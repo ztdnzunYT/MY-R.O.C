@@ -27,14 +27,11 @@ class database_manager():
 
 
 
-
-
-
-
 try:
     database_manager.reset_myteam_table()
     database_manager.reset_ai_team_tables()
     database_manager.reset_player_hub_table()
+   
 except:
     print("Database info already reset")
 
@@ -53,4 +50,6 @@ x = mycursor.fetchall()
 print(x)
 '''
 
+
 conn.close()
+
