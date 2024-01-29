@@ -1,4 +1,5 @@
 import flet as ft
+import Player_database_connector as pdc
 from Player_database_reset_manager import database_manager as Dbm
 from Player_db_creator import create_all_tables
 
@@ -16,23 +17,10 @@ def main(page: ft.Page):
     class new_or_load_management():
 
 
+
         def new_management():
-            '''
-            conn = sqlite3.connect("lib/db/Players.db")
-            mycursor = conn.cursor()
-            mycursor.execute("UPDATE SQLITE_SEQUENCE SET SEQ=0 WHERE NAME='player_hub'")
-            conn.commit()
-            mycursor.execute("DROP TABLE player_hub")
-            conn.commit()
-            for i in range(10): #Number of ai tables in database
-                i+=1
-                mycursor.execute("DROP TABLE ai_team_"+str(i)+"")
-                conn.commit()
-            mycursor.execute("DROP TABLE my_team")
-            conn.commit()
-            Player_hub_table_creator.create_player_hub_table()
-            conn.commit()
-            '''
+            pdc.open_connection()
+            time.sleep(.5)
             Dbm.reset_all()
             create_all_tables()
             print("Database info reset")

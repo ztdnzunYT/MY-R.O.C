@@ -44,6 +44,9 @@ def main(page: ft.Page):
             alignment=ft.alignment.center
             )
 
+
+
+        
     page.add(management_window())
            
     

@@ -648,10 +648,10 @@ def create_all_tables():
 
     try:
         conn.commit()
-       
+
         print("Executed")
     except:
-        
+    
         print("closed")
 
 

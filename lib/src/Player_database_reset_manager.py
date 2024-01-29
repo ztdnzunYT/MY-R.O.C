@@ -32,10 +32,10 @@ class database_manager():
             database_manager.reset_ai_team_tables()
             database_manager.reset_player_hub_table()
             print("reset database")
-            
 
         except:
             print("Database info already reset")
+
 
    
 
