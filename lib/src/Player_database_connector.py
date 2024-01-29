@@ -2,7 +2,7 @@ import sqlite3
 
 #This file connects other files to the players database without having to add the following variables
 #windows C:\\My R.O.C Manager\\lib\\db\\Players.db
-conn = sqlite3.connect("lib/db/Players.db")
+conn = sqlite3.connect("lib/db/Players.db",check_same_thread=False)
 mycursor = conn.cursor()
 
 

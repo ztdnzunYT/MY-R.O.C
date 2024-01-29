@@ -1,20 +1,9 @@
 import flet as ft
-from Player_database_connector import*
+from Player_database_reset_manager import database_manager as Dbm
+from Player_db_creator import create_all_tables
+
+
 import time
-
-class new_or_load_management():
-    def is_database_tables_created():
-        mycursor.execute("SELECT name FROM sqlite_schema WHERE TYPE='tables'")
-        databases = mycursor.fetchall()
-        print(databases)
-        return databases
-        '''
-        if (len() of variable assigned to fetch tables in database == 0):
-            return ft.outlinedbutton(text=“New Game”) 
-        else: 
-            return ft.outlinedbutton(text=“load game”)  
-        '''
-
 
 
 def main(page: ft.Page):
@@ -23,6 +12,36 @@ def main(page: ft.Page):
     page.vertical_alignment = ft.MainAxisAlignment.CENTER
     page.horizontal_alignment = ft.CrossAxisAlignment.CENTER
     page.window_frameless = False
+
+    class new_or_load_management():
+
+
+        def new_management():
+            '''
+            conn = sqlite3.connect("lib/db/Players.db")
+            mycursor = conn.cursor()
+            mycursor.execute("UPDATE SQLITE_SEQUENCE SET SEQ=0 WHERE NAME='player_hub'")
+            conn.commit()
+            mycursor.execute("DROP TABLE player_hub")
+            conn.commit()
+            for i in range(10): #Number of ai tables in database
+                i+=1
+                mycursor.execute("DROP TABLE ai_team_"+str(i)+"")
+                conn.commit()
+            mycursor.execute("DROP TABLE my_team")
+            conn.commit()
+            Player_hub_table_creator.create_player_hub_table()
+            conn.commit()
+            '''
+            Dbm.reset_all()
+            create_all_tables()
+            print("Database info reset")
+            return page.go("/Dashboard")
+            
+        
+        def load_management():
+            return page.go("/dashboard")
+        
 
 
     class Main_menu():
@@ -40,7 +59,7 @@ def main(page: ft.Page):
                         alignment=ft.alignment.top_center,
                         content=ft.Container(
                             ft.Column(
-                                alignment=ft.alignment.top_center,
+                                alignment=ft.alignment.center,
                                 scroll=ft.ScrollMode.AUTO,
                                 controls=
                             [
@@ -140,23 +159,18 @@ def main(page: ft.Page):
                                 height=30,
                                 bgcolor=ft.colors.TRANSPARENT,
                                 alignment=ft.alignment.center_left,
-                                content=ft.TextButton(
+                                content=ft.Column([
+                                ft.TextButton(
                                     text="New Management",
                                     disabled=False,
-                                    on_click=lambda _: page.go("/"),
-                                    )
-                                    
-                            ),
-                            ft.Container(
-                                width=160,
-                                height=30,
-                                bgcolor=ft.colors.TRANSPARENT,
-                                alignment=ft.alignment.center_left,
-                                content=ft.TextButton(
+                                    on_click=lambda e: new_or_load_management.new_management()
+                                    ),
+                                ft.TextButton(
                                     text="Load Management",
-                                    disabled=False,
-                                    on_click=lambda _: page.go("/Dashboard"))
-                            )],
+                                    disabled=False,)
+                                ])
+                            ),
+                            ],
                             spacing=15,
                             alignment=ft.MainAxisAlignment.CENTER
                         ),
@@ -215,22 +229,22 @@ def main(page: ft.Page):
             show_bottom_border=True,
             
             columns=[
-                ft.DataColumn(ft.Text(f"Row #")),
+                ft.DataColumn(ft.Text(f"Row #",text_align=ft.TextAlign.CENTER)),
                 ft.DataColumn(ft.Text(f"Icon",text_align=ft.TextAlign.CENTER)),
-                ft.DataColumn(ft.Text(f"None")),
-                ft.DataColumn(ft.Text(f"None")),
-                ft.DataColumn(ft.Text(f"None")),
-                ft.DataColumn(ft.Text(f"None")),
-                ft.DataColumn(ft.Text(f"None")),
-                ft.DataColumn(ft.Text(f"None")),
-                ft.DataColumn(ft.Text(f"None")),
-                ft.DataColumn(ft.Text(f"None")),
-                ft.DataColumn(ft.Text(f"None")),
-                ft.DataColumn(ft.Text(f"None")),
-                ft.DataColumn(ft.Text(f"None")),
-                ft.DataColumn(ft.Text(f"None")),
-                ft.DataColumn(ft.Text(f"None")),
-                ft.DataColumn(ft.Text(f"None")),
+                ft.DataColumn(ft.Text(f"None",text_align=ft.TextAlign.CENTER)),
+                ft.DataColumn(ft.Text(f"None",text_align=ft.TextAlign.CENTER)),
+                ft.DataColumn(ft.Text(f"None",text_align=ft.TextAlign.CENTER)),
+                ft.DataColumn(ft.Text(f"None",text_align=ft.TextAlign.CENTER)),
+                ft.DataColumn(ft.Text(f"None",text_align=ft.TextAlign.CENTER)),
+                ft.DataColumn(ft.Text(f"None",text_align=ft.TextAlign.CENTER)),
+                ft.DataColumn(ft.Text(f"None",text_align=ft.TextAlign.CENTER)),
+                ft.DataColumn(ft.Text(f"None",text_align=ft.TextAlign.CENTER)),
+                ft.DataColumn(ft.Text(f"None",text_align=ft.TextAlign.CENTER)),
+                ft.DataColumn(ft.Text(f"None",text_align=ft.TextAlign.CENTER)),
+                ft.DataColumn(ft.Text(f"None",text_align=ft.TextAlign.CENTER)),
+                ft.DataColumn(ft.Text(f"None",text_align=ft.TextAlign.CENTER)),
+                ft.DataColumn(ft.Text(f"None",text_align=ft.TextAlign.CENTER)),
+                ft.DataColumn(ft.Text(f"None",text_align=ft.TextAlign.CENTER)),
             ],
             rows=[
                 #color=ft.colors.with_opacity(0.3,ft.colors.WHITE),
@@ -265,6 +279,7 @@ def main(page: ft.Page):
 
         #Way to delete all the rows to be able to make a new list with filters
         def delete_player():
+            print("player deleted")
             for i in range(len(Player_search.table.rows)):
                 Player_search.table.rows.pop()
                 page.update()
@@ -385,14 +400,27 @@ def main(page: ft.Page):
             "/",
             [   
                 ft.Row ([
-                ft.Row(alignment="top_left", spacing=25, controls=[Main_menu.management_window()],expand=True), #Main_dashboard
+                ft.Row(alignment="top_left", spacing=25, controls=[Main_menu.management_window()],expand=True),
+                  #Main_dashboard
                 ],
                 expand=True)
             ],
             
+            )
         )
-
-        )
+        if page.route == "/Login":
+            page.views.append(
+                ft.View(
+                    "/Login",
+                    [
+                        ft.Row ([ 
+                        ft.Row(alignment="top_left", spacing=25, controls=[Main_menu.management_window()],expand=True),
+                        ],expand=True)
+                    ]
+                )
+            )
+        
+    
         if page.route == "/Dashboard":
             page.views.append(
                 ft.View(
@@ -400,7 +428,6 @@ def main(page: ft.Page):
                     [
                         ft.Row ([ 
                         ft.Row(alignment="top_left", spacing=25, controls=[Main_menu.side_menu(),Dashboard.dashboard()],expand=True),
-                        ft.ElevatedButton("Go Home", on_click=lambda _: page.go("/Dashboard")),
                         ],expand=True)
                     ]
                 )
@@ -413,7 +440,6 @@ def main(page: ft.Page):
                     [
                         ft.Row ([ 
                         ft.Row(alignment="top_let", spacing=25, controls=[Main_menu.side_menu(),Sim_game.sim_game()],expand=True),
-                        ft.ElevatedButton("Go Home", on_click=lambda _: page.go("/")),
                         ],expand=True)
                     ],
                 )
@@ -426,7 +452,6 @@ def main(page: ft.Page):
                     [
                         ft.Row ([ 
                         ft.Row(alignment="top_let", spacing=25, controls=[Main_menu.side_menu(),Online_pvp.online_pvp()],expand=True),
-                        ft.ElevatedButton("Go Home", on_click=lambda _: page.go("/")),
                         ],expand=True)
                     ],
                 )
@@ -439,7 +464,6 @@ def main(page: ft.Page):
                     [
                         ft.Row ([ 
                         ft.Row(alignment="top_let", spacing=25, controls=[Main_menu.side_menu(),Player_search.player_search_menu()],expand=True),
-                        ft.ElevatedButton("Go Home", on_click=lambda _: page.go("/")),
                         ],expand=True)
                     ],
                 )
@@ -451,7 +475,6 @@ def main(page: ft.Page):
                     [
                         ft.Row ([ 
                         ft.Row(alignment="top_let", spacing=25, controls=[Main_menu.side_menu(),My_ROC_Team.my_roc_team()],expand=True),
-                        ft.ElevatedButton("Go Home", on_click=lambda _: page.go("/")),
                         ],expand=True)
                     ],
                 )
@@ -463,7 +486,6 @@ def main(page: ft.Page):
                     [
                         ft.Row ([ 
                         ft.Row(alignment="top_let", spacing=25, controls=[Main_menu.side_menu(),Settings.settings()],expand=True),
-                        ft.ElevatedButton("Go Home", on_click=lambda _: page.go("/")),
                         ],expand=True)
                     ],
                 )

@@ -639,25 +639,20 @@ class Ai_teams_table_creator():
         )""")
 
   
-
-Myteam_table_creator.my_team_table_creator()
-Player_hub_table_creator.create_player_hub_table()
-Ai_teams_table_creator.create_ai_team_tables()
-
-
-
-try:
-    conn.commit()
-    conn.close()
-    print("Executed")
-except:
-    conn.close()
-    print("closed")
+def create_all_tables():
+    Myteam_table_creator.my_team_table_creator()
+    Player_hub_table_creator.create_player_hub_table()
+    Ai_teams_table_creator.create_ai_team_tables()
 
 
 
-
-
+    try:
+        conn.commit()
+       
+        print("Executed")
+    except:
+        
+        print("closed")
 
 
 

@@ -23,26 +23,63 @@ def main(page: ft.Page):
                     width=300,
                     height=410,
                     bgcolor=ft.colors.WHITE,
-                    padding=-17,
                     alignment=ft.alignment.center,
                     content=ft.Column([
-                        
-                        
                     ft.Container(
+                        padding=-19,
+                        width=300,
+                        height=20,
+                        bgcolor=ft.colors.WHITE,
+                        alignment=ft.alignment.top_center,
+                        content= ft.Container(
                         width=80,
                         height=40,
-                        col=6,
                         border_radius=ft.border_radius.only(bottom_left=20,bottom_right=20),
                         bgcolor=ft.colors.TRANSPARENT,
-                        border=ft.border.all(9,color=ft.colors.GREY),
-                    
+                        border=ft.border.all(9,color=ft.colors.GREY),),
+            
                     ),
-                
-               ],),
-            ),
-            ))
-    )
-          
+                    ft.Container(
+                        width=300,
+                        height=370,
+                        bgcolor=ft.colors.TRANSPARENT,
+                        alignment=ft.alignment.center,
+                        content=ft.Column([
+                            ft.Text("MY R.O.C",size=50,weight=ft.FontWeight.BOLD,color=ft.colors.GREY),
+                            ft.Column([
+                                ft.Container(
+                                width=160,
+                                height=30,
+                                bgcolor=ft.colors.TRANSPARENT,
+                                alignment=ft.alignment.center_left,
+                                content=ft.TextButton(
+                                    text="New Management",
+                                    disabled=False,
+                                    on_click=lambda _: page.go("/"),
+                                    )
+                            ),
+                            ft.Container(
+                                width=160,
+                                height=30,
+                                bgcolor=ft.colors.TRANSPARENT,
+                                alignment=ft.alignment.center_left,
+                                content=ft.TextButton(
+                                    text="Load Management",
+                                    disabled=False,
+                                    on_click=lambda _: page.go("/Dashboard"))
+                            )],
+                            )],
+                            spacing=60,
+                            alignment=ft.MainAxisAlignment.CENTER
+                        ),
+                    )
+                ])
+            )
+            ),expand=True
+        )
+            )
+
+     
 
 
 
