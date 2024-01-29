@@ -19,7 +19,7 @@ def main(page: ft.Page):
 
 
         def new_management():
-            pdc.open_connection()
+    
             time.sleep(.5)
             Dbm.reset_all()
             create_all_tables()
