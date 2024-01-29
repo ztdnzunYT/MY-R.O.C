@@ -1,3 +1,0 @@
-([('Player_search_list_example',
-   '/Users/ztdnzun/Documents/GitHub/MyR.O.CManager/dist/Player_search_list_example',
-   'EXECUTABLE')],)
