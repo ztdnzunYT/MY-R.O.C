@@ -20,7 +20,6 @@ def main(page: ft.Page):
 
         def new_management():
     
-            time.sleep(.5)
             Dbm.reset_all()
             create_all_tables()
             print("Database info reset")
