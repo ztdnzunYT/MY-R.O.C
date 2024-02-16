@@ -72,6 +72,13 @@ def main(page: ft.Page):
                                     on_click=lambda _: page.go("/Online PvP")
                                 ),
                                 ft.IconButton(
+                                    icon = ft.icons.SPORTS_BASKETBALL,
+                                    icon_color=ft.colors.WHITE60,
+                                    icon_size=45,
+                                    tooltip="The Roc",
+                                    on_click=lambda _: page.go("/The Roc")
+                                ),
+                                ft.IconButton(
                                     icon=ft.icons.PERSON_SEARCH_ROUNDED,
                                     icon_color=ft.colors.WHITE60,
                                     icon_size=50,
@@ -207,6 +214,28 @@ def main(page: ft.Page):
                     text_align=ft.TextAlign.CENTER,
                     )),
                 expand=True)
+        
+    class The_Roc():
+        def the_Roc():
+            print(f"{page.route} Menu item clicked")
+            return ft.Container(
+            width=page.window_width,
+            height=page.window_height,
+            margin=5,
+            border_radius=10,
+            border=ft.border.all(2, ft.colors.WHITE24),
+            alignment=ft.alignment.center,
+            bgcolor=ft.colors.BLACK12,
+            content=(ft.Text(
+                "The Roc",
+                size=50,
+                color=ft.colors.with_opacity(0.5,ft.colors.WHITE),
+                weight=ft.FontWeight.BOLD,
+                text_align=ft.TextAlign.CENTER,
+                )),
+            expand=True)
+
+
         
 
     class Player_search():
@@ -441,6 +470,17 @@ def main(page: ft.Page):
                         ft.Row(alignment="top_let", spacing=25, controls=[Main_menu.side_menu(),Online_pvp.online_pvp()],expand=True),
                         ],expand=True)
                     ],
+                )
+            )
+        if page.route == "/The Roc":
+            page.views.append(
+                ft.View(
+                    "/The Roc",
+                    [
+                        ft.Row ([ 
+                        ft.Row(alignment="top_left", spacing=25, controls=[Main_menu.side_menu(),The_Roc.the_Roc()],expand=True),
+                        ],expand=True)
+                    ]
                 )
             )
         
