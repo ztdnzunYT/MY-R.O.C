@@ -693,7 +693,7 @@ def run():
         player_rating = 0    
 
 
-run()
+
 
 
  

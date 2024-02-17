@@ -63,10 +63,8 @@ def main(page: ft.Page):
     add_row = ft.ElevatedButton(text="Button",on_click=new_row,data=0)
     page.add(add_row)
 
-    upload_url = page.get_upload_url("dir/Player_search_list_example.py", 60)
-    page.launch_url(upload_url)
    
-ft.app(target=main, upload_dir="uploads")
+ft.app(target=main)
     
 
 

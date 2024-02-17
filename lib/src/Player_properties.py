@@ -15,7 +15,7 @@ class Player_variables ():
     last_names = ("Jackson","Christopher","Davis","Johnson","Parker","Palacious","Bond","Cambell","Roberts","Jefferson","Glendan","Smith","Brown","Lopez","Wilson","Roses",
                   "Taylor","Lee","Moore","Harris","Clark","Robinson","Lewis","Young","Allen","Hill","Green","Nelson","Baxter","Carter","Gomez","Adams","Evans","Parker",
                   "Cruz","Collins","Murphy","Cook","Rogers","Cooper","Howard","Cox","Wood","Bennet","Gray","Price","James","Ross","Foster","Sanders","Bills","Washington",
-                  "Brax","Presely","Brunson","White","Lows","Kurr","Jefferson","Adam","Flyn","Porter","Sandler","Swift","Cage","Iverson","Bird","Frances","Paston","Suden",
+                  "Brax","Presely","Brunson","White","Lows","Kurr","Jefferson","Abner","Flyn","Porter","Sandler","Swift","Cage","Iverson","Bird","Frances","Paston","Suden",
                   "Luther","Freeman","Abernathy","Nash","Frezno","Mach","Maxwell","Wilks","Brands","Burrow","Kelts","Cresdan","Elain","Stakes","Heights","Sewell")
     
 
