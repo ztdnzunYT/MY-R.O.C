@@ -329,7 +329,8 @@ def main(page: ft.Page):
                 if i !=6 and i > 0:
                     new_row.cells.append(ft.DataCell(ft.Text(f"{player_info[i]}")))
                 if i == 6:
-                    new_row.cells.append(ft.DataCell(ft.Text(f"{(int(player_info[i]) * "★")}"))) #NOTE TO SELF. MIGHT NEED TO ADD THIS FOR THE ATTRIBUTE AND PERCENTS IN FUTURE
+                    new_row.cells.append(ft.DataCell(ft.Text(f"{(int(player_info[i]) * "★")}"))) #NOTE TO SELF. MIGHT NEED TO ADD THIS FOR THE ATTRIBUTE AND PERCENTS IN FUTURE 
+                    # AS WELL AS ADD STACK IN ORDER TO SEE THE SPECIFIC COLUMN NAMES WHILE SCROLLING 
             new_row.cells.append(ft.DataCell(ft.CupertinoCheckbox()))
             Player_search.table.rows.append(new_row)
             page.update()
