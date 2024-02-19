@@ -1,7 +1,6 @@
 import random
 import Player_properties as pprops
 from Player_properties import pv
-from simple_colors import* 
 from Player_database_connector import* 
 
 #THIS FILE IS USED TO CREATE ALL THE DATABASES ON START UP

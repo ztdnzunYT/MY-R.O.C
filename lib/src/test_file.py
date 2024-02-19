@@ -1,176 +1,126 @@
 import flet as ft
 
 def main(page: ft.Page):
-    st = ft.Stack(
-        [
-            ft.Container(
-                expand=True,
-               
+<<<<<<< HEAD
+    page.theme_mode = ft.ThemeMode.LIGHT
+    appbar_text_ref = ft.Ref[ft.Text]()
 
+    def handle_menu_item_click(e):
+        print(f"{e.control.content.value}.on_click")
+        page.show_snack_bar(ft.SnackBar(content=ft.Text(f"{e.control.content.value} was clicked!")))
+        appbar_text_ref.current.value = e.control.content.value
+        page.update()
 
-            
-            content=ft.DataTable(
+    def handle_on_open(e):
+        print(f"{e.control.content.value}.on_open")
 
-                
-                
-            columns=[
-                ft.DataColumn(ft.Text("First name")),
-                ft.DataColumn(ft.Text("Last name")),
-                ft.DataColumn(ft.Text("Age"), numeric=True),
-            ],
-            rows=[
-                ft.DataRow(
-                    cells=[
-                        ft.DataCell(ft.Text("John")),
-                        ft.DataCell(ft.Text("Smith")),
-                        ft.DataCell(ft.Text("43")),
-                    ],
-                ),
-                ft.DataRow(
-                    cells=[
-                        ft.DataCell(ft.Text("Jack")),
-                        ft.DataCell(ft.Text("Brown")),
-                        ft.DataCell(ft.Text("19")),
-                    ],
-                ),
-                ft.DataRow(
-                    cells=[
-                        ft.DataCell(ft.Text("Alice")),
-                        ft.DataCell(ft.Text("Wong")),
-                        ft.DataCell(ft.Text("25")),
-                    ],
-                ),
-                ft.DataRow(
-                    cells=[
-                        ft.DataCell(ft.Text("John")),
-                        ft.DataCell(ft.Text("Smith")),
-                        ft.DataCell(ft.Text("43")),
-                    ],
-                ),
-                ft.DataRow(
-                    cells=[
-                        ft.DataCell(ft.Text("Jack")),
-                        ft.DataCell(ft.Text("Brown")),
-                        ft.DataCell(ft.Text("19")),
-                    ],
-                ),
-                ft.DataRow(
-                    cells=[
-                        ft.DataCell(ft.Text("Alice")),
-                        ft.DataCell(ft.Text("Wong")),
-                        ft.DataCell(ft.Text("25")),
-                    ],
-                ),
-                ft.DataRow(
-                    cells=[
-                        ft.DataCell(ft.Text("John")),
-                        ft.DataCell(ft.Text("Smith")),
-                        ft.DataCell(ft.Text("43")),
-                    ],
-                ),
-                ft.DataRow(
-                    cells=[
-                        ft.DataCell(ft.Text("Jack")),
-                        ft.DataCell(ft.Text("Brown")),
-                        ft.DataCell(ft.Text("19")),
-                    ],
-                ),
-                ft.DataRow(
-                    cells=[
-                        ft.DataCell(ft.Text("Alice")),
-                        ft.DataCell(ft.Text("Wong")),
-                        ft.DataCell(ft.Text("25")),
-                    ],
-                ),
-                ft.DataRow(
-                    cells=[
-                        ft.DataCell(ft.Text("John")),
-                        ft.DataCell(ft.Text("Smith")),
-                        ft.DataCell(ft.Text("43")),
-                    ],
-                ),
-                ft.DataRow(
-                    cells=[
-                        ft.DataCell(ft.Text("Jack")),
-                        ft.DataCell(ft.Text("Brown")),
-                        ft.DataCell(ft.Text("19")),
-                    ],
-                ),
-                ft.DataRow(
-                    cells=[
-                        ft.DataCell(ft.Text("Alice")),
-                        ft.DataCell(ft.Text("Wong")),
-                        ft.DataCell(ft.Text("25")),
-                    ],
-                ),
-                ft.DataRow(
-                    cells=[
-                        ft.DataCell(ft.Text("John")),
-                        ft.DataCell(ft.Text("Smith")),
-                        ft.DataCell(ft.Text("43")),
-                    ],
-                ),
-                ft.DataRow(
-                    cells=[
-                        ft.DataCell(ft.Text("Jack")),
-                        ft.DataCell(ft.Text("Brown")),
-                        ft.DataCell(ft.Text("19")),
-                    ],
-                ),
-                ft.DataRow(
-                    cells=[
-                        ft.DataCell(ft.Text("Alice")),
-                        ft.DataCell(ft.Text("Wong")),
-                        ft.DataCell(ft.Text("25")),
-                    ],
-                ),
-                ft.DataRow(
-                    cells=[
-                        ft.DataCell(ft.Text("John")),
-                        ft.DataCell(ft.Text("Smith")),
-                        ft.DataCell(ft.Text("43")),
-                    ],
-                ),
-                ft.DataRow(
-                    cells=[
-                        ft.DataCell(ft.Text("Jack")),
-                        ft.DataCell(ft.Text("Brown")),
-                        ft.DataCell(ft.Text("19")),
-                    ],
-                ),
-                ft.DataRow(
-                    cells=[
-                        ft.DataCell(ft.Text("Alice")),
-                        ft.DataCell(ft.Text("Wong")),
-                        ft.DataCell(ft.Text("25")),
-                    ],
-                ),
-            ],
-        ),
-        ),
-         ft.Container(
-            
-            width=300,
-            height=50,
-            bgcolor=ft.colors.BACKGROUND,
-            content=ft.DataTable(
-            columns=[
-                ft.DataColumn(ft.Text("First name")),
-                ft.DataColumn(ft.Text("Last name")),
-                ft.DataColumn(ft.Text("Age"), numeric=True),
-            ],
-            
-        ),
+    def handle_on_close(e):
+        print(f"{e.control.content.value}.on_close")
 
+    def handle_on_hover(e):
+        print(f"{e.control.content.value}.on_hover")
 
-         )
-        ],
-        
-        width=300,
-        height=400,
+    page.appbar = ft.AppBar(
+        title=ft.Text("Menus", ref=appbar_text_ref),
+        center_title=True,
+        bgcolor=ft.colors.BLUE
     )
-    
 
-    page.add(st)
+    menubar = ft.MenuBar(
+        expand=True,
+        style=ft.MenuStyle(
+            alignment=ft.alignment.top_left,
+            bgcolor=ft.colors.RED_100,
+            mouse_cursor={ft.MaterialState.HOVERED: ft.MouseCursor.WAIT,
+                          ft.MaterialState.DEFAULT: ft.MouseCursor.ZOOM_OUT},
+        ),
+        controls=[
+            ft.SubmenuButton(
+                content=ft.Text("File"),
+                on_open=handle_on_open,
+                on_close=handle_on_close,
+                on_hover=handle_on_hover,
+                controls=[
+                    ft.MenuItemButton(
+                        content=ft.Text("About"),
+                        leading=ft.Icon(ft.icons.INFO),
+                        style=ft.ButtonStyle(bgcolor={ft.MaterialState.HOVERED: ft.colors.GREEN_100}),
+                        on_click=handle_menu_item_click
+                    ),
+                    ft.MenuItemButton(
+                        content=ft.Text("Save"),
+                        leading=ft.Icon(ft.icons.SAVE),
+                        style=ft.ButtonStyle(bgcolor={ft.MaterialState.HOVERED: ft.colors.GREEN_100}),
+                        on_click=handle_menu_item_click
+                    ),
+                    ft.MenuItemButton(
+                        content=ft.Text("Quit"),
+                        leading=ft.Icon(ft.icons.CLOSE),
+                        style=ft.ButtonStyle(bgcolor={ft.MaterialState.HOVERED: ft.colors.GREEN_100}),
+                        on_click=handle_menu_item_click
+                    )
+                ]
+            ),
+            ft.SubmenuButton(
+                content=ft.Text("View"),
+                on_open=handle_on_open,
+                on_close=handle_on_close,
+                on_hover=handle_on_hover,
+                controls=[
+                    ft.SubmenuButton(
+                        content=ft.Text("Zoom"),
+                        controls=[
+                            ft.MenuItemButton(
+                                content=ft.Text("Magnify"),
+                                leading=ft.Icon(ft.icons.ZOOM_IN),
+                                close_on_click=False,
+                                style=ft.ButtonStyle(bgcolor={ft.MaterialState.HOVERED: ft.colors.PURPLE_200}),
+                                on_click=handle_menu_item_click
+                            ),
+                            ft.MenuItemButton(
+                                content=ft.Text("Minify"),
+                                leading=ft.Icon(ft.icons.ZOOM_OUT),
+                                close_on_click=False,
+                                style=ft.ButtonStyle(bgcolor={ft.MaterialState.HOVERED: ft.colors.PURPLE_200}),
+                                on_click=handle_menu_item_click
+                            )
+                        ]
+                    )
+                ]
+            ),
+        ]
+    )
+
+    page.add(
+        ft.Row([menubar]),
+    )
+
+=======
+
+    t = ft.Tabs(
+        selected_index=1,
+        animation_duration=300,
+        tabs=[
+            ft.Tab(
+                text="Tab 1",
+                content=ft.Container(
+                    content=ft.Text("This is Tab 1"), alignment=ft.alignment.center
+                ),
+            ),
+            ft.Tab(
+                tab_content=ft.Icon(ft.icons.SEARCH),
+                content=ft.Text("This is Tab 2"),
+            ),
+            ft.Tab(
+                text="Tab 3",
+                icon=ft.icons.SETTINGS,
+                content=ft.Text("This is Tab 3"),
+            ),
+        ],
+        expand=1,
+    )
+
+    page.add(t)
+>>>>>>> cdd02a57ec84f32f6d24179f9edc66e2cf229928
 
 ft.app(target=main)
