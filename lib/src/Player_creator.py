@@ -1,7 +1,6 @@
 import random
 import Player_properties as pprops
 from Player_properties import pv
-from simple_colors import*
 from Player_database_connector import*
 
 #THIS FILE GENERATES RANDOM PLAYERS AND PLAYER INFO 
@@ -329,7 +328,7 @@ class Player_creator():
             print(first_name, last_name)
             print(f"{int(star_rating)} star player") 
             print("Potential",potential,"star")
-            print(cyan(build))
+            #print(cyan(build))
             print(position)
             print(height)
             print(weight)
@@ -340,9 +339,9 @@ class Player_creator():
             print(injured)
             print("recovery days",recovery_days)
             print(skill_set,"skill set")
-            print(overall,(yellow("ovr")))
-            print(offense, (green("offense")))
-            print(defense, (red("defense")))
+            #print(overall,(yellow("ovr")))
+            #print(offense, (green("offense")))
+            #print(defense, (red("defense")))
             print(three_pointer,"three pointer")
             print(midrange,"midrange")
             print(layup,"layup")

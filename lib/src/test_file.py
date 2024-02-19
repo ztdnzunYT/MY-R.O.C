@@ -1,176 +1,30 @@
 import flet as ft
 
 def main(page: ft.Page):
-    st = ft.Stack(
-        [
-            ft.Container(
-                expand=True,
-               
 
-
-            
-            content=ft.DataTable(
-
-                
-                
-            columns=[
-                ft.DataColumn(ft.Text("First name")),
-                ft.DataColumn(ft.Text("Last name")),
-                ft.DataColumn(ft.Text("Age"), numeric=True),
-            ],
-            rows=[
-                ft.DataRow(
-                    cells=[
-                        ft.DataCell(ft.Text("John")),
-                        ft.DataCell(ft.Text("Smith")),
-                        ft.DataCell(ft.Text("43")),
-                    ],
+    t = ft.Tabs(
+        selected_index=1,
+        animation_duration=300,
+        tabs=[
+            ft.Tab(
+                text="Tab 1",
+                content=ft.Container(
+                    content=ft.Text("This is Tab 1"), alignment=ft.alignment.center
                 ),
-                ft.DataRow(
-                    cells=[
-                        ft.DataCell(ft.Text("Jack")),
-                        ft.DataCell(ft.Text("Brown")),
-                        ft.DataCell(ft.Text("19")),
-                    ],
-                ),
-                ft.DataRow(
-                    cells=[
-                        ft.DataCell(ft.Text("Alice")),
-                        ft.DataCell(ft.Text("Wong")),
-                        ft.DataCell(ft.Text("25")),
-                    ],
-                ),
-                ft.DataRow(
-                    cells=[
-                        ft.DataCell(ft.Text("John")),
-                        ft.DataCell(ft.Text("Smith")),
-                        ft.DataCell(ft.Text("43")),
-                    ],
-                ),
-                ft.DataRow(
-                    cells=[
-                        ft.DataCell(ft.Text("Jack")),
-                        ft.DataCell(ft.Text("Brown")),
-                        ft.DataCell(ft.Text("19")),
-                    ],
-                ),
-                ft.DataRow(
-                    cells=[
-                        ft.DataCell(ft.Text("Alice")),
-                        ft.DataCell(ft.Text("Wong")),
-                        ft.DataCell(ft.Text("25")),
-                    ],
-                ),
-                ft.DataRow(
-                    cells=[
-                        ft.DataCell(ft.Text("John")),
-                        ft.DataCell(ft.Text("Smith")),
-                        ft.DataCell(ft.Text("43")),
-                    ],
-                ),
-                ft.DataRow(
-                    cells=[
-                        ft.DataCell(ft.Text("Jack")),
-                        ft.DataCell(ft.Text("Brown")),
-                        ft.DataCell(ft.Text("19")),
-                    ],
-                ),
-                ft.DataRow(
-                    cells=[
-                        ft.DataCell(ft.Text("Alice")),
-                        ft.DataCell(ft.Text("Wong")),
-                        ft.DataCell(ft.Text("25")),
-                    ],
-                ),
-                ft.DataRow(
-                    cells=[
-                        ft.DataCell(ft.Text("John")),
-                        ft.DataCell(ft.Text("Smith")),
-                        ft.DataCell(ft.Text("43")),
-                    ],
-                ),
-                ft.DataRow(
-                    cells=[
-                        ft.DataCell(ft.Text("Jack")),
-                        ft.DataCell(ft.Text("Brown")),
-                        ft.DataCell(ft.Text("19")),
-                    ],
-                ),
-                ft.DataRow(
-                    cells=[
-                        ft.DataCell(ft.Text("Alice")),
-                        ft.DataCell(ft.Text("Wong")),
-                        ft.DataCell(ft.Text("25")),
-                    ],
-                ),
-                ft.DataRow(
-                    cells=[
-                        ft.DataCell(ft.Text("John")),
-                        ft.DataCell(ft.Text("Smith")),
-                        ft.DataCell(ft.Text("43")),
-                    ],
-                ),
-                ft.DataRow(
-                    cells=[
-                        ft.DataCell(ft.Text("Jack")),
-                        ft.DataCell(ft.Text("Brown")),
-                        ft.DataCell(ft.Text("19")),
-                    ],
-                ),
-                ft.DataRow(
-                    cells=[
-                        ft.DataCell(ft.Text("Alice")),
-                        ft.DataCell(ft.Text("Wong")),
-                        ft.DataCell(ft.Text("25")),
-                    ],
-                ),
-                ft.DataRow(
-                    cells=[
-                        ft.DataCell(ft.Text("John")),
-                        ft.DataCell(ft.Text("Smith")),
-                        ft.DataCell(ft.Text("43")),
-                    ],
-                ),
-                ft.DataRow(
-                    cells=[
-                        ft.DataCell(ft.Text("Jack")),
-                        ft.DataCell(ft.Text("Brown")),
-                        ft.DataCell(ft.Text("19")),
-                    ],
-                ),
-                ft.DataRow(
-                    cells=[
-                        ft.DataCell(ft.Text("Alice")),
-                        ft.DataCell(ft.Text("Wong")),
-                        ft.DataCell(ft.Text("25")),
-                    ],
-                ),
-            ],
-        ),
-        ),
-         ft.Container(
-            
-            width=300,
-            height=50,
-            bgcolor=ft.colors.BACKGROUND,
-            content=ft.DataTable(
-            columns=[
-                ft.DataColumn(ft.Text("First name")),
-                ft.DataColumn(ft.Text("Last name")),
-                ft.DataColumn(ft.Text("Age"), numeric=True),
-            ],
-            
-        ),
-
-
-         )
+            ),
+            ft.Tab(
+                tab_content=ft.Icon(ft.icons.SEARCH),
+                content=ft.Text("This is Tab 2"),
+            ),
+            ft.Tab(
+                text="Tab 3",
+                icon=ft.icons.SETTINGS,
+                content=ft.Text("This is Tab 3"),
+            ),
         ],
-        
-        width=300,
-        height=400,
+        expand=1,
     )
-    
 
-    page.add(st)
+    page.add(t)
 
 ft.app(target=main)

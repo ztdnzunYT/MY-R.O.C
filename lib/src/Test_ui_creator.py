@@ -242,6 +242,7 @@ def main(page: ft.Page):
         
 
     class Player_search():
+
         
         def player_inserter():
             pdc.mycursor.execute("SELECT * FROM player_hub")
@@ -257,7 +258,7 @@ def main(page: ft.Page):
             
             
             columns=[
-                ft.DataColumn(ft.Text(f"Id",text_align=ft.TextAlign.CENTER,weight=ft.FontWeight.BOLD)),
+                ft.DataColumn(ft.Text(f"Id",text_align=ft.TextAlign.CENTER,weight=ft.FontWeight.BOLD),tooltip="Player row id"),
                 ft.DataColumn(ft.Text(f"",text_align=ft.TextAlign.CENTER,weight=ft.FontWeight.BOLD)),
                 ft.DataColumn(ft.Text(f"First name",text_align=ft.TextAlign.CENTER,weight=ft.FontWeight.BOLD)),
                 ft.DataColumn(ft.Text(f"Last name",text_align=ft.TextAlign.CENTER,weight=ft.FontWeight.BOLD)),
@@ -270,7 +271,7 @@ def main(page: ft.Page):
                 ft.DataColumn(ft.Text(f"Moral",text_align=ft.TextAlign.CENTER,weight=ft.FontWeight.BOLD)),
                 ft.DataColumn(ft.Text(f"Trait",text_align=ft.TextAlign.CENTER,weight=ft.FontWeight.BOLD)),
                 ft.DataColumn(ft.Text(f"Team name",text_align=ft.TextAlign.CENTER,weight=ft.FontWeight.BOLD)),
-                ft.DataColumn(ft.Text(f"Skill set",text_align=ft.TextAlign.CENTER,weight=ft.FontWeight.BOLD)),
+                ft.DataColumn(ft.Text(f"Skill set",text_align=ft.TextAlign.CENTER,weight=ft.FontWeight.BOLD),tooltip="Players with specific skill sets\ncan recieve attribute boosts"),
                 ft.DataColumn(ft.Text(f"Injured",text_align=ft.TextAlign.CENTER,weight=ft.FontWeight.BOLD)),
                 ft.DataColumn(ft.Text(f"Recovery days",text_align=ft.TextAlign.CENTER,weight=ft.FontWeight.BOLD)),
                 ft.DataColumn(ft.Text(f"Potential",text_align=ft.TextAlign.CENTER,weight=ft.FontWeight.BOLD)),
@@ -316,7 +317,7 @@ def main(page: ft.Page):
 
         def add_player(player_info):
             new_row = ft.DataRow(
-                #on_select_changed="",
+                on_select_changed="",
                 #color=ft.colors.with_opacity(0.3,ft.colors.WHITE),
                 cells=[
                 ]
@@ -334,6 +335,7 @@ def main(page: ft.Page):
             new_row.cells.append(ft.DataCell(ft.CupertinoCheckbox()))
             Player_search.table.rows.append(new_row)
             page.update()
+           
 
 
         #Way to delete all the rows to be able to make a new list with filters
@@ -345,11 +347,14 @@ def main(page: ft.Page):
                 time.sleep(.001)
         
         def add_multiple():
-            for i in range(15):
+            for i in range(50):
                 Player_search.add_player(Player_search.player_inserter()[i])
 
         def player_search_menu():  
             print(f"{page.route} Menu item clicked")
+            Player_search.table.rows.clear()
+           
+
             return ft.Container(
                 width=page.window_width,
                 height=page.window_height,
