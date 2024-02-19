@@ -22,7 +22,7 @@ def main(page: ft.Page):
 
         def new_management():
             Dbm.reset_all()
-            Player_search.table.rows.clear()
+            Player_search.table.rows.clear()  #improves player search menu smooth loading
             create_all_tables()
             print("Database info reset")
             pc_run()
