@@ -155,7 +155,7 @@ def main(page: ft.Page):
                                 width=160,
                                 height=30,
                                 bgcolor=ft.colors.TRANSPARENT,
-                                alignment=ft.alignment.center_left,
+                                alignment=ft.alignment.center,
                                 content=ft.Column([
                                 ft.TextButton(
                                     text="New Management",
@@ -175,7 +175,6 @@ def main(page: ft.Page):
                 expand=True,
                 alignment=ft.alignment.center
                 )
-
         
             
     class Dashboard():
@@ -189,14 +188,100 @@ def main(page: ft.Page):
                 border=ft.border.all(2, ft.colors.WHITE24),
                 alignment=ft.alignment.center,
                 bgcolor=ft.colors.BLACK12,
-                content=(ft.Text(
-                    "Dashboard",
-                    size=50,
-                    color=ft.colors.with_opacity(0.5,ft.colors.WHITE),
-                    weight=ft.FontWeight.BOLD,
-                    text_align=ft.TextAlign.CENTER,
-                    )),
-                expand=True)
+                
+                content=ft.Row([
+                    ft.Tabs(
+                        unselected_label_color=ft.colors.WHITE54, 
+                        label_color=ft.colors.WHITE,
+                        indicator_color=ft.colors.WHITE,
+                        height=page.window_height -50,
+                        width=page.window_width -200,
+                        selected_index = 0,
+                        animation_duration=300,
+                        expand=True,
+
+                        tabs=[
+                            ft.Tab(
+                                text="HOME",
+                                tab_content=ft.Text("HOME",size=20),
+                                content=ft.Container(
+                                    alignment=ft.alignment.center,
+                                    margin=20,
+                                    border_radius=15,
+                                    expand=True,
+                                    content=ft.Row([
+                                        ft.Column([
+                                            ft.Container(
+                                                height=50,
+                                                bgcolor=ft.colors.WHITE54,
+                                                alignment=ft.alignment.center,
+                                                margin=10,
+                                                border_radius=5,
+                                                expand=True),
+                                                
+                                            ft.Container(
+                                                height=50,
+                                                bgcolor=ft.colors.WHITE54,
+                                                alignment=ft.alignment.center,
+                                                margin=10,
+                                                border_radius=5,
+                                                expand=True),
+
+                                            ft.Container(
+                                                height=50,
+                                                bgcolor=ft.colors.WHITE54,
+                                                alignment=ft.alignment.center,
+                                                margin=10,
+                                                border_radius=5,
+                                                expand=True)
+                                        ],alignment=ft.alignment.center,spacing=10,expand=True),
+                                        
+                                        ft.Column([
+
+                                            ft.Container(width=page.window_width,
+                                                height=200,
+                                                bgcolor=ft.colors.WHITE54,
+                                                alignment=ft.alignment.center,
+                                                margin=10,
+                                                border_radius=5,
+                                                expand=True),
+                                                
+                                        ft.Container(width=page.window_width,
+                                                height = page.window_height/3,
+                                                bgcolor=ft.colors.WHITE54,
+                                                alignment=ft.alignment.center,
+                                                margin=10,
+                                                border_radius=5,
+                                                expand=True),
+                                        ],expand=True,spacing=5,alignment=ft.alignment.center_left)
+                                    ],alignment=ft.alignment.center_left,expand=True,spacing=5)
+                                )
+                            ),
+                            ft.Tab(
+                                text="MY R.O.C",
+                                tab_content=ft.Text("MY R.O.C",size=20),
+                                content=ft.Text("MY R.O.C")
+                            ),
+                            ft.Tab(
+                                text="ROSTER",
+                                tab_content=ft.Text("ROSTER",size=20),
+                                content=ft.Text("ROSTER")
+                            ),
+                            ft.Tab(
+                                text="STATS",
+                                tab_content=ft.Text("STATS",size=20),
+                                content=ft.Text("STATS")
+                            ),
+                            ft.Tab(
+                                text="SETTINGS",
+                                tab_content=ft.Text("SETTINGS",size=20),
+                                content=ft.Text("SETTINGS")
+                            )]
+                            ,)]) ,expand=True
+                            )
+                            
+                    
+            
 
     class Sim_game():
         def sim_game():
@@ -323,14 +408,89 @@ def main(page: ft.Page):
                 ]
 
             )
-            new_row.cells.append(ft.DataCell(ft.Text(f"{player_info[0]}"),placeholder="num"))
+            new_row.cells.append(ft.DataCell(ft.Text(f"{player_info[0]}")))
             new_row.cells.append(ft.DataCell(ft.CircleAvatar(content=ft.Text(f"{str(player_info[1][0])}{str(player_info[2][0])}",text_align=ft.TextAlign.CENTER,size=20),
-                                                             bgcolor=ft.colors.GREY_900,radius=20)))
+                                                             bgcolor=ft.colors.GREY_900,radius=20,color=ft.colors.WHITE70)))
             for i in range(49):
-                if i !=6 and i > 0:
-                    new_row.cells.append(ft.DataCell(ft.Text(f"{player_info[i]}")))
+                if i == 5:
+                    new_row.cells[i] = (ft.DataCell(ft.Text(f"{player_info[i-1]} ft")))
+                if i == 6: 
+                    new_row.cells[i] = (ft.DataCell(ft.Text(f"{player_info[i-1]} lb")))
                 if i == 6:
-                    new_row.cells.append(ft.DataCell(ft.Text(f"{(int(player_info[i]) * "★")}"))) #NOTE TO SELF. MIGHT NEED TO ADD THIS FOR THE ATTRIBUTE AND PERCENTS IN FUTURE 
+                    new_row.cells.append(ft.DataCell(ft.Text(f"{(int(player_info[i]) * "★")}")))
+                if i == 15:
+                    new_row.cells[i] = (ft.DataCell(ft.Text(f"{player_info[i-1]} dys")))
+                if i == 16:
+                    new_row.cells[i] = (ft.DataCell(ft.Text(f"{player_info[i-1]} pot")))
+                if i == 17:
+                    new_row.cells[i] = (ft.DataCell(ft.Text(f"{player_info[i-1]} ovr")))
+                if i == 18:
+                    new_row.cells[i] = (ft.DataCell(ft.Text(f"{player_info[i-1]} off")))
+                if i == 19:
+                    new_row.cells[i] = (ft.DataCell(ft.Text(f"{player_info[i-1]} def")))
+                if i == 21:
+                    new_row.cells[i] = (ft.DataCell(ft.Text(f"{player_info[i-1]} three")))
+                if i == 22:
+                    new_row.cells[i] = (ft.DataCell(ft.Text(f"{player_info[i-1]} midr")))
+                if i == 23:
+                    new_row.cells[i] = (ft.DataCell(ft.Text(f"{player_info[i-1]} lay")))
+                if i == 24:
+                    new_row.cells[i] = (ft.DataCell(ft.Text(f"{player_info[i-1]} dnk")))
+                if i == 25:
+                    new_row.cells[i] = (ft.DataCell(ft.Text(f"{player_info[i-1]} handle")))
+                if i == 26:
+                    new_row.cells[i] = (ft.DataCell(ft.Text(f"{player_info[i-1]} speed")))
+                if i == 27:
+                    new_row.cells[i] = (ft.DataCell(ft.Text(f"{player_info[i-1]} stam")))
+                if i == 28:
+                    new_row.cells[i] = (ft.DataCell(ft.Text(f"{player_info[i-1]} passing")))
+                if i == 29:
+                    new_row.cells[i] = (ft.DataCell(ft.Text(f"{player_info[i-1]} strength")))
+                if i == 30:
+                    new_row.cells[i] = (ft.DataCell(ft.Text(f"{player_info[i-1]} rebound")))
+                if i == 31:
+                    new_row.cells[i] = (ft.DataCell(ft.Text(f"{player_info[i-1]} int d")))
+                if i == 32:
+                    new_row.cells[i] = (ft.DataCell(ft.Text(f"{player_info[i-1]} per d")))
+                if i == 33:
+                    new_row.cells[i] = (ft.DataCell(ft.Text(f"{player_info[i-1]} stl")))
+                if i == 34:
+                    new_row.cells[i] = (ft.DataCell(ft.Text(f"{player_info[i-1]} blk")))
+                if i == 35:
+                    new_row.cells[i] = (ft.DataCell(ft.Text(f"{player_info[i-1]} pts")))
+                if i == 36:
+                    new_row.cells[i] = (ft.DataCell(ft.Text(f"{player_info[i-1]} asts")))
+                if i == 37:
+                    new_row.cells[i] = (ft.DataCell(ft.Text(f"{player_info[i-1]} rebs")))
+                if i == 38:
+                    new_row.cells[i] = (ft.DataCell(ft.Text(f"{player_info[i-1]} stls")))
+                if i == 39:
+                    new_row.cells[i] = (ft.DataCell(ft.Text(f"{player_info[i-1]} blks")))
+                if i == 40:
+                    new_row.cells[i] = (ft.DataCell(ft.Text(f"{player_info[i-1]} trnvrs")))
+                if i == 41:
+                    new_row.cells[i] = (ft.DataCell(ft.Text(f"{player_info[i-1]} games played")))
+                if i == 42:
+                    new_row.cells[i] = (ft.DataCell(ft.Text(f"{player_info[i-1]} ppg")))
+                if i == 43:
+                    new_row.cells[i] = (ft.DataCell(ft.Text(f"{player_info[i-1]} apg")))
+                if i == 44:
+                    new_row.cells[i] = (ft.DataCell(ft.Text(f"{player_info[i-1]} spg")))
+                if i == 45:
+                    new_row.cells[i] = (ft.DataCell(ft.Text(f"{player_info[i-1]} bpg")))
+                if i == 46:
+                    new_row.cells[i] = (ft.DataCell(ft.Text(f"{player_info[i-1]} rpg")))
+                if i == 47:
+                    new_row.cells[i] = (ft.DataCell(ft.Text(f"{player_info[i-1]} tpg")))
+                if i == 48:
+                    new_row.cells[i] = (ft.DataCell(ft.Text(f"{player_info[i-1]} fg%")))
+                if i == 49:
+                    new_row.cells[i] = (ft.DataCell(ft.Text(f"{player_info[i-1]} 3pt%")))
+                
+                if  i > 0 and i != 6:
+                    new_row.cells.append(ft.DataCell(ft.Text(f"{player_info[i]}")))
+                 #NOTE TO SELF. MIGHT NEED TO ADD THIS FOR THE ATTRIBUTE AND PERCENTS IN FUTURE 
+                
                     # AS WELL AS ADD STACK IN ORDER TO SEE THE SPECIFIC COLUMN NAMES WHILE SCROLLING 
             new_row.cells.append(ft.DataCell(ft.CupertinoCheckbox()))
             Player_search.table.rows.append(new_row)
@@ -344,7 +504,7 @@ def main(page: ft.Page):
             for i in range(len(Player_search.table.rows)):
                 Player_search.table.rows.pop()
                 page.update()
-                time.sleep(.001)
+                
         
         def add_multiple():
             for i in range(50):
