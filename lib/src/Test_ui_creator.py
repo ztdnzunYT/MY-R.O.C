@@ -45,7 +45,7 @@ def main(page: ft.Page):
                         margin=10,
                         border_radius= 10,
                         border=ft.border.all(2, ft.colors.WHITE24),
-                        bgcolor=ft.colors.BLACK12,
+                        bgcolor=ft.colors.BACKGROUND,
                         alignment=ft.alignment.top_center,
                         content=ft.Container(
                             ft.Column(
@@ -184,10 +184,10 @@ def main(page: ft.Page):
                 width=page.window_width,
                 height=page.window_height,
                 margin=5,
-                border_radius=10,
-                border=ft.border.all(2, ft.colors.WHITE24),
+                
+                
                 alignment=ft.alignment.center,
-                bgcolor=ft.colors.BLACK12,
+                bgcolor=ft.colors.TRANSPARENT,
                 
                 content=ft.Row([
                     ft.Tabs(
@@ -197,7 +197,7 @@ def main(page: ft.Page):
                         height=page.window_height -50,
                         width=page.window_width -200,
                         selected_index = 0,
-                        animation_duration=300,
+                        animation_duration=400,
                         expand=True,
 
                         tabs=[
@@ -212,74 +212,88 @@ def main(page: ft.Page):
                                     content=ft.Row([
                                         ft.Column([
                                             ft.Container(
-                                                height=50,
-                                                bgcolor=ft.colors.WHITE54,
+                                                padding=10,
+                                                bgcolor=ft.colors.WHITE38,
                                                 alignment=ft.alignment.center,
                                                 margin=10,
                                                 border_radius=5,
-                                                expand=True),
-                                                
+                                                expand=True,
+                                                ink=True,
+                                                on_click=lambda _: page.go("/Sim Game"),
+                                                content=ft.Text("SIM GAME",size=60,color=ft.colors.WHITE,weight=ft.FontWeight.BOLD,expand=False,text_align=ft.TextAlign.CENTER,italic=True,max_lines=3),
+                                                ),
                                             ft.Container(
-                                                height=50,
-                                                bgcolor=ft.colors.WHITE54,
+                                                padding=10,
+                                                bgcolor=ft.colors.WHITE38,
                                                 alignment=ft.alignment.center,
                                                 margin=10,
                                                 border_radius=5,
-                                                expand=True),
-
+                                                expand=True,
+                                                ink=True,
+                                                on_click=lambda _: page.go("/Online PvP"),
+                                                content=ft.Text("ONLINE PVP",size=60,color=ft.colors.WHITE,weight=ft.FontWeight.BOLD,expand=False,text_align=ft.TextAlign.CENTER,italic=True,max_lines=3),
+                                                ),
                                             ft.Container(
-                                                height=50,
-                                                bgcolor=ft.colors.WHITE54,
+                                                padding=10,
+                                                bgcolor=ft.colors.WHITE38,
                                                 alignment=ft.alignment.center,
                                                 margin=10,
                                                 border_radius=5,
-                                                expand=True)
-                                        ],alignment=ft.alignment.center,spacing=10,expand=True),
+                                                expand=True,
+                                                ink=True,
+                                                on_click=lambda e: print("Clickable with Ink clicked!"),
+                                                content=ft.Text("MY SEASON",size=60,color=ft.colors.WHITE,weight=ft.FontWeight.BOLD,expand=False,text_align=ft.TextAlign.CENTER,italic=True,max_lines=3),
+                                                ),
+                                        ],alignment=ft.MainAxisAlignment.CENTER,spacing=10,expand=True),
                                         
                                         ft.Column([
 
-                                            ft.Container(width=page.window_width,
-                                                height=200,
-                                                bgcolor=ft.colors.WHITE54,
-                                                alignment=ft.alignment.center,
+                                            ft.Container(
+                                                width=page.window_width,  
+                                                height = page.window_height/2.5,
+                                                padding=10,
+                                                bgcolor=ft.colors.WHITE38,
+                                                alignment=ft.alignment.top_center,
                                                 margin=10,
                                                 border_radius=5,
-                                                expand=True),
+                                                expand=True,
+                                                content=ft.Column([
+                                                ft.Container(
+                                                    bgcolor=ft.colors.TRANSPARENT,
+                                                    alignment=ft.alignment.center,
+                                                    content=ft.Text(
+                                                    "SOCIAL MEDIA",
+                                                    size=20,
+                                                    text_align=ft.TextAlign.CENTER,
+                                                    weight=ft.FontWeight.BOLD,
+                                                    color=ft.colors.WHITE,
+                                                    italic=True,
+                                                    ),
+                                                ),
+                                                ft.Container(
+                                                    bgcolor=ft.colors.WHITE10,
+                                                    expand=True,
+                                                    margin=5,
+                                                    border_radius=10
+                                                    )
+                                                ],alignment=ft.CrossAxisAlignment.CENTER)
+                                                ),
                                                 
                                         ft.Container(width=page.window_width,
-                                                height = page.window_height/3,
-                                                bgcolor=ft.colors.WHITE54,
+                                                height = page.window_height/4,
+                                                bgcolor=ft.colors.WHITE38,
                                                 alignment=ft.alignment.center,
                                                 margin=10,
                                                 border_radius=5,
                                                 expand=True),
-                                        ],expand=True,spacing=5,alignment=ft.alignment.center_left)
-                                    ],alignment=ft.alignment.center_left,expand=True,spacing=5)
+                                        ],expand=True,spacing=5,alignment=ft.alignment.center)
+                                    ],alignment=ft.alignment.center,expand=True,spacing=5),
                                 )
                             ),
-                            ft.Tab(
-                                text="MY R.O.C",
-                                tab_content=ft.Text("MY R.O.C",size=20),
-                                content=ft.Text("MY R.O.C")
-                            ),
-                            ft.Tab(
-                                text="ROSTER",
-                                tab_content=ft.Text("ROSTER",size=20),
-                                content=ft.Text("ROSTER")
-                            ),
-                            ft.Tab(
-                                text="STATS",
-                                tab_content=ft.Text("STATS",size=20),
-                                content=ft.Text("STATS")
-                            ),
-                            ft.Tab(
-                                text="SETTINGS",
-                                tab_content=ft.Text("SETTINGS",size=20),
-                                content=ft.Text("SETTINGS")
-                            )]
+                    
+                            ]
                             ,)]) ,expand=True
                             )
-                            
                     
             
 
