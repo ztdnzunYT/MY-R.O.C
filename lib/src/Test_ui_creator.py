@@ -4,17 +4,25 @@ from Player_database_reset_manager import database_manager as Dbm
 from Player_db_creator import create_all_tables
 from Player_creator import run as pc_run 
 import random
-
-
 import time
 
 
 def main(page: ft.Page):
     
     page.title = "MY R.O.C MANAGER"
+    page.horizontal_alignment = ft.MainAxisAlignment.CENTER
     page.vertical_alignment = ft.MainAxisAlignment.CENTER
-    page.horizontal_alignment = ft.CrossAxisAlignment.CENTER
     page.window_frameless = False
+    page.window_width=1000
+    page.window_min_height=600
+    page.window_min_width=850
+    page.window_center()
+   
+  
+   
+    
+    
+    
 
 
 
@@ -220,7 +228,7 @@ def main(page: ft.Page):
                                                 expand=True,
                                                 ink=True,
                                                 on_click=lambda _: page.go("/Sim Game"),
-                                                content=ft.Text("SIM GAME",size=60,color=ft.colors.WHITE,weight=ft.FontWeight.BOLD,expand=False,text_align=ft.TextAlign.CENTER,italic=True,max_lines=3),
+                                                content=ft.Text("SIM GAME",size=40,color=ft.colors.WHITE,weight=ft.FontWeight.BOLD,expand=False,text_align=ft.TextAlign.CENTER,italic=True,max_lines=3),
                                                 ),
                                             ft.Container(
                                                 padding=10,
@@ -231,7 +239,7 @@ def main(page: ft.Page):
                                                 expand=True,
                                                 ink=True,
                                                 on_click=lambda _: page.go("/Online PvP"),
-                                                content=ft.Text("ONLINE PVP",size=60,color=ft.colors.WHITE,weight=ft.FontWeight.BOLD,expand=False,text_align=ft.TextAlign.CENTER,italic=True,max_lines=3),
+                                                content=ft.Text("ONLINE PVP",size=40,color=ft.colors.WHITE,weight=ft.FontWeight.BOLD,expand=False,text_align=ft.TextAlign.CENTER,italic=True,max_lines=3),
                                                 ),
                                             ft.Container(
                                                 padding=10,
@@ -242,7 +250,7 @@ def main(page: ft.Page):
                                                 expand=True,
                                                 ink=True,
                                                 on_click=lambda e: print("Clickable with Ink clicked!"),
-                                                content=ft.Text("MY SEASON",size=60,color=ft.colors.WHITE,weight=ft.FontWeight.BOLD,expand=False,text_align=ft.TextAlign.CENTER,italic=True,max_lines=3),
+                                                content=ft.Text("MY SEASON",size=40,color=ft.colors.WHITE,weight=ft.FontWeight.BOLD,expand=False,text_align=ft.TextAlign.CENTER,italic=True,max_lines=3),
                                                 ),
                                         ],alignment=ft.MainAxisAlignment.CENTER,spacing=10,expand=True),
                                         
@@ -286,6 +294,7 @@ def main(page: ft.Page):
                                                 margin=10,
                                                 border_radius=5,
                                                 expand=True),
+                                                
                                         ],expand=True,spacing=5,alignment=ft.alignment.center)
                                     ],alignment=ft.alignment.center,expand=True,spacing=5),
                                 )
@@ -526,7 +535,7 @@ def main(page: ft.Page):
 
         def player_search_menu():  
             print(f"{page.route} Menu item clicked")
-            Player_search.table.rows.clear()
+            Player_search.table.rows.clear() #Deletes all of player search 
            
 
             return ft.Container(
@@ -546,8 +555,8 @@ def main(page: ft.Page):
                             [
                                 ft.Column(
                                     [Player_search.table,
-                                    ft.FilledTonalButton(text="Delete players",on_click=lambda e: Player_search.delete_player()),
-                                    ft.FilledTonalButton(text="Add player",on_click=lambda e: Player_search.add_multiple())],
+                                    ft.FilledTonalButton(text="Clear search",on_click=lambda e: Player_search.delete_player()),
+                                    ft.FilledTonalButton(text="Search players",on_click=lambda e: Player_search.add_multiple())],
                                     scroll=ft.ScrollMode.AUTO,alignment=ft.alignment.center,on_scroll_interval=.1
                                 ),
                             ],
@@ -626,8 +635,9 @@ def main(page: ft.Page):
 
 
     def route_change(route):
-        page.update
+        page.drawer = False
         page.views.clear()
+       
         page.views.append(
 
         ft.View(
