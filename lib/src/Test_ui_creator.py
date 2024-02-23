@@ -192,7 +192,8 @@ def main(page: ft.Page):
                 width=page.window_width,
                 height=page.window_height,
                 margin=5,
-                
+                border_radius=10,
+                border=ft.border.all(2, ft.colors.WHITE24),
                 
                 alignment=ft.alignment.center,
                 bgcolor=ft.colors.TRANSPARENT,
