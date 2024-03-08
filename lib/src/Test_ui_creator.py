@@ -14,6 +14,11 @@ def main(page: ft.Page):
     page.title = "MY R.O.C MANAGER"
     page.vertical_alignment = ft.MainAxisAlignment.CENTER
     page.horizontal_alignment = ft.CrossAxisAlignment.CENTER
+    page.window_min_height=660
+    page.window_min_width=1000
+    page.window_width=1000
+    page.window_height=660
+    print(page.width,page.height)
     page.window_frameless = False
 
 
@@ -26,7 +31,10 @@ def main(page: ft.Page):
             create_all_tables()
             print("Database info reset")
             pc_run()
+
             return page.go("/Dashboard")
+        
+            
             
         
         def load_management():
@@ -186,10 +194,8 @@ def main(page: ft.Page):
                 margin=5,
                 border_radius=10,
                 border=ft.border.all(2, ft.colors.WHITE24),
-                
                 alignment=ft.alignment.center,
                 bgcolor=ft.colors.TRANSPARENT,
-                
                 content=ft.Row([
                     ft.Tabs(
                         unselected_label_color=ft.colors.WHITE54, 
@@ -216,34 +222,34 @@ def main(page: ft.Page):
                                                 padding=10,
                                                 bgcolor=ft.colors.WHITE38,
                                                 alignment=ft.alignment.center,
-                                                margin=10,
+                                                margin=5,
                                                 border_radius=5,
                                                 expand=True,
                                                 ink=True,
                                                 on_click=lambda _: page.go("/Sim Game"),
-                                                content=ft.Text("SIM GAME",size=60,color=ft.colors.WHITE,weight=ft.FontWeight.BOLD,expand=False,text_align=ft.TextAlign.CENTER,italic=True,max_lines=3),
+                                                content=ft.Text("SIM GAME",size=50,color=ft.colors.WHITE,weight=ft.FontWeight.BOLD,expand=False,text_align=ft.TextAlign.CENTER,italic=True,max_lines=3),
                                                 ),
                                             ft.Container(
                                                 padding=10,
                                                 bgcolor=ft.colors.WHITE38,
                                                 alignment=ft.alignment.center,
-                                                margin=10,
+                                                margin=5,
                                                 border_radius=5,
                                                 expand=True,
                                                 ink=True,
                                                 on_click=lambda _: page.go("/Online PvP"),
-                                                content=ft.Text("ONLINE PVP",size=60,color=ft.colors.WHITE,weight=ft.FontWeight.BOLD,expand=False,text_align=ft.TextAlign.CENTER,italic=True,max_lines=3),
+                                                content=ft.Text("ONLINE PVP",size=50,color=ft.colors.WHITE,weight=ft.FontWeight.BOLD,expand=False,text_align=ft.TextAlign.CENTER,italic=True,max_lines=3),
                                                 ),
                                             ft.Container(
                                                 padding=10,
                                                 bgcolor=ft.colors.WHITE38,
                                                 alignment=ft.alignment.center,
-                                                margin=10,
+                                                margin=5,
                                                 border_radius=5,
                                                 expand=True,
                                                 ink=True,
                                                 on_click=lambda e: print("Clickable with Ink clicked!"),
-                                                content=ft.Text("MY SEASON",size=60,color=ft.colors.WHITE,weight=ft.FontWeight.BOLD,expand=False,text_align=ft.TextAlign.CENTER,italic=True,max_lines=3),
+                                                content=ft.Text("MY SEASON",size=50,color=ft.colors.WHITE,weight=ft.FontWeight.BOLD,expand=False,text_align=ft.TextAlign.CENTER,italic=True,max_lines=3),
                                                 ),
                                         ],alignment=ft.MainAxisAlignment.CENTER,spacing=10,expand=True),
                                         
@@ -255,7 +261,7 @@ def main(page: ft.Page):
                                                 padding=10,
                                                 bgcolor=ft.colors.WHITE38,
                                                 alignment=ft.alignment.top_center,
-                                                margin=10,
+                                                margin=5,
                                                 border_radius=5,
                                                 expand=True,
                                                 content=ft.Column([
@@ -272,21 +278,22 @@ def main(page: ft.Page):
                                                     ),
                                                 ),
                                                 ft.Container(
-                                                    bgcolor=ft.colors.WHITE10,
+                                                    bgcolor=ft.colors.TRANSPARENT,
                                                     expand=True,
-                                                    margin=5,
-                                                    border_radius=10
+                                                    margin=2,
+                                                    border_radius=5,
+                                                    border=ft.border.all(2, color=ft.colors.WHITE24),
                                                     )
                                                 ],alignment=ft.CrossAxisAlignment.CENTER)
                                                 ),
                                                 
                                         ft.Container(width=page.window_width,
-                                                height = page.window_height/4,
+                                                height = page.window_height/5,
                                                 bgcolor=ft.colors.WHITE38,
                                                 alignment=ft.alignment.center,
-                                                margin=10,
+                                                margin=5,
                                                 border_radius=5,
-                                                expand=True),
+                                                expand=False),
                                         ],expand=True,spacing=5,alignment=ft.alignment.center)
                                     ],alignment=ft.alignment.center,expand=True,spacing=5),
                                 )
@@ -304,18 +311,119 @@ def main(page: ft.Page):
             return ft.Container(
                 width=page.window_width,
                 height=page.window_height,
-                margin=5,
+                margin=10,
                 border_radius=10,
                 border=ft.border.all(2, ft.colors.WHITE24),
                 alignment=ft.alignment.center,
                 bgcolor=ft.colors.BLACK12,
-                content=(ft.Text(
-                    "Sim Game",
-                    size=50,
-                    color=ft.colors.with_opacity(0.5,ft.colors.WHITE),
-                    weight=ft.FontWeight.BOLD,
-                    text_align=ft.TextAlign.CENTER,
-                    )),
+                content=(
+                    ft.Row(
+                    [
+                        ft.Container(
+                            width=page.window_width,
+                            height=page.window_height,
+                            margin=20,
+                            border_radius=5,
+                            bgcolor=ft.colors.WHITE38,
+                            alignment=ft.alignment.top_center,
+                            content=(
+                                ft.Column(
+                                    [
+
+                                    ft.Row([
+                                        ft.Container(
+                                            alignment=ft.alignment.center,
+                                            bgcolor=ft.colors.BLACK38,
+                                            width=100,
+                                            height=30,
+                                            margin=ft.margin.only(top=15),
+                                            border_radius=2,
+                                            content=ft.Container(
+                                                ft.Row([
+                                                    ft.Text("10",text_align=ft.TextAlign.CENTER,weight=ft.FontWeight.W_500,color=ft.colors.RED),
+                                                    ft.VerticalDivider(
+                                                        thickness=2,
+                                                        opacity=.5,
+                                                        color=ft.colors.WHITE,
+                                                    ),
+                                                    ft.Text("21",text_align=ft.TextAlign.CENTER,weight=ft.FontWeight.W_500,color=ft.colors.GREEN_ACCENT),
+                                                ],alignment=ft.MainAxisAlignment.CENTER)
+                                            )
+                                            ),  
+                                        ],vertical_alignment=ft.alignment.center,alignment=ft.MainAxisAlignment.CENTER
+                                        ),
+
+                                        ft.Container(
+                                            width=page.window_width,
+                                            height=page.window_height/2.8,
+                                            border_radius=2,
+                                            margin=ft.margin.only(top=5,bottom=-5,right=30,left=30),
+                                            bgcolor=ft.colors.AMBER,
+                                            alignment=ft.alignment.top_center
+                                        ),  
+
+                                    ft.Row([
+                                        ft.Slider(min=0,max=100,divisions=4,width=300,active_color=ft.colors.WHITE60,label="Gamespeed: {value}%")
+                                    ],alignment=ft.MainAxisAlignment.CENTER),
+
+
+                                    ft.Row([
+                                        ft.SegmentedButton(
+                                            selected={"1"},
+                                            selected_icon=ft.Icon(ft.icons.ARROW_RIGHT_ROUNDED),
+                                            style=ft.ButtonStyle(bgcolor=ft.colors.BLACK38,padding=20,color=ft.colors.WHITE,side=ft.border.all(1,ft.colors.BLACK)),
+                                            allow_multiple_selection=False,
+                                         
+                                            segments=[
+                                                ft.Segment(
+                                                    value="1",
+                                                    label=ft.Text("Play style 1"),
+                                                    ),
+                                                ft.Segment(
+                                                    value="2",
+                                                    label=ft.Text("Play style 2"),
+                                                    ),
+                                                ft.Segment(                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+                                                    value="3",
+                                                    label=ft.Text("Play style 3"),
+                                                    ),
+                                                ],
+                                            )
+                                    ],alignment=ft.MainAxisAlignment.CENTER)
+
+
+
+
+                                    ],horizontal_alignment=ft.alignment.center) 
+                                ),
+
+                            expand=True
+                        ),
+
+                        ft.Container(
+                            width=page.window_width/3.7,
+                            height=page.window_height,
+                            margin= ft.margin.only(left=-10,top=20,right=15,bottom=20),
+                            border_radius=5,
+                            bgcolor=ft.colors.WHITE38,
+                            alignment=ft.alignment.center,
+                            content=ft.Container(
+                                width=page.width,
+                                height=page.height,
+                                margin=10,
+                                bgcolor=ft.colors.BLACK38,
+                                content=ft.Container(
+                                    ft.ListView(expand=1, spacing=10, padding=20, auto_scroll=True),
+                                )
+                            )
+                        ),
+
+                    ], alignment=ft.MainAxisAlignment.CENTER,
+                
+                    )
+                    
+                    
+                    ),
                 expand=True)
         
     class The_Roc():

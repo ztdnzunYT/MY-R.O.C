@@ -1,234 +1,198 @@
 import flet as ft
 
+class State:
+    toggle = True
+
+s = State()
+
 def main(page: ft.Page):
+    data_1 = [
+        ft.LineChartData(
+            data_points=[
+                ft.LineChartDataPoint(1, 1),
+                ft.LineChartDataPoint(3, 1.5),
+                ft.LineChartDataPoint(5, 1.4),
+                ft.LineChartDataPoint(7, 3.4),
+                ft.LineChartDataPoint(10, 2),
+                ft.LineChartDataPoint(12, 2.2),
+                ft.LineChartDataPoint(13, 1.8),
+            ],
+            stroke_width=8,
+            color=ft.colors.LIGHT_GREEN,
+            curved=True,
+            stroke_cap_round=True,
+        ),
+        ft.LineChartData(
+            data_points=[
+                ft.LineChartDataPoint(1, 1),
+                ft.LineChartDataPoint(3, 2.8),
+                ft.LineChartDataPoint(7, 1.2),
+                ft.LineChartDataPoint(10, 2.8),
+                ft.LineChartDataPoint(12, 2.6),
+                ft.LineChartDataPoint(13, 3.9),
+            ],
+            color=ft.colors.PINK,
+            below_line_bgcolor=ft.colors.with_opacity(0, ft.colors.PINK),
+            stroke_width=8,
+            curved=True,
+            stroke_cap_round=True,
+        ),
+        ft.LineChartData(
+            data_points=[
+                ft.LineChartDataPoint(1, 2.8),
+                ft.LineChartDataPoint(3, 1.9),
+                ft.LineChartDataPoint(6, 3),
+                ft.LineChartDataPoint(10, 1.3),
+                ft.LineChartDataPoint(13, 2.5),
+            ],
+            color=ft.colors.CYAN,
+            stroke_width=8,
+            curved=True,
+            stroke_cap_round=True,
+        ),
+    ]
 
-    class Main_menu():
-        def side_menu():
-            return ft.Row(
-                [
-                    ft.Container(  
-                        expand=False,
-                        width=110,
-                        height=page.window_height,
-                        margin=10,
-                        border_radius= 10,
-                        border=ft.border.all(2, ft.colors.WHITE24),
-                        bgcolor=ft.colors.BLACK12,
-                        alignment=ft.alignment.top_center,
-                        content=ft.Container(
-                            ft.Column(
-                                alignment=ft.alignment.center,
-                                scroll=ft.ScrollMode.AUTO,
-                                controls=
-                            [
-                                ft.IconButton(
-                                    icon=ft.icons.SPACE_DASHBOARD,
-                                    icon_color=ft.colors.WHITE60, 
-                                    icon_size=50,
-                                    tooltip="Dashboard",
-                                    on_click=lambda _: page.go("/Dashboard"),
-                                ), 
-                                ft.IconButton(
-                                    icon=ft.icons.SCOREBOARD,
-                                    icon_color=ft.colors.WHITE60,
-                                    icon_size=50,
-                                    tooltip="Sim Game",
-                                    on_click=lambda _: page.go("/Sim Game")
-                                ),
-                                ft.IconButton(
-                                    icon=ft.icons.CONNECT_WITHOUT_CONTACT,
-                                    icon_color=ft.colors.WHITE60,
-                                    icon_size=50,
-                                    tooltip="Online PVP",
-                                    on_click=lambda _: page.go("/Online PvP")
-                                ),
-                                ft.IconButton(
-                                    icon = ft.icons.SPORTS_BASKETBALL,
-                                    icon_color=ft.colors.WHITE60,
-                                    icon_size=45,
-                                    tooltip="The R.O.C",
-                                    on_click=lambda _: page.go("/The Roc")
-                                ),
-                                ft.IconButton(
-                                    icon=ft.icons.PERSON_SEARCH_ROUNDED,
-                                    icon_color=ft.colors.WHITE60,
-                                    icon_size=50,
-                                    tooltip="Player Search",
-                                    on_click=lambda _: page.go("/Player Search")
-                                ),
-                                ft.IconButton(
-                                    icon=ft.icons.MANAGE_ACCOUNTS,
-                                    icon_color=ft.colors.WHITE60,
-                                    icon_size=50,
-                                    tooltip="My R.O.C Team",
-                                    on_click=lambda _: page.go("/MY R.O.C Team")
-                                ),
-                                ft.IconButton(
-                                    icon=ft.icons.SETTINGS_SHARP,
-                                    icon_color=ft.colors.WHITE60,
-                                    icon_size=45,
-                                    tooltip="Settings",
-                                    on_click=lambda _: page.go("/Settings")
-                                ),
-                                ft.IconButton(
-                                    icon=ft.icons.LOGIN,
-                                    icon_color=ft.colors.WHITE60,
-                                    icon_size=40,
-                                    tooltip="Logout",
-                                    on_click=lambda _: page.go("/"),
-                                ),
-                                #ACCOUNT_CIRCLE_ROUNDED
-                                #icons.LIST_ALT_ROUNDED
-                            ]), 
-                        margin=10,)
+    data_2 = [
+        ft.LineChartData(
+            data_points=[
+                ft.LineChartDataPoint(1, 1),
+                ft.LineChartDataPoint(3, 4),
+                ft.LineChartDataPoint(5, 1.8),
+                ft.LineChartDataPoint(7, 5),
+                ft.LineChartDataPoint(10, 2),
+                ft.LineChartDataPoint(12, 2.2),
+                ft.LineChartDataPoint(13, 1.8),
+            ],
+            stroke_width=4,
+            color=ft.colors.with_opacity(0.5, ft.colors.LIGHT_GREEN),
+            stroke_cap_round=True,
+        ),
+        ft.LineChartData(
+            data_points=[
+                ft.LineChartDataPoint(1, 1),
+                ft.LineChartDataPoint(3, 2.8),
+                ft.LineChartDataPoint(7, 1.2),
+                ft.LineChartDataPoint(10, 2.8),
+                ft.LineChartDataPoint(12, 2.6),
+                ft.LineChartDataPoint(13, 3.9),
+            ],
+            color=ft.colors.with_opacity(0.5, ft.colors.PINK),
+            below_line_bgcolor=ft.colors.with_opacity(0.2, ft.colors.PINK),
+            stroke_width=4,
+            curved=True,
+            stroke_cap_round=True,
+        ),
+        ft.LineChartData(
+            data_points=[
+                ft.LineChartDataPoint(1, 3.8),
+                ft.LineChartDataPoint(3, 1.9),
+                ft.LineChartDataPoint(6, 5),
+                ft.LineChartDataPoint(10, 3.3),
+                ft.LineChartDataPoint(13, 4.5),
+            ],
+            color=ft.colors.with_opacity(0.5, ft.colors.CYAN),
+            stroke_width=4,
+            stroke_cap_round=True,
+        ),
+    ]
+
+    chart = ft.LineChart(
+        data_series=data_1,
+        border=ft.Border(
+            bottom=ft.BorderSide(4, ft.colors.with_opacity(0.5, ft.colors.ON_SURFACE))
+        ),
+        left_axis=ft.ChartAxis(
+            labels=[
+                ft.ChartAxisLabel(
+                    value=1,
+                    label=ft.Text("1m", size=14, weight=ft.FontWeight.BOLD),
+                ),
+                ft.ChartAxisLabel(
+                    value=2,
+                    label=ft.Text("2m", size=14, weight=ft.FontWeight.BOLD),
+                ),
+                ft.ChartAxisLabel(
+                    value=3,
+                    label=ft.Text("3m", size=14, weight=ft.FontWeight.BOLD),
+                ),
+                ft.ChartAxisLabel(
+                    value=4,
+                    label=ft.Text("4m", size=14, weight=ft.FontWeight.BOLD),
+                ),
+                ft.ChartAxisLabel(
+                    value=5,
+                    label=ft.Text("5m", size=14, weight=ft.FontWeight.BOLD),
+                ),
+                ft.ChartAxisLabel(
+                    value=6,
+                    label=ft.Text("6m", size=14, weight=ft.FontWeight.BOLD),
+                ),
+            ],
+            labels_size=40,
+        ),
+        bottom_axis=ft.ChartAxis(
+            labels=[
+                ft.ChartAxisLabel(
+                    value=2,
+                    label=ft.Container(
+                        ft.Text(
+                            "SEP",
+                            size=16,
+                            weight=ft.FontWeight.BOLD,
+                            color=ft.colors.with_opacity(0.5, ft.colors.ON_SURFACE),
+                        ),
+                        margin=ft.margin.only(top=10),
                     ),
-                ],
-                expand=False     
-                )
+                ),
+                ft.ChartAxisLabel(
+                    value=7,
+                    label=ft.Container(
+                        ft.Text(
+                            "OCT",
+                            size=16,
+                            weight=ft.FontWeight.BOLD,
+                            color=ft.colors.with_opacity(0.5, ft.colors.ON_SURFACE),
+                        ),
+                        margin=ft.margin.only(top=10),
+                    ),
+                ),
+                ft.ChartAxisLabel(
+                    value=12,
+                    label=ft.Container(
+                        ft.Text(
+                            "DEC",
+                            size=16,
+                            weight=ft.FontWeight.BOLD,
+                            color=ft.colors.with_opacity(0.5, ft.colors.ON_SURFACE),
+                        ),
+                        margin=ft.margin.only(top=10),
+                    ),
+                ),
+            ],
+            labels_size=32,
+        ),
+        tooltip_bgcolor=ft.colors.with_opacity(0.8, ft.colors.BLUE_GREY),
+        min_y=0,
+        max_y=4,
+        min_x=0,
+        max_x=14,
+        # animate=5000,
+        expand=True,
+    )
 
-    class Dashboard():
-        def dashboard():
-            print(f"{page.route} Menu item clicked")
-            return ft.Container(
-                width=page.window_width,
-                height=page.window_height,
-                margin=5,
-                border_radius=10,
-                border=ft.border.all(2, ft.colors.WHITE24),
-                alignment=ft.alignment.center,
-                bgcolor=ft.colors.TRANSPARENT,
-                
-                content=ft.Row([
-                    ft.Tabs(
-                        unselected_label_color=ft.colors.WHITE54, 
-                        label_color=ft.colors.WHITE,
-                        indicator_color=ft.colors.WHITE,
-                        height=page.window_height -50,
-                        width=page.window_width -200,
-                        selected_index = 0,
-                        animation_duration=300,
-                        expand=True,
+    def toggle_data(e):
+        if s.toggle:
+            chart.data_series = data_2
+            chart.data_series[2].point = True
+            chart.max_y = 6
+            chart.interactive = False
+        else:
+            chart.data_series = data_1
+            chart.max_y = 4
+            chart.interactive = True
+        s.toggle = not s.toggle
+        chart.update()
 
-                        tabs=[
-                            ft.Tab(
-                                text="HOME",
-                                tab_content=ft.Text("HOME",size=20),
-                                content=ft.Container(
-                                    alignment=ft.alignment.center,
-                                    margin=20,
-                                    border_radius=15,
-                                    expand=False,
-                                    content=ft.Row([
-                                        ft.Column([
-                                            ft.Container(
-                                                padding=10,
-                                                bgcolor=ft.colors.WHITE38,
-                                                alignment=ft.alignment.center,
-                                                margin=10,
-                                                border_radius=5,
-                                                expand=True,
-                                                ink=True,
-                                                on_click=lambda e: print("Clickable with Ink clicked!"),
-                                                content=ft.Text("QUICK GAME",size=60,color=ft.colors.WHITE,weight=ft.FontWeight.BOLD,expand=False,text_align=ft.TextAlign.CENTER,italic=True,max_lines=3),
-                                                ),
-                                            ft.Container(
-                                                padding=10,
-                                                bgcolor=ft.colors.WHITE38,
-                                                alignment=ft.alignment.center,
-                                                margin=10,
-                                                border_radius=5,
-                                                expand=True,
-                                                ink=True,
-                                                on_click=lambda e: print("Clickable with Ink clicked!"),
-                                                content=ft.Text("ONLINE PVP",size=60,color=ft.colors.WHITE,weight=ft.FontWeight.BOLD,expand=False,text_align=ft.TextAlign.CENTER,italic=True,max_lines=3),
-                                                ),
-                                            ft.Container(
-                                                padding=10,
-                                                bgcolor=ft.colors.WHITE38,
-                                                alignment=ft.alignment.center,
-                                                margin=10,
-                                                border_radius=5,
-                                                expand=True,
-                                                ink=True,
-                                                on_click=lambda e: print("Clickable with Ink clicked!"),
-                                                content=ft.Text("MY SEASON",size=60,color=ft.colors.WHITE,weight=ft.FontWeight.BOLD,expand=False,text_align=ft.TextAlign.CENTER,italic=True,max_lines=3),
-                                                ),
-                                        ],alignment=ft.MainAxisAlignment.CENTER,spacing=10,expand=True),
-                                        
-                                        ft.Column([
+    page.add(ft.IconButton(ft.icons.REFRESH, on_click=toggle_data), chart)
 
-                                            ft.Container(
-                                                width=page.window_width,  
-                                                height = page.window_height/2.5,
-                                                padding=10,
-                                                bgcolor=ft.colors.WHITE38,
-                                                alignment=ft.alignment.top_center,
-                                                margin=10,
-                                                border_radius=5,
-                                                expand=True,
-                                                content=ft.Column([
-                                                ft.Container(
-                                                    bgcolor=ft.colors.TRANSPARENT,
-                                                    alignment=ft.alignment.center,
-                                                    content=ft.Text(
-                                                    "SOCIAL MEDIA",
-                                                    size=20,
-                                                    text_align=ft.TextAlign.CENTER,
-                                                    weight=ft.FontWeight.BOLD,
-                                                    color=ft.colors.WHITE,
-                                                    italic=True,
-                                                    ),
-                                                ),
-                                                ft.Container(
-                                                    bgcolor=ft.colors.WHITE10,
-                                                    expand=True,
-                                                    margin=5,
-                                                    border_radius=10
-                                                    )
-                                                ],alignment=ft.CrossAxisAlignment.CENTER)
-                                                ),
-                                                
-                                        ft.Container(width=page.window_width,
-                                                height = page.window_height/4,
-                                                bgcolor=ft.colors.WHITE38,
-                                                alignment=ft.alignment.center,
-                                                margin=10,
-                                                border_radius=5,
-                                                expand=True),
-                                        ],expand=True,spacing=5,alignment=ft.alignment.center)
-                                    ],alignment=ft.alignment.center,expand=True,spacing=5),
-                                )
-                            ),
-                            ft.Tab(
-                                text="MY R.O.C",
-                                tab_content=ft.Text("THE R.O.C",size=20),
-                                content=ft.Text("MY R.O.C")
-                            ),
-                            ft.Tab(
-                                text="ROSTER",
-                                tab_content=ft.Text("ROSTER",size=20),
-                                content=ft.Text("ROSTER")
-                            ),
-                            ft.Tab(
-                                text="STATS",
-                                tab_content=ft.Text("STATS",size=20),
-                                content=ft.Text("STATS")
-                            ),
-                            ft.Tab(
-                                text="SETTINGS",
-                                tab_content=ft.Text("SETTINGS",size=20),
-                                content=ft.Text("SETTINGS")
-                            ),
-                            ft.Tab(
-                                text="ACCOUNT",
-                                tab_content=ft.Text("ACCOUNT",size=20),
-                                content=ft.Text("ACCOUNT")
-                            ),]
-                            ,)]) ,expand=True
-                            )
-                            
-                
-
-    page.add(Dashboard.dashboard())
-
-ft.app(target=main)
+ft.app(main)
