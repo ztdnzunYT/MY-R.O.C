@@ -1,20 +1,17 @@
-import random
-import time
+import flet as ft
 
 
-"""
+def main(page: ft.Page):
+    page.title = "Text button with 'click' event"
 
-class Game_sim:
-    curr_play = "" 
-    x = "PG"
-    y = "Dave"
-    z = "Pivots"
-    ran = 0
+    def button_clicked(e):
+        b.data += 1
+        t.value = f"Button clicked {b.data} time(s)"
+        page.update()
 
-    def new_entry():
-        Game_sim.curr_play = f"new entry number: {(random.randint(0,9))}"
-        
+    b = ft.TextButton("Button with 'click' event", on_click=button_clicked, data=0)
+    t = ft.Text()
 
+    page.add(b, t)
 
-Game_sim.curr_play = (f"{Game_sim.x} {Game_sim.y} {Game_sim.z} shot a three point shot and missed")
-"""
+ft.app(target=main)
