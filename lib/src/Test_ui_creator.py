@@ -1,15 +1,13 @@
 import flet as ft
+import random
+import time
 import Player_database_connector as pdc
 from Player_database_reset_manager import database_manager as Dbm
 from Player_db_creator import create_all_tables
 from Player_creator import run as pc_run 
+from Test_simgame import Game_sim, Game_stats, start_sim
 
 
-
-
-
-import random
-import time
 
 
 def main(page: ft.Page):
@@ -37,7 +35,6 @@ def main(page: ft.Page):
             print("Database info reset")
             pc_run()
             return page.go("/Dashboard")
-        
         def load_management():
             return page.go("/dashboard")
         
@@ -310,15 +307,17 @@ def main(page: ft.Page):
     class Sim_game():
 
         lv = ft.ListView(expand=1, spacing=10, padding=20, auto_scroll=True)
-       
+        play = Game_sim.play_choice
         def new_log_entry():
-            
-           
-            for i in range(60):
+            for i in range(len(Sim_game.play)):
                 time.sleep(.2)
-                #Sim_game.lv.controls.append(ft.Text(f"{Sim_game.lis[random.randrange(0,len(Sim_game.lis))]}"))
-                Sim_game.lv.controls.append(ft.Text(f"Newline",color=ft.colors.WHITE))
+                Sim_game.lv.controls.append(ft.Text(f"{Sim_game.play[i]}",color=ft.colors.WHITE))
                 page.update()
+            Sim_game.play.clear()
+            start_sim()
+        
+        
+
 
         def sim_game():
             print(f"{page.route} Menu item clicked")
@@ -354,13 +353,13 @@ def main(page: ft.Page):
                                             border_radius=2,
                                             content=ft.Container(
                                                 ft.Row([
-                                                    ft.Text("10",text_align=ft.TextAlign.CENTER,weight=ft.FontWeight.W_500,color=ft.colors.RED),
+                                                    ft.Text(f"{Game_stats.score}",text_align=ft.TextAlign.CENTER,weight=ft.FontWeight.W_500,color=ft.colors.RED),
                                                     ft.VerticalDivider(
                                                         thickness=2,
                                                         opacity=.5,
                                                         color=ft.colors.WHITE,
                                                     ),
-                                                    ft.Text("21",text_align=ft.TextAlign.CENTER,weight=ft.FontWeight.W_500,color=ft.colors.GREEN_ACCENT),
+                                                    ft.Text(f"{Game_stats.ai_score}",text_align=ft.TextAlign.CENTER,weight=ft.FontWeight.W_500,color=ft.colors.GREEN_ACCENT),
                                                 ],alignment=ft.MainAxisAlignment.CENTER)
                                             )
                                             ),  
@@ -459,7 +458,7 @@ def main(page: ft.Page):
                                                 expand=True,
                                                 content=(
                                                     ft.ElevatedButton( text="Start Sim",icon=ft.icons.PLAY_ARROW_ROUNDED, style=ft.ButtonStyle(shape=ft.ContinuousRectangleBorder(radius=30,)
-                                                                    ,padding=15),color=ft.colors.WHITE,bgcolor=ft.colors.WHITE30,on_click=lambda e: Sim_game.new_log_entry() )
+                                                                    ,padding=15),tooltip="Click to start sim",color=ft.colors.WHITE,bgcolor=ft.colors.WHITE30,on_click=lambda e: Sim_game.new_log_entry())
                                                     )
                                                 )
                                             
