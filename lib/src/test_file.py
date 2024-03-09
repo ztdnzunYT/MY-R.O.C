@@ -1,10 +1,20 @@
-import flet as ft
+import random
+import time
 
-def main(page: ft.Page):
-    page.title = "Basic elevated buttons"
-    page.add(
-        ft.ElevatedButton(text="Elevated button",bgcolor=ft.colors.GREY_800,color=ft.colors.WHITE),
-        ft.ElevatedButton("Disabled button", disabled=True,bgcolor=ft.colors.BLACK38),
-    )
 
-ft.app(target=main)
+"""
+
+class Game_sim:
+    curr_play = "" 
+    x = "PG"
+    y = "Dave"
+    z = "Pivots"
+    ran = 0
+
+    def new_entry():
+        Game_sim.curr_play = f"new entry number: {(random.randint(0,9))}"
+        
+
+
+Game_sim.curr_play = (f"{Game_sim.x} {Game_sim.y} {Game_sim.z} shot a three point shot and missed")
+"""

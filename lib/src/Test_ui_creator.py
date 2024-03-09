@@ -3,6 +3,11 @@ import Player_database_connector as pdc
 from Player_database_reset_manager import database_manager as Dbm
 from Player_db_creator import create_all_tables
 from Player_creator import run as pc_run 
+
+
+
+
+
 import random
 import time
 
@@ -13,24 +18,15 @@ def main(page: ft.Page):
     page.horizontal_alignment = ft.MainAxisAlignment.CENTER
     page.vertical_alignment = ft.MainAxisAlignment.CENTER
     page.horizontal_alignment = ft.CrossAxisAlignment.CENTER
-    page.window_min_height=660
-    page.window_min_width=1000
-    page.window_width=1000
-    page.window_height=660
     print(page.width,page.height)
     page.window_frameless = False
-    page.window_width=1000
-    page.window_min_height=600
-    page.window_min_width=850
+    page.window_width=1050
+    page.window_min_height=690
+    page.window_min_width=1000
     page.window_center()
    
   
    
-    
-    
-    
-
-
 
     class new_or_load_management():
 
@@ -40,11 +36,7 @@ def main(page: ft.Page):
             create_all_tables()
             print("Database info reset")
             pc_run()
-
             return page.go("/Dashboard")
-        
-            
-            
         
         def load_management():
             return page.go("/dashboard")
@@ -297,12 +289,13 @@ def main(page: ft.Page):
                                                 ),
                                                 
                                         ft.Container(width=page.window_width,
-                                                height = page.window_height/5,
-                                                bgcolor=ft.colors.WHITE38,
-                                                alignment=ft.alignment.center,
-                                                margin=5,
-                                                border_radius=5,
-                                                expand=False),
+                                            height = page.window_height/5,
+                                            bgcolor=ft.colors.WHITE38,
+                                            alignment=ft.alignment.center,
+                                            margin=5,
+                                            border_radius=5,
+                                            expand=False),
+
                                         ],expand=True,spacing=5,alignment=ft.alignment.center)
                                     ],alignment=ft.alignment.center,expand=True,spacing=5),
                                 )
@@ -315,6 +308,18 @@ def main(page: ft.Page):
             
 
     class Sim_game():
+
+        lv = ft.ListView(expand=1, spacing=10, padding=20, auto_scroll=True)
+       
+        def new_log_entry():
+            
+           
+            for i in range(60):
+                time.sleep(.2)
+                #Sim_game.lv.controls.append(ft.Text(f"{Sim_game.lis[random.randrange(0,len(Sim_game.lis))]}"))
+                Sim_game.lv.controls.append(ft.Text(f"Newline",color=ft.colors.WHITE))
+                page.update()
+
         def sim_game():
             print(f"{page.route} Menu item clicked")
             return ft.Container(
@@ -324,7 +329,7 @@ def main(page: ft.Page):
                 border_radius=10,
                 border=ft.border.all(2, ft.colors.WHITE24),
                 alignment=ft.alignment.center,
-                bgcolor=ft.colors.BLACK12,
+                bgcolor=ft.colors.BACKGROUND,
                 content=(
                     ft.Row(
                     [
@@ -333,7 +338,7 @@ def main(page: ft.Page):
                             height=page.window_height,
                             margin=20,
                             border_radius=5,
-                            bgcolor=ft.colors.WHITE38,
+                            bgcolor=ft.colors.ERROR_CONTAINER,
                             alignment=ft.alignment.top_center,
                             content=(
                                 ft.Column(
@@ -342,7 +347,7 @@ def main(page: ft.Page):
                                     ft.Row([
                                         ft.Container(
                                             alignment=ft.alignment.center,
-                                            bgcolor=ft.colors.BLACK38,
+                                            bgcolor=ft.colors.BLACK26,
                                             width=100,
                                             height=30,
                                             margin=ft.margin.only(top=15),
@@ -364,23 +369,36 @@ def main(page: ft.Page):
 
                                         ft.Container(
                                             width=page.window_width,
-                                            height=page.window_height/2.8,
+                                            height=page.window_height/2.7,
                                             border_radius=2,
-                                            margin=ft.margin.only(top=5,bottom=-5,right=30,left=30),
-                                            bgcolor=ft.colors.AMBER,
-                                            alignment=ft.alignment.top_center
-                                        ),  
+                                            margin=ft.margin.only(top=5,bottom=0,right=30,left=30),
+                                            bgcolor=ft.colors.BACKGROUND,
+                                            border=ft.border.all(2,ft.colors.BLACK26),
+                                            alignment=ft.alignment.center,
+                                            
+                                            content=(
+                                                ft.Image(
+                                                    src="lib\\assets\\icons\\basketball-half-court-parquet-600nw-122537710.png",
+                                                    width=400,
+                                                    height=400,
+                                                    scale=.9,
+                                                    fit=ft.ImageFit.COVER,
+                                                    repeat=ft.ImageRepeat.NO_REPEAT,
+                                                    border_radius=ft.border_radius.all(5),
+                                                )
+                                            )
+                                        ),
 
                                     ft.Row([
-                                        ft.Slider(min=0,max=100,divisions=4,width=300,active_color=ft.colors.WHITE60,label="Gamespeed: {value}%")
+                                        ft.Slider(value=100,min=50,max=150,divisions=4,width=300,active_color=ft.colors.WHITE70,label=" Gamespeed: {value}% ",on_change=lambda e: print(e.control.value))
                                     ],alignment=ft.MainAxisAlignment.CENTER),
 
 
                                     ft.Row([
                                         ft.SegmentedButton(
                                             selected={"1"},
-                                            selected_icon=ft.Icon(ft.icons.ARROW_RIGHT_ROUNDED),
-                                            style=ft.ButtonStyle(bgcolor=ft.colors.BLACK38,padding=20,color=ft.colors.WHITE,side=ft.border.all(1,ft.colors.BLACK)),
+                                            selected_icon=ft.Icon(ft.icons.ARROW_RIGHT_ROUNDED,size=25),
+                                            style=ft.ButtonStyle(bgcolor=ft.colors.BLACK26,padding=13,color=ft.colors.WHITE,side=ft.border.all(1,ft.colors.BLACK)),
                                             allow_multiple_selection=False,
                                          
                                             segments=[
@@ -398,10 +416,57 @@ def main(page: ft.Page):
                                                     ),
                                                 ],
                                             )
-                                    ],alignment=ft.MainAxisAlignment.CENTER)
+                                    ],alignment=ft.MainAxisAlignment.CENTER),
 
+                                    ft.Container(
+                                        width=page.window_width,
+                                        border_radius=10,
+                                        margin=ft.margin.only(top=10,bottom=20,right=30,left=30),
+                                        bgcolor=ft.colors.BLACK26,
+                                        alignment=ft.alignment.center_left,
+                                        expand=True,
+                                        content=(
+                                            ft.Row([
+                                                ft.Container(
+                                                width=page.width,
+                                                height=page.height/3,
+                                                margin=ft.margin.only(top=15,bottom=15,right=5,left=20),
+                                                alignment=ft.alignment.center,
+                                                border_radius=5,
+                                                bgcolor=ft.colors.WHITE24,
+                                                expand=True,
+                                                content=(
+                                                    ft.Column([
+                                                        ft.Row([
+                                                            ft.Text("MY TEAM",text_align=ft.TextAlign.CENTER,weight=ft.FontWeight.BOLD,size=17,color=ft.colors.WHITE,expand=True),
+                                                        ],alignment=ft.MainAxisAlignment.CENTER,expand=True),
+                                                        ft.Divider(color=ft.colors.BLACK38,thickness=2),
+                                                        ft.Row([
+                                                            ft.Text("AI TEAM 1",text_align=ft.TextAlign.CENTER,weight=ft.FontWeight.BOLD,size=17,color=ft.colors.WHITE)
+                                                        ],alignment=ft.MainAxisAlignment.CENTER,expand=True)
 
-
+                                                    ],spacing=0,expand=True,alignment=ft.MainAxisAlignment.CENTER)
+                                                    )
+                                                ),
+                                                ft.VerticalDivider(
+                                                    thickness=3
+                                                ),
+                                                ft.Container(
+                                                height=140,
+                                                margin=ft.margin.only(top=0,bottom=0,right=20,left=0),
+                                                alignment=ft.alignment.center,
+                                                bgcolor=ft.colors.TRANSPARENT,
+                                                expand=True,
+                                                content=(
+                                                    ft.ElevatedButton( text="Start Sim",icon=ft.icons.PLAY_ARROW_ROUNDED, style=ft.ButtonStyle(shape=ft.ContinuousRectangleBorder(radius=30,)
+                                                                    ,padding=15),color=ft.colors.WHITE,bgcolor=ft.colors.WHITE30,on_click=lambda e: Sim_game.new_log_entry() )
+                                                    )
+                                                )
+                                            
+                                            ])
+                                        )
+                                        
+                                    ),  
 
                                     ],horizontal_alignment=ft.alignment.center) 
                                 ),
@@ -410,21 +475,38 @@ def main(page: ft.Page):
                         ),
 
                         ft.Container(
-                            width=page.window_width/3.7,
+                            width=page.window_width/3.6,
                             height=page.window_height,
                             margin= ft.margin.only(left=-10,top=20,right=15,bottom=20),
                             border_radius=5,
                             bgcolor=ft.colors.WHITE38,
                             alignment=ft.alignment.center,
-                            content=ft.Container(
-                                width=page.width,
-                                height=page.height,
-                                margin=10,
-                                bgcolor=ft.colors.BLACK38,
-                                content=ft.Container(
-                                    ft.ListView(expand=1, spacing=10, padding=20, auto_scroll=True),
+                            content=(
+                                
+                                ft.Container(
+                                    width=page.width,
+                                    height=page.height,
+                                    margin=ft.margin.only(top=10,bottom=10,left=15,right=15),
+                                    alignment=ft.alignment.center,
+                                    border=ft.border.all(2,ft.colors.BLACK12),
+                                    bgcolor=ft.colors.BLACK38,
+                                    content=ft.Container(
+                                        ft.Column([
+                                            ft.Row([
+                                                ft.Container(
+                                                    margin=ft.margin.only(top=10,bottom=-10),
+                                                    alignment=ft.alignment.center,
+                                                    content=(
+                                                        ft.Text("GAME LOG",text_align=ft.TextAlign.CENTER,size=15,weight=ft.FontWeight.W_500,color=ft.colors.WHITE)
+                                                    )
+                                                ),
+                                            ],alignment=ft.MainAxisAlignment.CENTER,vertical_alignment=ft.alignment.center),
+                                            ft.Divider(color=ft.colors.BLACK26,thickness=2),
+                                            Sim_game.lv
+                                        ],alignment=ft.MainAxisAlignment.CENTER,horizontal_alignment=ft.alignment.center)
+                                    )
                                 )
-                            )
+                            )    
                         ),
 
                     ], alignment=ft.MainAxisAlignment.CENTER,
@@ -460,19 +542,16 @@ def main(page: ft.Page):
 
     class Player_search():
 
-        
         def player_inserter():
             pdc.mycursor.execute("SELECT * FROM player_hub")
             player_list = pdc.mycursor.fetchall()
             return player_list
-
 
         table = ft.DataTable(
             column_spacing=50,
             data_row_max_height=60,
             show_bottom_border=True,
             show_checkbox_column=False,
-            
             
             columns=[
                 ft.DataColumn(ft.Text(f"Id",text_align=ft.TextAlign.CENTER,weight=ft.FontWeight.BOLD),tooltip="Player row id"),

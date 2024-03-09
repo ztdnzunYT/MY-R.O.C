@@ -1,6 +1,5 @@
 from Player_team_initializer import *
 from Player_database_connector import *
-from simple_colors import*
 import time 
 
 '''
@@ -107,11 +106,11 @@ class Game_stats():
 
 
     def my_team_display_score():
-        print(yellow(f"MY TEAM SCORE : {Game_stats.score} POINTS"))
+        print((f"MY TEAM SCORE : {Game_stats.score} POINTS"))
         print()
 
     def ai_display_score():
-        print(yellow(f"AI SCORE : {Game_stats.ai_score} POINTS"))
+        print((f"AI SCORE : {Game_stats.ai_score} POINTS"))
         print()
 
 
@@ -298,7 +297,7 @@ class Game_sim():
         
         def turnover_ball():
             print()
-            print(black('AI TEAMS BALL',['bold','underlined']))
+            print(('AI TEAMS BALL'))
 
         def play_inside_defense(): 
             pass
@@ -498,7 +497,7 @@ class Game_sim():
         
         def turnover_ball():
             print()
-            print(black('MY TEAMS BALL',['bold','underlined']))
+            print(('MY TEAMS BALL',['bold','underlined']))
 
         def play_inside_defense():
             pass
@@ -520,12 +519,12 @@ class Game_sim():
     
     def gameover():
         if Game_stats.score >= Game_stats.wining_score:
-            print(yellow(f"MY TEAM WON! {Game_stats.score}|{Game_stats.ai_score}"))
-            print(yellow("-----------------"))
+            print((f"MY TEAM WON! {Game_stats.score}|{Game_stats.ai_score}"))
+            print(("-----------------"))
             quit()
         elif Game_stats.ai_score >= Game_stats.wining_score:
-            print(yellow(f"AI TEAM WON! {Game_stats.ai_score}|{Game_stats.score}"))
-            print(yellow("-----------------"))
+            print((f"AI TEAM WON! {Game_stats.ai_score}|{Game_stats.score}"))
+            print(("-----------------"))
             quit()
         else:
             pass
@@ -536,7 +535,7 @@ print("-------------")
 
 
 def ball_first():
-    print(yellow(f"{Game_sim.team_with_ball} : GETS BALL FIRST "))
+    print((f"{Game_sim.team_with_ball} : GETS BALL FIRST "))
     print()
 ball_first()
 
