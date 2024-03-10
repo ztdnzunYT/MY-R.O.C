@@ -639,9 +639,13 @@ class Ai_teams_table_creator():
 
   
 def create_all_tables():
-    Myteam_table_creator.my_team_table_creator()
-    Player_hub_table_creator.create_player_hub_table()
-    Ai_teams_table_creator.create_ai_team_tables()
+    try:
+        Myteam_table_creator.my_team_table_creator()
+        Player_hub_table_creator.create_player_hub_table()
+        Ai_teams_table_creator.create_ai_team_tables()
+    except:
+        print("Loaded databases")
+        pass
 
 
 
@@ -663,13 +667,7 @@ def create_all_tables():
 
 
 
-
-
-
-
-
-
-
+create_all_tables()
 
 
 

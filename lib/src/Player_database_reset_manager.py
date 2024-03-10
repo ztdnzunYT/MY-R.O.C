@@ -37,8 +37,6 @@ class database_manager():
             print("Database info already reset")
 
 
-   
-
 
 
 '''
@@ -52,6 +50,3 @@ mycursor.execute("SELECT name FROM sqlite_schema WHERE type='table'")
 x = mycursor.fetchall()
 print(x)
 '''
-
-
-

@@ -21,3 +21,5 @@ def open_connection():
     conn = sqlite3.connect("C:\\My R.O.C Manager\\lib\\db\\Players.db")
     mycursor = conn.cursor()
 
+
+
