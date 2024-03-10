@@ -165,8 +165,6 @@ self,id,first_name,last_name,age,height,weight,star_rating,position,build,moral,
 '''
 
 
-
-
 try:
     conn.commit()
     print("executed")
