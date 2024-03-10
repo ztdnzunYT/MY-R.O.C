@@ -6,12 +6,10 @@ from Player_database_reset_manager import database_manager as Dbm
 from Player_db_creator import create_all_tables
 from Player_creator import run as pc_run 
 from Test_simgame import Game_sim, Game_stats, start_sim
-
-
+from Player_team_initializer import My_team_query
 
 
 def main(page: ft.Page):
-    
     page.title = "MY R.O.C MANAGER"
     page.horizontal_alignment = ft.MainAxisAlignment.CENTER
     page.vertical_alignment = ft.MainAxisAlignment.CENTER
@@ -22,11 +20,27 @@ def main(page: ft.Page):
     page.window_min_height=690
     page.window_min_width=1000
     page.window_center()
-   
-  
-   
 
     class new_or_load_management():
+        
+        new_management_button = ft.Container(
+            content=ft.TextButton(
+            text="New Management",
+            disabled=False,
+            on_click=lambda e: new_or_load_management.new_management()
+            )
+        )
+        load_management_button = ft.Container(
+            content=ft.TextButton(
+            text="Load Management",
+            on_click=lambda e: new_or_load_management.load_management()
+            )
+        )
+
+        if My_team_query.my_team == []:
+            load_management_button.disabled = True
+        else:
+            load_management_button.disabled = False
 
         def new_management():
             Dbm.reset_all()
@@ -35,8 +49,9 @@ def main(page: ft.Page):
             print("Database info reset")
             pc_run()
             return page.go("/Dashboard")
+        
         def load_management():
-            return page.go("/dashboard")
+            return page.go("/Dashboard")
         
 
 
@@ -162,17 +177,20 @@ def main(page: ft.Page):
                                 height=30,
                                 bgcolor=ft.colors.TRANSPARENT,
                                 alignment=ft.alignment.center,
-                                content=ft.Column([
-                                ft.TextButton(
-                                    text="New Management",
-                                    disabled=False,
-                                    on_click=lambda e: new_or_load_management.new_management()
-                                    ),
-                                ft.TextButton(
-                                    text="Load Management",
-                                    disabled=False,)
-                                ])
+                                content=(
+                                    new_or_load_management.new_management_button
+                                )
                             ),
+                            ft.Container(
+                                width=160,
+                                height=30,
+                                bgcolor=ft.colors.TRANSPARENT,
+                                alignment=ft.alignment.center,
+                                content=(
+                                    new_or_load_management.load_management_button
+                                )
+                            ),
+                            
                             ],
                             spacing=15,
                             alignment=ft.MainAxisAlignment.CENTER
@@ -252,7 +270,6 @@ def main(page: ft.Page):
                                         ],alignment=ft.MainAxisAlignment.CENTER,spacing=10,expand=True),
                                         
                                         ft.Column([
-
                                             ft.Container(
                                                 width=page.window_width,  
                                                 height = page.window_height/2.5,
@@ -308,6 +325,7 @@ def main(page: ft.Page):
 
         lv = ft.ListView(expand=1, spacing=10, padding=20, auto_scroll=True)
         play = Game_sim.play_choice
+
         def new_log_entry():
             for i in range(len(Sim_game.play)):
                 time.sleep(.2)
@@ -316,9 +334,6 @@ def main(page: ft.Page):
             Sim_game.play.clear()
             start_sim()
         
-        
-
-
         def sim_game():
             print(f"{page.route} Menu item clicked")
             return ft.Container(
@@ -536,8 +551,6 @@ def main(page: ft.Page):
                 )),
             expand=True)
 
-
-        
 
     class Player_search():
 
@@ -945,3 +958,4 @@ def main(page: ft.Page):
 
 
 ft.app(target=main)
+

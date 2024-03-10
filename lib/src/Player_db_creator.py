@@ -647,8 +647,6 @@ def create_all_tables():
         print("Loaded databases")
         pass
 
-
-
     try:
         conn.commit()
 
@@ -656,33 +654,6 @@ def create_all_tables():
     except:
     
         print("closed")
-
-
-
-
-
-
-
-
-
-
-
-create_all_tables()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

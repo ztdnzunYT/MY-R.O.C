@@ -39,6 +39,10 @@ class database_manager():
 
 
 
+
+
+
+
 '''
 id = str(1)
 mycursor.execute("INSERT INTO test_user_table2 SELECT * FROM test_user_team WHERE id = "+id+"")
