@@ -614,13 +614,13 @@ def gameover():
     if Game_stats.score >= Game_stats.wining_score:
         #print((f"MY TEAM WON! {Game_stats.score}|{Game_stats.ai_score}"))
         #print(("-----------------"))
-        Game_sim.play_choice.append(f"MY TEAM WON! {Game_stats.score}|{Game_stats.ai_score}")
+        Game_sim.play_choice.append(f"MY TEAM WON! {Game_stats.score} | {Game_stats.ai_score}")
         Game_sim.play_choice.append("-----------------")
         quit()
     elif Game_stats.ai_score >= Game_stats.wining_score:
         #print((f"AI TEAM WON! {Game_stats.ai_score}|{Game_stats.score}"))
         #print(("-----------------"))
-        Game_sim.play_choice.append(f"AI TEAM WON! {Game_stats.ai_score}|{Game_stats.score}")
+        Game_sim.play_choice.append(f"AI TEAM WON! {Game_stats.ai_score} | {Game_stats.score}")
         Game_sim.play_choice.append("-----------------")
         quit()
 

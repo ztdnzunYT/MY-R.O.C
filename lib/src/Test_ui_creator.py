@@ -1,6 +1,7 @@
 import flet as ft
 import random
 import time
+import math
 import Player_database_connector as pdc
 from Player_database_reset_manager import database_manager as Dbm
 from Player_db_creator import create_all_tables
@@ -22,6 +23,8 @@ def main(page: ft.Page):
     page.window_center()
 
     class new_or_load_management():
+
+        
         
         new_management_button = ft.Container(
             content=ft.TextButton(
@@ -49,9 +52,12 @@ def main(page: ft.Page):
             print("Database info reset")
             pc_run()
             return page.go("/Dashboard")
+            
         
         def load_management():
             return page.go("/Dashboard")
+        
+        
         
 
 
@@ -138,6 +144,7 @@ def main(page: ft.Page):
                 ],
                 expand=False     
                 )
+     
         
         def default_menu_backdrop():
             return ft.Container(
@@ -293,11 +300,11 @@ def main(page: ft.Page):
                                                     ),
                                                 ),
                                                 ft.Container(
-                                                    bgcolor=ft.colors.TRANSPARENT,
+                                                    bgcolor=ft.colors.BLACK45,
                                                     expand=True,
-                                                    margin=2,
+                                                    margin=3,
                                                     border_radius=5,
-                                                    border=ft.border.all(2, color=ft.colors.WHITE24),
+                                                    border=ft.border.all(3, color=ft.colors.BLACK12),
                                                     )
                                                 ],alignment=ft.CrossAxisAlignment.CENTER)
                                                 ),
@@ -323,18 +330,59 @@ def main(page: ft.Page):
 
     class Sim_game():
 
+        
         lv = ft.ListView(expand=1, spacing=10, padding=20, auto_scroll=True)
+        my_team_score_display =  ft.Text(text_align=ft.TextAlign.CENTER,weight=ft.FontWeight.W_500,value=0)
+        ai_team_score_display =  ft.Text(text_align=ft.TextAlign.CENTER,weight=ft.FontWeight.W_500,value=0)
         play = Game_sim.play_choice
+        game_speed_slider = ft.Slider(value=2,min=0.04,max=3,divisions=3,width=300,active_color=ft.colors.WHITE70,label=" Gamespeed: {value}% ",on_change=lambda e: print(round(e.control.value),3))
 
         def new_log_entry():
+            my_team_score = 0
+            ai_team_score = 0
+            Sim_game.my_team_score_display.value = 0
+            Sim_game.ai_team_score_display.value = 0
+            Sim_game.my_team_score_display.color = ft.colors.WHITE
+            Sim_game.ai_team_score_display.color = ft.colors.WHITE
+            Sim_game.lv.controls.clear()
+            
             for i in range(len(Sim_game.play)):
-                time.sleep(.2)
-                Sim_game.lv.controls.append(ft.Text(f"{Sim_game.play[i]}",color=ft.colors.WHITE))
+                time.sleep(round(Sim_game.game_speed_slider.value,3))
+                Sim_game.lv.controls.append(ft.Text(f"{Sim_game.play[i]}",color=ft.colors.WHITE,weight=ft.FontWeight.W_500))
+                if "MY TEAM SCORE :" in Sim_game.play[i]:
+                    my_team_score_list = []
+                    for o in range(len(Sim_game.play[i])):
+                        if (str(Sim_game.play[i][o])).isdigit(): 
+                            my_team_score_list.append(Sim_game.play[i][o])
+                            if len(my_team_score_list) == 1:
+                                my_team_score = (my_team_score_list[0])
+                            else:
+                                my_team_score = (my_team_score_list[0] + my_team_score_list[1])
+                    Sim_game.my_team_score_display.value = my_team_score
+                if int(my_team_score) >= Game_stats.wining_score:
+                    Sim_game.my_team_score_display.color = ft.colors.LIGHT_GREEN_ACCENT_400
+                    Sim_game.ai_team_score_display.color = ft.colors.RED
+                if "AI SCORE :" in Sim_game.play[i]:
+                    ai_team_score_list = []
+                    for o in range(len(Sim_game.play[i])):
+                        if (str(Sim_game.play[i][o])).isdigit(): 
+                            ai_team_score_list.append(Sim_game.play[i][o])
+                            if len(ai_team_score_list) == 1 :
+                                ai_team_score = (ai_team_score_list[0])
+                            else:
+                                ai_team_score = (ai_team_score_list[0] + ai_team_score_list[1])
+                    Sim_game.ai_team_score_display.value = ai_team_score
+                if int(ai_team_score) >= Game_stats.wining_score:
+                    Sim_game.ai_team_score_display.color = ft.colors.LIGHT_GREEN_ACCENT_400
+                    Sim_game.my_team_score_display.color = ft.colors.RED
+
                 page.update()
             Sim_game.play.clear()
             start_sim()
+      
         
         def sim_game():
+            
             print(f"{page.route} Menu item clicked")
             return ft.Container(
                 width=page.window_width,
@@ -367,15 +415,32 @@ def main(page: ft.Page):
                                             margin=ft.margin.only(top=15),
                                             border_radius=2,
                                             content=ft.Container(
-                                                ft.Row([
-                                                    ft.Text(f"{Game_stats.score}",text_align=ft.TextAlign.CENTER,weight=ft.FontWeight.W_500,color=ft.colors.RED),
-                                                    ft.VerticalDivider(
-                                                        thickness=2,
-                                                        opacity=.5,
-                                                        color=ft.colors.WHITE,
+                                                content=
+                                                ft.Stack([
+                                                    ft.Container(
+                                                        margin=ft.margin.only(top=5,right=50),
+                                                        content=
+                                                        ft.Row([
+                                                            Sim_game.my_team_score_display,
+                                                        ],alignment=ft.MainAxisAlignment.CENTER,spacing=37,vertical_alignment=ft.alignment.center),
                                                     ),
-                                                    ft.Text(f"{Game_stats.ai_score}",text_align=ft.TextAlign.CENTER,weight=ft.FontWeight.W_500,color=ft.colors.GREEN_ACCENT),
-                                                ],alignment=ft.MainAxisAlignment.CENTER)
+                                                    ft.Container(
+                                                        margin=ft.margin.only(top=5,left=50),
+                                                        content=
+                                                        ft.Row([
+                                                            Sim_game.ai_team_score_display,
+                                                        ],alignment=ft.MainAxisAlignment.CENTER,spacing=37,vertical_alignment=ft.alignment.center),
+                                                    ),
+                                                    ft.Container(
+                                                        alignment=ft.alignment.center,
+                                                        content=
+                                                        ft.VerticalDivider(
+                                                            thickness=2,
+                                                            opacity=.5,
+                                                            color=ft.colors.WHITE,
+                                                        ),
+                                                    )
+                                                ])
                                             )
                                             ),  
                                         ],vertical_alignment=ft.alignment.center,alignment=ft.MainAxisAlignment.CENTER
@@ -404,7 +469,7 @@ def main(page: ft.Page):
                                         ),
 
                                     ft.Row([
-                                        ft.Slider(value=100,min=50,max=150,divisions=4,width=300,active_color=ft.colors.WHITE70,label=" Gamespeed: {value}% ",on_change=lambda e: print(e.control.value))
+                                        Sim_game.game_speed_slider,
                                     ],alignment=ft.MainAxisAlignment.CENTER),
 
 
