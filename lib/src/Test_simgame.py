@@ -73,19 +73,7 @@ def time_delay():
 
 class Game_stats():
 
-    def new_game():
-
-        Game_stats.score = 0 
-        Game_stats.ai_score = 0
-
-        #print()
-        Game_sim.play_choice.append("")
-        #print(f"AI TEAM : {random_ai_team} STAR RATING")
-        Game_sim.play_choice.append(f"AI TEAM : {random_ai_team} STAR RATING")
-        #print("-------------")
-        Game_sim.play_choice.append("-------------")
-
-        ball_first()
+    
 
 
     score = 0
@@ -599,7 +587,17 @@ def ball_first():
 
 def start_sim():
     
-    Game_stats.new_game()
+    Game_stats.score = 0 
+    Game_stats.ai_score = 0
+
+    #print()
+    Game_sim.play_choice.append("")
+    #print(f"AI TEAM : {random_ai_team} STAR RATING")
+    Game_sim.play_choice.append(f"AI TEAM : {random_ai_team} STAR RATING")
+    #print("-------------")
+    Game_sim.play_choice.append("-------------")
+
+    ball_first()
 
     if Game_sim.team_with_ball == Teams.my_team:
         Game_sim.Offense.check_ball()

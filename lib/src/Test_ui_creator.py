@@ -153,7 +153,7 @@ def main(page: ft.Page):
                 border_radius=10,
                 border=ft.border.all(2, ft.colors.WHITE24),
                 alignment=ft.alignment.center,
-                bgcolor=ft.colors.BLACK12,
+                bgcolor=ft.colors.WHITE12,
                 content=(ft.Text(
                     "MY R.O.C",
                     size=50,
@@ -213,7 +213,7 @@ def main(page: ft.Page):
             return ft.Container(
                 width=page.window_width,
                 height=page.window_height,
-                margin=5,
+                margin=10,
                 border_radius=10,
                 border=ft.border.all(2, ft.colors.WHITE24),
                 alignment=ft.alignment.center,
@@ -331,10 +331,10 @@ def main(page: ft.Page):
 
         
         lv = ft.ListView(expand=1, spacing=10, padding=20, auto_scroll=True)
-        my_team_score_display =  ft.Text(text_align=ft.TextAlign.CENTER,weight=ft.FontWeight.W_500,value=0)
-        ai_team_score_display =  ft.Text(text_align=ft.TextAlign.CENTER,weight=ft.FontWeight.W_500,value=0)
+        my_team_score_display =  ft.Text(text_align=ft.TextAlign.CENTER,weight=ft.FontWeight.W_500,value=0,size=15)
+        ai_team_score_display =  ft.Text(text_align=ft.TextAlign.CENTER,weight=ft.FontWeight.W_500,value=0,size=15)
         play = Game_sim.play_choice
-        game_speed_slider = ft.Slider(value=2,min=0.04,max=3,divisions=3,width=300,active_color=ft.colors.WHITE70,label=" Gamespeed: {value}% ",on_change=lambda e: print(round(e.control.value),3))
+        game_speed_slider = ft.Slider(value=1,min=0.04,max=3,divisions=3,width=300,active_color=ft.colors.WHITE70,label=" Gamespeed: {value}% ",on_change=lambda e: print(round(e.control.value),3))
 
         def new_log_entry():
             my_team_score = 0
@@ -456,9 +456,9 @@ def main(page: ft.Page):
                                             
                                             content=(
                                                 ft.Image(
-                                                    src="lib\\assets\\icons\\basketball-half-court-parquet-600nw-122537710.png",
-                                                    width=400,
-                                                    height=400,
+                                                    src="lib\\assets\\images\\basketball-half-court-parquet-600nw-122537710.png",
+                                                    width=380,
+                                                    height=380,
                                                     scale=.9,
                                                     fit=ft.ImageFit.COVER,
                                                     repeat=ft.ImageRepeat.NO_REPEAT,
@@ -601,7 +601,7 @@ def main(page: ft.Page):
             return ft.Container(
             width=page.window_width,
             height=page.window_height,
-            margin=5,
+            margin=10,
             border_radius=10,
             border=ft.border.all(2, ft.colors.WHITE24),
             alignment=ft.alignment.center,
@@ -817,11 +817,14 @@ def main(page: ft.Page):
                         border_radius=10,
                         content=ft.Row(
                             [
-                                ft.Column(
-                                    [Player_search.table,
-                                    ft.FilledTonalButton(text="Clear search",on_click=lambda e: Player_search.delete_player()),
-                                    ft.FilledTonalButton(text="Search players",on_click=lambda e: Player_search.add_multiple())],
-                                    scroll=ft.ScrollMode.AUTO,alignment=ft.alignment.center,on_scroll_interval=.1
+                                ft.Column([
+                                        ft.Row([
+                                            ft.FilledTonalButton(text="Search players",on_click=lambda e: Player_search.add_multiple()),
+                                            ft.FilledTonalButton(text="Clear search",on_click=lambda e: Player_search.delete_player())
+                                            ]),
+                                        Player_search.table,
+                                    ],
+scroll=ft.ScrollMode.AUTO,alignment=ft.alignment.center,on_scroll_interval=.1
                                 ),
                             ],
                             scroll=ft.ScrollMode.AUTO,alignment=ft.alignment.center
@@ -841,7 +844,7 @@ def main(page: ft.Page):
             return ft.Container(
                 width=page.window_width,
                 height=page.window_height,
-                margin=5,
+                margin=10,
                 border_radius=10,
                 border=ft.border.all(2, ft.colors.WHITE24),
                 alignment=ft.alignment.center,
@@ -862,7 +865,7 @@ def main(page: ft.Page):
             return ft.Container(
                 width=page.window_width,
                 height=page.window_height,
-                margin=5,
+                margin=10,
                 border_radius=10,
                 border=ft.border.all(2, ft.colors.WHITE24),
                 alignment=ft.alignment.center,
@@ -882,7 +885,7 @@ def main(page: ft.Page):
             return ft.Container(
                 width=page.window_width,
                 height=page.window_height,
-                margin=5,
+                margin=10,
                 border_radius=10,
                 border=ft.border.all(2, ft.colors.WHITE24),
                 alignment=ft.alignment.center,
@@ -924,7 +927,8 @@ def main(page: ft.Page):
                         ft.Row ([ 
                         ft.Row(alignment="top_left", spacing=25, controls=[Main_menu.management_window()],expand=True),
                         ],expand=True)
-                    ]
+                    ],  
+                   
                 )
             )
         
@@ -934,12 +938,15 @@ def main(page: ft.Page):
                 ft.View(
                     "/Dashboard",
                     [
+                        
                         ft.Row ([ 
                         ft.Row(alignment="top_left", spacing=25, controls=[Main_menu.side_menu(),Dashboard.dashboard()],expand=True),
                         ],expand=True)
-                    ]
-                )
-            )
+                    ],
+                  
+
+                )    
+            )    
         
         if page.route == "/Sim Game":
             page.views.append(
@@ -950,6 +957,7 @@ def main(page: ft.Page):
                         ft.Row(alignment="top_let", spacing=25, controls=[Main_menu.side_menu(),Sim_game.sim_game()],expand=True),
                         ],expand=True)
                     ],
+                     
                 )
             )
 
@@ -962,6 +970,7 @@ def main(page: ft.Page):
                         ft.Row(alignment="top_let", spacing=25, controls=[Main_menu.side_menu(),Online_pvp.online_pvp()],expand=True),
                         ],expand=True)
                     ],
+                   
                 )
             )
         if page.route == "/The Roc":
@@ -972,7 +981,8 @@ def main(page: ft.Page):
                         ft.Row ([ 
                         ft.Row(alignment="top_left", spacing=25, controls=[Main_menu.side_menu(),The_Roc.the_Roc()],expand=True),
                         ],expand=True)
-                    ]
+                    ],
+                    
                 )
             )
         
@@ -985,6 +995,7 @@ def main(page: ft.Page):
                         ft.Row(alignment="top_let", spacing=25, controls=[Main_menu.side_menu(),Player_search.player_search_menu()],expand=True),
                         ],expand=True)
                     ],
+                   
                 )
             )
         if page.route == "/MY R.O.C Team":
@@ -996,6 +1007,7 @@ def main(page: ft.Page):
                         ft.Row(alignment="top_let", spacing=25, controls=[Main_menu.side_menu(),My_ROC_Team.my_roc_team()],expand=True),
                         ],expand=True)
                     ],
+                    
                 )
             )
         if page.route == "/Settings":
@@ -1007,6 +1019,7 @@ def main(page: ft.Page):
                         ft.Row(alignment="top_let", spacing=25, controls=[Main_menu.side_menu(),Settings.settings()],expand=True),
                         ],expand=True)
                     ],
+                      
                 )
             )
             

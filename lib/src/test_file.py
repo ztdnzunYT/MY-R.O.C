@@ -9,15 +9,16 @@ def main(page: ft.Page):
     class players:
 
         player_size = 40
+        player_speed = 600
 
-        c1 = ft.Container(alignment=ft.alignment.center,width=player_size, height=player_size, bgcolor="red", animate_position=500,shape=ft.BoxShape.CIRCLE,content=ft.Text("PG",text_align=ft.TextAlign.CENTER,weight=ft.FontWeight.W_500))
+        c1 = ft.Container(alignment=ft.alignment.center,width=player_size, height=player_size, bgcolor="red", animate_position=player_speed,shape=ft.BoxShape.CIRCLE,content=ft.Text("PG",text_align=ft.TextAlign.CENTER,weight=ft.FontWeight.W_500))
 
         c2 = ft.Container(
-            alignment=ft.alignment.center,width=player_size, height=player_size, bgcolor="green", top=60, left=0, animate_position=500,shape=ft.BoxShape.CIRCLE,content=ft.Text("SF",text_align=ft.TextAlign.CENTER,weight=ft.FontWeight.W_500)
+            alignment=ft.alignment.center,width=player_size, height=player_size, bgcolor="green", top=60, left=0, animate_position=player_speed,shape=ft.BoxShape.CIRCLE,content=ft.Text("SF",text_align=ft.TextAlign.CENTER,weight=ft.FontWeight.W_500)
         )
 
         c3 = ft.Container(
-            alignment=ft.alignment.center,width=player_size, height=player_size, bgcolor="blue", top=120, left=0, animate_position=500,shape=ft.BoxShape.CIRCLE,content=ft.Text("C",text_align=ft.TextAlign.CENTER,weight=ft.FontWeight.W_500)
+            alignment=ft.alignment.center,width=player_size, height=player_size, bgcolor="blue", top=120, left=0, animate_position=player_speed,shape=ft.BoxShape.CIRCLE,content=ft.Text("C",text_align=ft.TextAlign.CENTER,weight=ft.FontWeight.W_500)
         )
 
 
