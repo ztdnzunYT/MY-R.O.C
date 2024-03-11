@@ -25,7 +25,6 @@ def main(page: ft.Page):
     class new_or_load_management():
 
         
-        
         new_management_button = ft.Container(
             content=ft.TextButton(
             text="New Management",
