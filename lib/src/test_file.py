@@ -3,9 +3,54 @@ import flet as ft
 import random
 
 def main(page: ft.Page):
-    page.bgcolor= ft.colors.BACKGROUND
+    
+    page.horizontal_alignment=ft.CrossAxisAlignment.CENTER
+    page.vertical_alignment=ft.MainAxisAlignment.CENTER
 
 
+    basketball = ft.Container(
+        width=300,
+        height=300,
+        alignment=ft.alignment.center,
+        bgcolor=ft.colors.ORANGE,
+        shape=ft.BoxShape.CIRCLE,
+        border=ft.border.all(10,ft.colors.BLACK),
+        padding=-5,
+        content=( 
+                    ft.Stack([
+                        ft.Row([
+                            ft.Container(
+                                bgcolor=ft.colors.BLACK,
+                                width=15,
+                                alignment=ft.alignment.center,
+                                
+                            )
+                        ],alignment=ft.MainAxisAlignment.CENTER,vertical_alignment=ft.alignment.center),
+                        ft.Column([
+                            ft.Row([
+                                ft.Container(
+                                    bgcolor=ft.colors.BLACK,
+                                    width=20,
+                                    height=15,
+                                    alignment=ft.alignment.center,
+                        
+                                )
+                            ],alignment=ft.MainAxisAlignment.CENTER,vertical_alignment=ft.alignment.center)
+                        ],horizontal_alignment=ft.alignment.center,alignment=ft.MainAxisAlignment.CENTER)
+                    ])
+           
+        ) 
+    )
+    
+    
+    page.add(basketball)
+
+
+ft.app(target=main)
+
+
+
+"""
     class players:
 
         player_size = 35
@@ -254,15 +299,7 @@ def main(page: ft.Page):
     b =ft.ElevatedButton("Animate!", on_click=animate_container)
 
     page.add(court,b
-    )
-
-ft.app(target=main)
-
-
-
-
-
-
+    )"""
 
 
 

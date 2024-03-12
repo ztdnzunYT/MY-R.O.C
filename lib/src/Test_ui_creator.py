@@ -339,21 +339,32 @@ def main(page: ft.Page):
         game_speed_slider = ft.Slider(value=1,min=0.04,max=3,divisions=3,width=300,active_color=ft.colors.WHITE70,label=" Gamespeed: {value}% ",
                                         on_change=lambda e: print(round(e.control.value),3))
         
-        player_size = 35
-        player_speed = 600
+        player_size = 32
+        player_speed = 800
         court_horizontal_range = [60,280]
         court_vertical_range = [15,200]
 
 
         image_png = ft.Image( src="lib\\assets\\images\\basketball-half-court-parquet-600nw-122537710.png",width=380,height=380,scale=.9,fit=ft.ImageFit.COVER,
-                                repeat=ft.ImageRepeat.NO_REPEAT,border_radius=ft.border_radius.all(5),expand=True)
+                                repeat=ft.ImageRepeat.NO_REPEAT,border_radius=ft.border_radius.all(5))
 
-        court_player_1 = ft.Container(width=player_size,height=player_size,shape=ft.BoxShape.CIRCLE,bgcolor=ft.colors.BLUE,animate_position=player_speed,
-                                      alignment=ft.alignment.center,bottom=random.randint(min(court_vertical_range),max(court_vertical_range)),left=random.randint(min(court_horizontal_range),max(court_horizontal_range)),content=(ft.Text("PG",text_align=ft.TextAlign.CENTER,weight=ft.FontWeight.W_500,color=ft.colors.WHITE)))
-        court_player_2 = ft.Container(width=player_size,height=player_size,shape=ft.BoxShape.CIRCLE,bgcolor=ft.colors.AMBER_600,animate_position=player_speed,
-                                      alignment=ft.alignment.center,top=random.randint(min(court_vertical_range),max(court_vertical_range)),left=random.randint(min(court_horizontal_range),max(court_horizontal_range)),content=(ft.Text("SF",text_align=ft.TextAlign.CENTER,weight=ft.FontWeight.W_500,color=ft.colors.WHITE)))
-        court_player_3 = ft.Container(width=player_size,height=player_size,shape=ft.BoxShape.CIRCLE,bgcolor=ft.colors.GREEN,animate_position=player_speed,
-                                      alignment=ft.alignment.center,top=random.randint(min(court_vertical_range),max(court_vertical_range)),left=random.randint(min(court_horizontal_range),max(court_horizontal_range)),content=(ft.Text("C",text_align =ft.TextAlign.CENTER,weight=ft.FontWeight.W_500,color=ft.colors.WHITE)))
+        court_player_1 = ft.Container(width=player_size,height=player_size,shape=ft.BoxShape.CIRCLE,bgcolor=ft.colors.RED,border=ft.border.all(2,ft.colors.WHITE24),animate_position=player_speed,
+                                      alignment=ft.alignment.center,bottom=random.randint(min(court_vertical_range),max(court_vertical_range)),
+                                      left=random.randint(min(court_horizontal_range),max(court_horizontal_range)),
+                                      content=(ft.Text("PG",text_align=ft.TextAlign.CENTER,weight=ft.FontWeight.W_500,color=ft.colors.WHITE)))
+        court_player_2 = ft.Container(width=player_size,height=player_size,shape=ft.BoxShape.CIRCLE,bgcolor=ft.colors.AMBER_700,border=ft.border.all(2,ft.colors.WHITE24),animate_position=player_speed,
+                                      alignment=ft.alignment.center,bottom=random.randint(min(court_vertical_range),max(court_vertical_range)),
+                                      left=random.randint(min(court_horizontal_range),max(court_horizontal_range)),
+                                      content=(ft.Text("SF",text_align=ft.TextAlign.CENTER,weight=ft.FontWeight.W_500,color=ft.colors.WHITE)))
+        court_player_3 = ft.Container(width=player_size,height=player_size,shape=ft.BoxShape.CIRCLE,bgcolor=ft.colors.BLUE,border=ft.border.all(2,ft.colors.WHITE24),animate_position=player_speed,
+                                      alignment=ft.alignment.center,bottom=random.randint(min(court_vertical_range),max(court_vertical_range)),
+                                      left=random.randint(min(court_horizontal_range),max(court_horizontal_range)),
+                                      content=(ft.Text("C",text_align=ft.TextAlign.CENTER,weight=ft.FontWeight.W_500,color=ft.colors.WHITE)))
+        court_ball = ft.Container(width=player_size/1.8,height=player_size/1.8,shape=ft.BoxShape.CIRCLE,bgcolor=ft.colors.ORANGE_600,border=ft.border.all(2,ft.colors.WHITE24),
+                                  animate_position=player_speed,alignment=ft.alignment.center,top=random.randint(min(court_vertical_range),max(court_vertical_range)),
+                                      left=random.randint(min(court_horizontal_range),max(court_horizontal_range)))
+                                  
+                                     
         
 
 
@@ -370,16 +381,19 @@ def main(page: ft.Page):
                     image_png,
                     court_player_1,
                     court_player_2,
-                    court_player_3
+                    court_player_3, 
+                    court_ball
                 ])
             )
         )
         
 
         court = ft.Container(
+
             width=page.window_width,
             height=page.window_height/2.7,
             alignment=ft.alignment.center,
+            expand=True,
             content=(
                 court_image
             )
