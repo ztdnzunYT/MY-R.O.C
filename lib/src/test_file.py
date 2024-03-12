@@ -48,10 +48,7 @@ def main(page: ft.Page):
                 s
             ])
         )
-        
     )
-
-
 
 
     court = ft.Container(

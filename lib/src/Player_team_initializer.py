@@ -157,6 +157,10 @@ ai_team_player1 = Teams.Ai_team.ai_team_p1
 ai_team_player2 = Teams.Ai_team.ai_team_p2 
 ai_team_player3 = Teams.Ai_team.ai_team_p3
 
+
+
+
+
 '''
 self,id,first_name,last_name,age,height,weight,star_rating,position,build,moral,trait,skill_set,injured,recovery_days, 
             potential,overall,offense,defense,roots,three_pointer,midrange,layup,dunk,ball_handle,speed,stamina,passing,strength,rebounding,
