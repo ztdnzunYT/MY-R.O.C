@@ -325,7 +325,6 @@ def main(page: ft.Page):
                             ,)]) ,expand=True
                             )
                     
-            
 
     class Sim_game():
 
@@ -334,7 +333,13 @@ def main(page: ft.Page):
         my_team_score_display =  ft.Text(text_align=ft.TextAlign.CENTER,weight=ft.FontWeight.W_500,value=0,size=15)
         ai_team_score_display =  ft.Text(text_align=ft.TextAlign.CENTER,weight=ft.FontWeight.W_500,value=0,size=15)
         play = Game_sim.play_choice
-        game_speed_slider = ft.Slider(value=1,min=0.04,max=3,divisions=3,width=300,active_color=ft.colors.WHITE70,label=" Gamespeed: {value}% ",on_change=lambda e: print(round(e.control.value),3))
+        game_speed_slider = ft.Slider(value=1,min=0.04,max=3,divisions=3,width=300,active_color=ft.colors.WHITE70,label=" Gamespeed: {value}% ",
+                                        on_change=lambda e: print(round(e.control.value),3))
+        court_image = ft.Image( src="lib\\assets\\images\\basketball-half-court-parquet-600nw-122537710.png",width=380,height=380,scale=.9,fit=ft.ImageFit.COVER,
+                                repeat=ft.ImageRepeat.NO_REPEAT,border_radius=ft.border_radius.all(5),
+        )
+
+
 
         def new_log_entry():
             my_team_score = 0
@@ -404,46 +409,55 @@ def main(page: ft.Page):
                             content=(
                                 ft.Column(
                                     [
-
                                     ft.Row([
-                                        ft.Container(
-                                            alignment=ft.alignment.center,
-                                            bgcolor=ft.colors.BLACK26,
-                                            width=100,
-                                            height=30,
-                                            margin=ft.margin.only(top=15),
-                                            border_radius=2,
-                                            content=ft.Container(
-                                                content=
-                                                ft.Stack([
-                                                    ft.Container(
-                                                        margin=ft.margin.only(top=5,right=50),
-                                                        content=
-                                                        ft.Row([
-                                                            Sim_game.my_team_score_display,
-                                                        ],alignment=ft.MainAxisAlignment.CENTER,spacing=37,vertical_alignment=ft.alignment.center),
-                                                    ),
-                                                    ft.Container(
-                                                        margin=ft.margin.only(top=5,left=50),
-                                                        content=
-                                                        ft.Row([
-                                                            Sim_game.ai_team_score_display,
-                                                        ],alignment=ft.MainAxisAlignment.CENTER,spacing=37,vertical_alignment=ft.alignment.center),
-                                                    ),
-                                                    ft.Container(
-                                                        alignment=ft.alignment.center,
-                                                        content=
-                                                        ft.VerticalDivider(
-                                                            thickness=2,
-                                                            opacity=.5,
-                                                            color=ft.colors.WHITE,
+                                        ft.Stack([
+                                            ft.Container(
+                                                margin=ft.margin.only(left=-170,top=10),
+                                                content=(
+                                                    ft.Switch(label="Full screen",value=False)
+                                                )
+                                            ),
+                                                ft.Row([
+                                                    
+                                                ],vertical_alignment=ft.alignment.center,alignment=ft.MainAxisAlignment.CENTER),
+                                                ft.Container(                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
+                                                    alignment=ft.alignment.center,
+                                                    bgcolor=ft.colors.BLACK26,
+                                                    width=100,
+                                                    height=30,
+                                                    margin=ft.margin.only(top=15),
+                                                    border_radius=2,
+                                                    content=
+                                                    ft.Stack([
+                                                        ft.Container(
+                                                            margin=ft.margin.only(top=5,right=50),
+                                                            content=
+                                                            ft.Row([
+                                                                Sim_game.my_team_score_display,
+                                                            ],alignment=ft.MainAxisAlignment.CENTER,spacing=37,vertical_alignment=ft.alignment.center),
                                                         ),
-                                                    )
-                                                ])
-                                            )
-                                            ),  
+                                                        ft.Container(
+                                                            margin=ft.margin.only(top=5,left=50),
+                                                            content=
+                                                            ft.Row([
+                                                                Sim_game.ai_team_score_display,
+                                                            ],alignment=ft.MainAxisAlignment.CENTER,spacing=37,vertical_alignment=ft.alignment.center),
+                                                        ),
+                                                        ft.Container(
+                                                            alignment=ft.alignment.center,
+                                                            content=
+                                                            ft.VerticalDivider(
+                                                                thickness=2,
+                                                                opacity=.5,
+                                                                color=ft.colors.WHITE,
+                                                            ),
+                                                        )
+                                                    ])
+                                                ),
+                                            ])  
                                         ],vertical_alignment=ft.alignment.center,alignment=ft.MainAxisAlignment.CENTER
                                         ),
+                                        
 
                                         ft.Container(
                                             width=page.window_width,
@@ -455,15 +469,7 @@ def main(page: ft.Page):
                                             alignment=ft.alignment.center,
                                             
                                             content=(
-                                                ft.Image(
-                                                    src="lib\\assets\\images\\basketball-half-court-parquet-600nw-122537710.png",
-                                                    width=380,
-                                                    height=380,
-                                                    scale=.9,
-                                                    fit=ft.ImageFit.COVER,
-                                                    repeat=ft.ImageRepeat.NO_REPEAT,
-                                                    border_radius=ft.border_radius.all(5),
-                                                )
+                                                Sim_game.court_image
                                             )
                                         ),
 
@@ -540,15 +546,11 @@ def main(page: ft.Page):
                                                                     ,padding=15),tooltip="Click to start sim",color=ft.colors.WHITE,bgcolor=ft.colors.WHITE30,on_click=lambda e: Sim_game.new_log_entry())
                                                     )
                                                 )
-                                            
                                             ])
-                                        )
-                                        
+                                        )                                        
                                     ),  
-
                                     ],horizontal_alignment=ft.alignment.center) 
                                 ),
-
                             expand=True
                         ),
 
@@ -559,8 +561,7 @@ def main(page: ft.Page):
                             border_radius=5,
                             bgcolor=ft.colors.WHITE38,
                             alignment=ft.alignment.center,
-                            content=(
-                                
+                            content=(                                
                                 ft.Container(
                                     width=page.width,
                                     height=page.height,
@@ -823,8 +824,7 @@ def main(page: ft.Page):
                                             ft.FilledTonalButton(text="Clear search",on_click=lambda e: Player_search.delete_player())
                                             ]),
                                         Player_search.table,
-                                    ],
-scroll=ft.ScrollMode.AUTO,alignment=ft.alignment.center,on_scroll_interval=.1
+                                    ],scroll=ft.ScrollMode.AUTO,alignment=ft.alignment.center,on_scroll_interval=.1
                                 ),
                             ],
                             scroll=ft.ScrollMode.AUTO,alignment=ft.alignment.center
