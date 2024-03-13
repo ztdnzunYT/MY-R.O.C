@@ -337,9 +337,9 @@ def main(page: ft.Page):
     class Sim_game():
         
         lv = ft.ListView(expand=1, spacing=10, padding=20, auto_scroll=True)
+        switch = ft.Switch(label=" Fullscreen",value=True,scale=.7,active_color=ft.colors.BACKGROUND)
         my_team_score_display =  ft.Text(text_align=ft.TextAlign.CENTER,weight=ft.FontWeight.W_500,value=0,size=15)
         ai_team_score_display =  ft.Text(text_align=ft.TextAlign.CENTER,weight=ft.FontWeight.W_500,value=0,size=15)
-        play = Game_sim.play_choice
         game_speed_slider = ft.Slider(value=1,min=0.04,max=2.5,divisions=3,width=300,active_color=ft.colors.WHITE70,label=" Gamespeed: {value}% ",
                                         on_change=lambda e: print((e.control.value)))
         
@@ -354,15 +354,15 @@ def main(page: ft.Page):
         court_player_1 = ft.Container(width=player_size,height=player_size,shape=ft.BoxShape.CIRCLE,bgcolor=ft.colors.RED,border=ft.border.all(2,ft.colors.WHITE24),animate_position=player_speed,
                                       alignment=ft.alignment.center,bottom=random.randint(min(court_vertical_range),max(court_vertical_range)),
                                       left=random.randint(min(court_horizontal_range),max(court_horizontal_range)),
-                                      content=(ft.Text("PG",text_align=ft.TextAlign.CENTER,weight=ft.FontWeight.W_500,color=ft.colors.WHITE)))
+                                      content=(ft.Text(value=my_team_player1.position,text_align=ft.TextAlign.CENTER,weight=ft.FontWeight.W_500,color=ft.colors.WHITE)))
         court_player_2 = ft.Container(width=player_size,height=player_size,shape=ft.BoxShape.CIRCLE,bgcolor=ft.colors.BLUE,border=ft.border.all(2,ft.colors.WHITE24),animate_position=player_speed,
                                       alignment=ft.alignment.center,bottom=random.randint(min(court_vertical_range),max(court_vertical_range)),
                                       left=random.randint(min(court_horizontal_range),max(court_horizontal_range)),
-                                      content=(ft.Text("SF",text_align=ft.TextAlign.CENTER,weight=ft.FontWeight.W_500,color=ft.colors.WHITE)))
+                                      content=(ft.Text(value=my_team_player2.position,text_align=ft.TextAlign.CENTER,weight=ft.FontWeight.W_500,color=ft.colors.WHITE)))
         court_player_3 = ft.Container(width=player_size,height=player_size,shape=ft.BoxShape.CIRCLE,bgcolor=ft.colors.GREEN_500,border=ft.border.all(2,ft.colors.WHITE24),animate_position=player_speed,
                                       alignment=ft.alignment.center,bottom=random.randint(min(court_vertical_range),max(court_vertical_range)),
                                       left=random.randint(min(court_horizontal_range),max(court_horizontal_range)),
-                                      content=(ft.Text("C",text_align=ft.TextAlign.CENTER,weight=ft.FontWeight.W_500,color=ft.colors.WHITE)))
+                                      content=(ft.Text(value=my_team_player3.position,text_align=ft.TextAlign.CENTER,weight=ft.FontWeight.W_500,color=ft.colors.WHITE)))
         court_ball = ft.Container(width=player_size/1.9,height=player_size/1.9,shape=ft.BoxShape.CIRCLE,bgcolor=ft.colors.ORANGE_600,border=ft.border.all(2,ft.colors.WHITE24),
                                   animate_position=player_speed,alignment=ft.alignment.center,top=random.randint(min(court_vertical_range),max(court_vertical_range)),
                                       left=random.randint(min(court_horizontal_range),max(court_horizontal_range)))
@@ -411,14 +411,14 @@ def main(page: ft.Page):
             Sim_game.ai_team_score_display.color = ft.colors.WHITE
             Sim_game.lv.controls.clear()
             
-            for i in range(len(Sim_game.play)):
+            for i in range(len(Game_sim.play)):
                 time.sleep(round(Sim_game.game_speed_slider.value,3))
-                Sim_game.lv.controls.append(ft.Text(f"{Sim_game.play[i]}",color=ft.colors.WHITE,weight=ft.FontWeight.W_500))
-                if "MY TEAM SCORE :" in Sim_game.play[i]:
+                Sim_game.lv.controls.append(ft.Text(f"{Game_sim.play[i]}",color=ft.colors.WHITE,weight=ft.FontWeight.W_500))
+                if "MY TEAM SCORE :" in Game_sim.play[i]:
                     my_team_score_list = []
-                    for o in range(len(Sim_game.play[i])):
-                        if (str(Sim_game.play[i][o])).isdigit(): 
-                            my_team_score_list.append(Sim_game.play[i][o])
+                    for o in range(len(Game_sim.play[i])):
+                        if (str(Game_sim.play[i][o])).isdigit(): 
+                            my_team_score_list.append(Game_sim.play[i][o])
                             if len(my_team_score_list) == 1:
                                 my_team_score = (my_team_score_list[0])
                             else:
@@ -427,11 +427,11 @@ def main(page: ft.Page):
                 if int(my_team_score) >= Game_stats.wining_score:
                     Sim_game.my_team_score_display.color = ft.colors.LIGHT_GREEN_ACCENT_400
                     Sim_game.ai_team_score_display.color = ft.colors.RED
-                if "AI SCORE :" in Sim_game.play[i]:
+                if "AI SCORE :" in Game_sim.play[i]:
                     ai_team_score_list = []
-                    for o in range(len(Sim_game.play[i])):
-                        if (str(Sim_game.play[i][o])).isdigit(): 
-                            ai_team_score_list.append(Sim_game.play[i][o])
+                    for o in range(len(Game_sim.play[i])):
+                        if (str(Game_sim.play[i][o])).isdigit(): 
+                            ai_team_score_list.append(Game_sim.play[i][o])
                             if len(ai_team_score_list) == 1 :
                                 ai_team_score = (ai_team_score_list[0])
                             else:
@@ -442,7 +442,7 @@ def main(page: ft.Page):
                     Sim_game.my_team_score_display.color = ft.colors.RED
 
                 page.update()
-            Sim_game.play.clear()
+            Game_sim.play.clear()
             start_sim()
       
         
@@ -477,7 +477,7 @@ def main(page: ft.Page):
                                                 ft.Container(
                                                     margin=ft.margin.only(top=10,left=10),
                                                     content=(
-                                                        ft.Switch(label=" Fullscreen",value=True,scale=.7,active_color=ft.colors.BACKGROUND)
+                                                        Sim_game.switch
                                                     )
                                                 )
                                             ],vertical_alignment=ft.alignment.center),
