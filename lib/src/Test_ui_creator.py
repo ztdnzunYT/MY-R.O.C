@@ -22,6 +22,11 @@ def main(page: ft.Page):
     page.window_min_width=1000
     page.window_center()
 
+
+    
+    page.on_window_event = page.update()
+
+
     class new_or_load_management():
 
         
@@ -363,19 +368,10 @@ def main(page: ft.Page):
         court_ball = ft.Container(width=player_size/1.8,height=player_size/1.8,shape=ft.BoxShape.CIRCLE,bgcolor=ft.colors.ORANGE_600,border=ft.border.all(2,ft.colors.WHITE24),
                                   animate_position=player_speed,alignment=ft.alignment.center,top=random.randint(min(court_vertical_range),max(court_vertical_range)),
                                       left=random.randint(min(court_horizontal_range),max(court_horizontal_range)))
-                                  
-                                     
-        
-
-
-
-         #,height=300)
-
-
         
 
         court_image = ft.Container(
-            expand=True,
+            expand=False,
             content=(
                 ft.Stack([
                     image_png,
@@ -389,15 +385,19 @@ def main(page: ft.Page):
         
 
         court = ft.Container(
-
             width=page.window_width,
-            height=page.window_height/2.7,
+            height=page.window_height,
             alignment=ft.alignment.center,
             expand=True,
             content=(
                 court_image
             )
         )
+
+        def court_resizing():
+            Sim_game.court_image.expand = True
+            page.update()
+            
         
         
                 
@@ -450,6 +450,7 @@ def main(page: ft.Page):
       
         
         def sim_game():
+            Sim_game.court_resizing()
             
             print(f"{page.route} Menu item clicked")
             return ft.Container(
@@ -569,6 +570,7 @@ def main(page: ft.Page):
 
                                     ft.Container(
                                         width=page.window_width,
+                                        height=page.window_height,
                                         border_radius=10,
                                         margin=ft.margin.only(top=10,bottom=20,right=30,left=30),
                                         bgcolor=ft.colors.BLACK26,
@@ -577,12 +579,11 @@ def main(page: ft.Page):
                                         content=(
                                             ft.Row([
                                                 ft.Container(
-                                                width=page.width,
-                                                height=page.height/3,
-                                                margin=ft.margin.only(top=15,bottom=15,right=5,left=20),
+                                                height=page.window_height,
                                                 alignment=ft.alignment.center,
                                                 border_radius=5,
                                                 bgcolor=ft.colors.WHITE24,
+                                                margin=ft.margin.only(left=10,top=10,bottom=10,right=-5),
                                                 expand=True,
                                                 content=(
                                                     ft.Column([
