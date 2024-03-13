@@ -14,7 +14,6 @@ def main(page: ft.Page):
     page.title = "MY R.O.C MANAGER"
     page.horizontal_alignment = ft.MainAxisAlignment.CENTER
     page.vertical_alignment = ft.MainAxisAlignment.CENTER
-    page.horizontal_alignment = ft.CrossAxisAlignment.CENTER
     print(page.width,page.height)
     page.window_frameless = False
     page.window_width=1050
@@ -341,71 +340,69 @@ def main(page: ft.Page):
         my_team_score_display =  ft.Text(text_align=ft.TextAlign.CENTER,weight=ft.FontWeight.W_500,value=0,size=15)
         ai_team_score_display =  ft.Text(text_align=ft.TextAlign.CENTER,weight=ft.FontWeight.W_500,value=0,size=15)
         play = Game_sim.play_choice
-        game_speed_slider = ft.Slider(value=1,min=0.04,max=3,divisions=3,width=300,active_color=ft.colors.WHITE70,label=" Gamespeed: {value}% ",
-                                        on_change=lambda e: print(round(e.control.value),3))
+        game_speed_slider = ft.Slider(value=1,min=0.04,max=2.5,divisions=3,width=300,active_color=ft.colors.WHITE70,label=" Gamespeed: {value}% ",
+                                        on_change=lambda e: print((e.control.value)))
         
-        player_size = 32
-        player_speed = 800
-        court_horizontal_range = [60,280]
-        court_vertical_range = [15,200]
+        player_size = 35  
+        player_speed = 500
+        court_horizontal_range = [60,260]
+        court_vertical_range = [45,230]
 
-
-        image_png = ft.Image( src="lib\\assets\\images\\basketball-half-court-parquet-600nw-122537710.png",width=380,height=380,scale=.9,fit=ft.ImageFit.COVER,
+        court_picture = ft.Image( src="lib\\assets\\images\\basketball-half-court-parquet-600nw-122537710.png",width=380,height=380,scale=.9,fit=ft.ImageFit.COVER,
                                 repeat=ft.ImageRepeat.NO_REPEAT,border_radius=ft.border_radius.all(5))
 
         court_player_1 = ft.Container(width=player_size,height=player_size,shape=ft.BoxShape.CIRCLE,bgcolor=ft.colors.RED,border=ft.border.all(2,ft.colors.WHITE24),animate_position=player_speed,
                                       alignment=ft.alignment.center,bottom=random.randint(min(court_vertical_range),max(court_vertical_range)),
                                       left=random.randint(min(court_horizontal_range),max(court_horizontal_range)),
                                       content=(ft.Text("PG",text_align=ft.TextAlign.CENTER,weight=ft.FontWeight.W_500,color=ft.colors.WHITE)))
-        court_player_2 = ft.Container(width=player_size,height=player_size,shape=ft.BoxShape.CIRCLE,bgcolor=ft.colors.AMBER_700,border=ft.border.all(2,ft.colors.WHITE24),animate_position=player_speed,
+        court_player_2 = ft.Container(width=player_size,height=player_size,shape=ft.BoxShape.CIRCLE,bgcolor=ft.colors.BLUE,border=ft.border.all(2,ft.colors.WHITE24),animate_position=player_speed,
                                       alignment=ft.alignment.center,bottom=random.randint(min(court_vertical_range),max(court_vertical_range)),
                                       left=random.randint(min(court_horizontal_range),max(court_horizontal_range)),
                                       content=(ft.Text("SF",text_align=ft.TextAlign.CENTER,weight=ft.FontWeight.W_500,color=ft.colors.WHITE)))
-        court_player_3 = ft.Container(width=player_size,height=player_size,shape=ft.BoxShape.CIRCLE,bgcolor=ft.colors.BLUE,border=ft.border.all(2,ft.colors.WHITE24),animate_position=player_speed,
+        court_player_3 = ft.Container(width=player_size,height=player_size,shape=ft.BoxShape.CIRCLE,bgcolor=ft.colors.GREEN_500,border=ft.border.all(2,ft.colors.WHITE24),animate_position=player_speed,
                                       alignment=ft.alignment.center,bottom=random.randint(min(court_vertical_range),max(court_vertical_range)),
                                       left=random.randint(min(court_horizontal_range),max(court_horizontal_range)),
                                       content=(ft.Text("C",text_align=ft.TextAlign.CENTER,weight=ft.FontWeight.W_500,color=ft.colors.WHITE)))
-        court_ball = ft.Container(width=player_size/1.8,height=player_size/1.8,shape=ft.BoxShape.CIRCLE,bgcolor=ft.colors.ORANGE_600,border=ft.border.all(2,ft.colors.WHITE24),
+        court_ball = ft.Container(width=player_size/1.9,height=player_size/1.9,shape=ft.BoxShape.CIRCLE,bgcolor=ft.colors.ORANGE_600,border=ft.border.all(2,ft.colors.WHITE24),
                                   animate_position=player_speed,alignment=ft.alignment.center,top=random.randint(min(court_vertical_range),max(court_vertical_range)),
                                       left=random.randint(min(court_horizontal_range),max(court_horizontal_range)))
         
+        court_icons = ft.Stack([court_player_1,court_player_2,court_player_3,court_ball],height=280,expand=True)
 
-        court_image = ft.Container(
-            expand=False,
-            content=(
-                ft.Stack([
-                    image_png,
-                    court_player_1,
-                    court_player_2,
-                    court_player_3, 
-                    court_ball
-                ])
-            )
-        )
+        court = ft.Stack([
+            ft.Container(
+                    width=court_picture.width,
+                    height=court_picture.height,
+                    content=(
+                        ft.Stack([
+                            court_picture,
+                            ft.Column([
+                                ft.Row([
+                                    court_icons
+                                ],
+                                vertical_alignment=ft.alignment.center,alignment=ft.MainAxisAlignment.CENTER)
+                            ],alignment=ft.MainAxisAlignment.CENTER,horizontal_alignment=ft.alignment.center),
+                        ])
+                    )
+                )
+            ],expand=True)   
         
-
-        court = ft.Container(
-            width=page.window_width,
-            height=page.window_height,
-            alignment=ft.alignment.center,
-            expand=True,
-            content=(
-                court_image
-            )
-        )
-
-        def court_resizing():
-            Sim_game.court_image.expand = True
-            page.update()
+        def run_play(e):
+            for i in range(10):
+                Sim_game.court_player_1.bottom = random.randint(min(Sim_game.court_vertical_range),max(Sim_game.court_vertical_range))
+                Sim_game.court_player_1.left = random.randint(min(Sim_game.court_horizontal_range),max(Sim_game.court_horizontal_range))
+                Sim_game.court_player_2.bottom = random.randint(min(Sim_game.court_vertical_range),max(Sim_game.court_vertical_range))
+                Sim_game.court_player_2.left = random.randint(min(Sim_game.court_horizontal_range),max(Sim_game.court_horizontal_range))
+                Sim_game.court_player_3.bottom = random.randint(min(Sim_game.court_vertical_range),max(Sim_game.court_vertical_range))
+                Sim_game.court_player_3.left = random.randint(min(Sim_game.court_horizontal_range),max(Sim_game.court_horizontal_range))
+                page.update()
+                time.sleep(1)
             
+        def court_resizing():
+            Sim_game.court_picture.expand = True
+            page.update()
         
-        
-                
-        
-
-
         def new_log_entry():
-            print(Sim_game.image_png.width,Sim_game.image_png.height)
             my_team_score = 0
             ai_team_score = 0
             Sim_game.my_team_score_display.value = 0
@@ -532,13 +529,9 @@ def main(page: ft.Page):
                                             border=ft.border.all(2,ft.colors.BLACK26),
                                             alignment=ft.alignment.center,
                                             content=(
-                                                ft.Stack([
-                                                   Sim_game.court,
-                                                   
-                                                ])
+                                                Sim_game.court
                                             )
                                         ),
-
                                     ft.Row([
                                         Sim_game.game_speed_slider,
                                     ],alignment=ft.MainAxisAlignment.CENTER),
@@ -608,9 +601,15 @@ def main(page: ft.Page):
                                                 bgcolor=ft.colors.TRANSPARENT,
                                                 expand=True,
                                                 content=(
-                                                    ft.ElevatedButton( text="Start Sim",icon=ft.icons.PLAY_ARROW_ROUNDED, style=ft.ButtonStyle(shape=ft.ContinuousRectangleBorder(radius=30,)
-                                                                    ,padding=15),tooltip="Click to start sim",color=ft.colors.WHITE,bgcolor=ft.colors.WHITE30,on_click=lambda e: Sim_game.new_log_entry())
-                                                    )
+                                                    ft.Row([
+                                                        ft.Column([
+                                                            ft.ElevatedButton( text="Start Sim",icon=ft.icons.PLAY_ARROW_ROUNDED, style=ft.ButtonStyle(shape=ft.ContinuousRectangleBorder(radius=30,)
+                                                                            ,padding=15),tooltip="Click to start sim",color=ft.colors.WHITE,bgcolor=ft.colors.WHITE30,on_click=lambda e: Sim_game.new_log_entry()),
+                                                            ft.ElevatedButton( text="Run Play",icon=ft.icons.PLAY_ARROW_ROUNDED, style=ft.ButtonStyle(shape=ft.ContinuousRectangleBorder(radius=30,)
+                                                                            ,padding=15),tooltip="Click to make players run a play",color=ft.colors.WHITE,bgcolor=ft.colors.WHITE30,on_click=Sim_game.run_play)
+                                                        ])
+                                                    ])
+                                                )
                                                 )
                                             ])
                                         )                                        
