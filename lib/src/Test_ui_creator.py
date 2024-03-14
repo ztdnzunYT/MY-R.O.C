@@ -22,11 +22,10 @@ def main(page: ft.Page):
     page.window_center()
 
 
-    
     page.on_window_event = page.update()
 
 
-    class new_or_load_management():
+    class new_or_load_management:
 
         
         new_management_button = ft.Container(
@@ -60,11 +59,8 @@ def main(page: ft.Page):
         def load_management():
             return page.go("/Dashboard")
         
-        
-        
 
-
-    class Main_menu():
+    class Main_menu:
         def side_menu():
             return ft.Row(
                 [
@@ -211,7 +207,7 @@ def main(page: ft.Page):
             )
         
             
-    class Dashboard():
+    class Dashboard:
         def dashboard():
             print(f"{page.route} Menu item clicked")
             return ft.Container(
@@ -332,7 +328,7 @@ def main(page: ft.Page):
                             ]
                             ,)]) ,expand=True
                             )
-                    
+                
 
     class Sim_game():
         
@@ -342,59 +338,66 @@ def main(page: ft.Page):
         ai_team_score_display =  ft.Text(text_align=ft.TextAlign.CENTER,weight=ft.FontWeight.W_500,value=0,size=15)
         game_speed_slider = ft.Slider(value=1,min=0.04,max=2.5,divisions=3,width=300,active_color=ft.colors.WHITE70,label=" Gamespeed: {value}% ",
                                         on_change=lambda e: print((e.control.value)))
-        
-        player_size = 35  
-        player_speed = 500
-        court_horizontal_range = [60,260]
-        court_vertical_range = [45,230]
+    
+
+        class Players(ft.Container):
+
+            player_size = 40  
+            player_speed = 500
+            court_min_max_width = [60,240]
+            court_min_max_height = [10,205]
+                      
+            def __init__(self,width,height,shape,bgcolor,speed,bottom,left,player_info):
+                super().__init__()
+                self.width = width
+                self.height = height
+                self.shape = shape
+                self.bgcolor = bgcolor
+                self.border = ft.border.all(2,ft.colors.WHITE24)
+                self.animate_position = speed
+                self.alignment = ft.alignment.center
+                self.bottom = bottom
+                self.left = left
+                self.player_info = player_info
+                self.content = ft.Text(value=self.player_info.position if player_info != None else "",text_align=ft.TextAlign.CENTER,weight=ft.FontWeight.W_500,color=ft.colors.WHITE)
+                self.expand = True
+
+        court_player_1 = Players(Players.player_size,Players.player_size,ft.BoxShape.CIRCLE,ft.colors.RED,Players.player_speed,105,250,my_team_player1)    
+        court_player_2 = Players(Players.player_size,Players.player_size,ft.BoxShape.CIRCLE,ft.colors.BLUE,Players.player_speed,180,170,my_team_player2)    
+        court_player_3 = Players(Players.player_size,Players.player_size,ft.BoxShape.CIRCLE,ft.colors.ORANGE_600,Players.player_speed,30,130,my_team_player3)    
+        court_ball = Players(Players.player_size/1.9,Players.player_size/1.9,ft.BoxShape.CIRCLE,ft.colors.ORANGE_600,Players.player_speed,100,240,None)    
 
         court_picture = ft.Image( src="lib\\assets\\images\\basketball-half-court-parquet-600nw-122537710.png",width=380,height=380,scale=.9,fit=ft.ImageFit.COVER,
-                                repeat=ft.ImageRepeat.NO_REPEAT,border_radius=ft.border_radius.all(5))
-
-        court_player_1 = ft.Container(width=player_size,height=player_size,shape=ft.BoxShape.CIRCLE,bgcolor=ft.colors.RED,border=ft.border.all(2,ft.colors.WHITE24),animate_position=player_speed,
-                                      alignment=ft.alignment.center,bottom=random.randint(min(court_vertical_range),max(court_vertical_range)),
-                                      left=random.randint(min(court_horizontal_range),max(court_horizontal_range)),
-                                      content=(ft.Text(value=my_team_player1.position,text_align=ft.TextAlign.CENTER,weight=ft.FontWeight.W_500,color=ft.colors.WHITE)))
-        court_player_2 = ft.Container(width=player_size,height=player_size,shape=ft.BoxShape.CIRCLE,bgcolor=ft.colors.BLUE,border=ft.border.all(2,ft.colors.WHITE24),animate_position=player_speed,
-                                      alignment=ft.alignment.center,bottom=random.randint(min(court_vertical_range),max(court_vertical_range)),
-                                      left=random.randint(min(court_horizontal_range),max(court_horizontal_range)),
-                                      content=(ft.Text(value=my_team_player2.position,text_align=ft.TextAlign.CENTER,weight=ft.FontWeight.W_500,color=ft.colors.WHITE)))
-        court_player_3 = ft.Container(width=player_size,height=player_size,shape=ft.BoxShape.CIRCLE,bgcolor=ft.colors.GREEN_500,border=ft.border.all(2,ft.colors.WHITE24),animate_position=player_speed,
-                                      alignment=ft.alignment.center,bottom=random.randint(min(court_vertical_range),max(court_vertical_range)),
-                                      left=random.randint(min(court_horizontal_range),max(court_horizontal_range)),
-                                      content=(ft.Text(value=my_team_player3.position,text_align=ft.TextAlign.CENTER,weight=ft.FontWeight.W_500,color=ft.colors.WHITE)))
-        court_ball = ft.Container(width=player_size/1.9,height=player_size/1.9,shape=ft.BoxShape.CIRCLE,bgcolor=ft.colors.ORANGE_600,border=ft.border.all(2,ft.colors.WHITE24),
-                                  animate_position=player_speed,alignment=ft.alignment.center,top=random.randint(min(court_vertical_range),max(court_vertical_range)),
-                                      left=random.randint(min(court_horizontal_range),max(court_horizontal_range)))
+                                        repeat=ft.ImageRepeat.NO_REPEAT,border_radius=ft.border_radius.all(5))
         
-        court_icons = ft.Stack([court_player_1,court_player_2,court_player_3,court_ball],height=280,expand=True)
+        court_icons = ft.Stack([court_player_1,court_player_2,court_player_3,court_ball],height=250,expand=True)
 
         court = ft.Stack([
             ft.Container(
-                    width=court_picture.width,
-                    height=court_picture.height,
-                    content=(
-                        ft.Stack([
-                            court_picture,
-                            ft.Column([
-                                ft.Row([
-                                    court_icons
-                                ],
-                                vertical_alignment=ft.alignment.center,alignment=ft.MainAxisAlignment.CENTER)
-                            ],alignment=ft.MainAxisAlignment.CENTER,horizontal_alignment=ft.alignment.center),
-                        ])
-                    )
+                width=court_picture.width,
+                height=court_picture.height,
+                content=(
+                ft.Stack([
+                    court_picture,
+                    ft.Column([
+                        ft.Row([
+                            court_icons
+                        ],
+                        vertical_alignment=ft.alignment.center,alignment=ft.MainAxisAlignment.CENTER)
+                    ],alignment=ft.MainAxisAlignment.CENTER,horizontal_alignment=ft.alignment.center),
+                ])
                 )
+            )
             ],expand=True)   
         
         def run_play(e):
             for i in range(10):
-                Sim_game.court_player_1.bottom = random.randint(min(Sim_game.court_vertical_range),max(Sim_game.court_vertical_range))
-                Sim_game.court_player_1.left = random.randint(min(Sim_game.court_horizontal_range),max(Sim_game.court_horizontal_range))
-                Sim_game.court_player_2.bottom = random.randint(min(Sim_game.court_vertical_range),max(Sim_game.court_vertical_range))
-                Sim_game.court_player_2.left = random.randint(min(Sim_game.court_horizontal_range),max(Sim_game.court_horizontal_range))
-                Sim_game.court_player_3.bottom = random.randint(min(Sim_game.court_vertical_range),max(Sim_game.court_vertical_range))
-                Sim_game.court_player_3.left = random.randint(min(Sim_game.court_horizontal_range),max(Sim_game.court_horizontal_range))
+                Sim_game.court_player_1.bottom = random.randint(min(Sim_game.Players.court_min_max_height),max(Sim_game.Players.court_min_max_height))
+                Sim_game.court_player_1.left = random.randint(min(Sim_game.Players.court_min_max_width),max(Sim_game.Players.court_min_max_width))
+                Sim_game.court_player_2.bottom = random.randint(min(Sim_game.Players.court_min_max_height),max(Sim_game.Players.court_min_max_height))
+                Sim_game.court_player_2.left = random.randint(min(Sim_game.Players.court_min_max_width),max(Sim_game.Players.court_min_max_width))
+                Sim_game.court_player_3.bottom = random.randint(min(Sim_game.Players.court_min_max_height),max(Sim_game.Players.court_min_max_height))
+                Sim_game.court_player_3.left = random.randint(min(Sim_game.Players.court_min_max_width),max(Sim_game.Players.court_min_max_width))
                 page.update()
                 time.sleep(1)
             
@@ -411,14 +414,14 @@ def main(page: ft.Page):
             Sim_game.ai_team_score_display.color = ft.colors.WHITE
             Sim_game.lv.controls.clear()
             
-            for i in range(len(Game_sim.play)):
+            for i in range(len(Game_sim.play_log)):
                 time.sleep(round(Sim_game.game_speed_slider.value,3))
-                Sim_game.lv.controls.append(ft.Text(f"{Game_sim.play[i]}",color=ft.colors.WHITE,weight=ft.FontWeight.W_500))
-                if "MY TEAM SCORE :" in Game_sim.play[i]:
+                Sim_game.lv.controls.append(ft.Text(f"{Game_sim.play_log[i]}",color=ft.colors.WHITE,weight=ft.FontWeight.W_500))
+                if "MY TEAM SCORE :" in Game_sim.play_log[i]:
                     my_team_score_list = []
-                    for o in range(len(Game_sim.play[i])):
-                        if (str(Game_sim.play[i][o])).isdigit(): 
-                            my_team_score_list.append(Game_sim.play[i][o])
+                    for o in range(len(Game_sim.play_log[i])):
+                        if (str(Game_sim.play_log[i][o])).isdigit(): 
+                            my_team_score_list.append(Game_sim.play_log[i][o])
                             if len(my_team_score_list) == 1:
                                 my_team_score = (my_team_score_list[0])
                             else:
@@ -427,11 +430,11 @@ def main(page: ft.Page):
                 if int(my_team_score) >= Game_stats.wining_score:
                     Sim_game.my_team_score_display.color = ft.colors.LIGHT_GREEN_ACCENT_400
                     Sim_game.ai_team_score_display.color = ft.colors.RED
-                if "AI SCORE :" in Game_sim.play[i]:
+                if "AI SCORE :" in Game_sim.play_log[i]:
                     ai_team_score_list = []
-                    for o in range(len(Game_sim.play[i])):
-                        if (str(Game_sim.play[i][o])).isdigit(): 
-                            ai_team_score_list.append(Game_sim.play[i][o])
+                    for o in range(len(Game_sim.play_log[i])):
+                        if (str(Game_sim.play_log[i][o])).isdigit(): 
+                            ai_team_score_list.append(Game_sim.play_log[i][o])
                             if len(ai_team_score_list) == 1 :
                                 ai_team_score = (ai_team_score_list[0])
                             else:
@@ -442,7 +445,7 @@ def main(page: ft.Page):
                     Sim_game.my_team_score_display.color = ft.colors.RED
 
                 page.update()
-            Game_sim.play.clear()
+            Game_sim.play_log.clear()
             start_sim()
       
         
@@ -661,7 +664,7 @@ def main(page: ft.Page):
                     ),
                 expand=True)
         
-    class The_Roc():
+    class The_Roc:
         def the_Roc():
             print(f"{page.route} Menu item clicked")
             return ft.Container(
@@ -682,7 +685,7 @@ def main(page: ft.Page):
             expand=True)
 
 
-    class Player_search():
+    class Player_search:
 
         def player_inserter():
             pdc.mycursor.execute("SELECT * FROM player_hub")
@@ -903,7 +906,7 @@ def main(page: ft.Page):
             )   
         
 
-    class Online_pvp():
+    class Online_pvp:
         def online_pvp():
             print(f"{page.route} Menu item clicked")
             return ft.Container(
@@ -924,7 +927,7 @@ def main(page: ft.Page):
                 expand=True)
 
 
-    class My_ROC_Team():
+    class My_ROC_Team:
         def my_roc_team():
             print(f"{page.route} Menu item clicked")
             return ft.Container(
@@ -944,7 +947,7 @@ def main(page: ft.Page):
                     )),
                 expand=True)
 
-    class Settings():
+    class Settings:
         def settings():
             print(f"{page.route} Menu item clicked")
             return ft.Container(

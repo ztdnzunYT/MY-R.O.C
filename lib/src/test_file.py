@@ -3,6 +3,7 @@ import flet as ft
 import random
 import time
 from Test_simgame import Game_sim , start_sim
+from Player_team_initializer import My_team_query , my_team_player1 , my_team_player2 , my_team_player3
 
 def main(page: ft.Page):
 
@@ -18,6 +19,27 @@ def main(page: ft.Page):
 
     court_pic = ft.Image( src="lib\\assets\\images\\basketball-half-court-parquet-600nw-122537710.png",width=380,height=380,scale=.9,fit=ft.ImageFit.COVER,
                             repeat=ft.ImageRepeat.NO_REPEAT,border_radius=ft.border_radius.all(5))
+
+
+    class Player_init(ft.Container):
+        player_size = 40  
+        player_speed = 500
+        court_horizontal_range = [60,280]
+        court_vertical_range = [15,200]
+        def __init__(self,height,bgcolor,info):
+                super().__init__()
+                self.width = player_size
+                self.height = height 
+                self.bgcolor = bgcolor
+                self.info = info
+                self.shape = ft.BoxShape.CIRCLE
+                self.alignment = ft.alignment.center
+                self.content = ft.Text(value=my_team_player1.position,text_align=ft.TextAlign.CENTER,weight=ft.FontWeight.W_500,color=ft.colors.WHITE)
+
+
+
+    p = Player_init(player_size,ft.colors.GREEN,(my_team_player1.position))
+
 
 
     court_player_1 = ft.Container(width=player_size,height=player_size,shape=ft.BoxShape.CIRCLE,bgcolor=ft.colors.RED,border=ft.border.all(2,ft.colors.WHITE24),animate_position=player_speed,
@@ -49,25 +71,44 @@ def main(page: ft.Page):
                 )
             )
         ],expand=True)   
+    
 
-
-    def run_play(e):
-        start_sim()
-        print(Game_sim.play)
-        court_player_1.bottom = random.randint(min(court_vertical_range),max(court_vertical_range))
-        court_player_1.left = random.randint(min(court_horizontal_range),max(court_horizontal_range))
-        court_player_2.bottom = random.randint(min(court_vertical_range),max(court_vertical_range))
-        court_player_2.left = random.randint(min(court_horizontal_range),max(court_horizontal_range))
-        court_player_3.bottom = random.randint(min(court_vertical_range),max(court_vertical_range))
-        court_player_3.left = random.randint(min(court_horizontal_range),max(court_horizontal_range))
-        page.update()
-        time.sleep(.7) 
+    def play_checker(play):
+         pass
         
 
 
+
+
+
+    def run_play(e):
+        
+        court_player_1.bottom = random.randint(min(court_vertical_range),max(court_vertical_range))
+        court_player_1.left = random.randint(min(court_horizontal_range),max(court_horizontal_range))
+
+        for i in range(len(Game_sim.play_log)):
+            print("Searching ...")
+            time.sleep(.1)
+            if my_team_player1.first_name and my_team_player1.last_name and "cleared the ball" in Game_sim.play_log[i]:
+                print(Game_sim.play_log[i])
+            
+            
+
+
+
+        page.update()
+        time.sleep(.7) 
+
+    def run_sim(e):
+        start_sim()
+        print(Game_sim.play_log)
+
     page.add(
         court,
+        p,
         ft.ElevatedButton("Animate!", on_click=run_play),
+        ft.ElevatedButton("Start Game", on_click=run_sim),
+
     )
 
 
@@ -81,7 +122,7 @@ ft.app(target=main)
 
 
 
-
+ 
 
 
 
