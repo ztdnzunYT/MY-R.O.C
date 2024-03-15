@@ -338,16 +338,12 @@ def main(page: ft.Page):
         ai_team_score_display =  ft.Text(text_align=ft.TextAlign.CENTER,weight=ft.FontWeight.W_500,value=0,size=15)
         game_speed_slider = ft.Slider(value=1,min=0.04,max=2.5,divisions=3,width=300,active_color=ft.colors.WHITE70,label=" Gamespeed: {value}% ",
                                         on_change=lambda e: print((e.control.value)))
-    
-
         class Players(ft.Container):
-
             player_size = 40  
             player_speed = 500
             court_min_max_width = [60,240]
-            court_min_max_height = [10,205]
-                      
-            def __init__(self,width,height,shape,bgcolor,speed,bottom,left,player_info):
+            court_min_max_height = [10,205]    
+            def __init__(self,width,height,shape,bgcolor,speed,bottom,left,player_info,player_name):
                 super().__init__()
                 self.width = width
                 self.height = height
@@ -359,13 +355,14 @@ def main(page: ft.Page):
                 self.bottom = bottom
                 self.left = left
                 self.player_info = player_info
+                self.player_name = player_name
                 self.content = ft.Text(value=self.player_info.position if player_info != None else "",text_align=ft.TextAlign.CENTER,weight=ft.FontWeight.W_500,color=ft.colors.WHITE)
                 self.expand = True
 
-        court_player_1 = Players(Players.player_size,Players.player_size,ft.BoxShape.CIRCLE,ft.colors.RED,Players.player_speed,105,250,my_team_player1)    
-        court_player_2 = Players(Players.player_size,Players.player_size,ft.BoxShape.CIRCLE,ft.colors.BLUE,Players.player_speed,180,170,my_team_player2)    
-        court_player_3 = Players(Players.player_size,Players.player_size,ft.BoxShape.CIRCLE,ft.colors.ORANGE_600,Players.player_speed,30,130,my_team_player3)    
-        court_ball = Players(Players.player_size/1.9,Players.player_size/1.9,ft.BoxShape.CIRCLE,ft.colors.ORANGE_600,Players.player_speed,100,240,None)    
+        court_player_1 = Players(Players.player_size,Players.player_size,ft.BoxShape.CIRCLE,ft.colors.RED,Players.player_speed,105,250,my_team_player1,(my_team_player1.first_name,my_team_player1.last_name))    
+        court_player_2 = Players(Players.player_size,Players.player_size,ft.BoxShape.CIRCLE,ft.colors.BLUE,Players.player_speed,180,170,my_team_player2,(my_team_player2.first_name,my_team_player2.last_name))    
+        court_player_3 = Players(Players.player_size,Players.player_size,ft.BoxShape.CIRCLE,ft.colors.ORANGE_600,Players.player_speed,30,130,my_team_player3,(my_team_player3.first_name,my_team_player3.last_name))    
+        court_ball = Players(Players.player_size/1.9,Players.player_size/1.9,ft.BoxShape.CIRCLE,ft.colors.ORANGE_600,Players.player_speed,100,240,None,None)    
 
         court_picture = ft.Image( src="lib\\assets\\images\\basketball-half-court-parquet-600nw-122537710.png",width=380,height=380,scale=.9,fit=ft.ImageFit.COVER,
                                         repeat=ft.ImageRepeat.NO_REPEAT,border_radius=ft.border_radius.all(5))
@@ -390,6 +387,7 @@ def main(page: ft.Page):
             )
             ],expand=True)   
         
+        
         def run_play(e):
             for i in range(10):
                 Sim_game.court_player_1.bottom = random.randint(min(Sim_game.Players.court_min_max_height),max(Sim_game.Players.court_min_max_height))
@@ -401,6 +399,13 @@ def main(page: ft.Page):
                 page.update()
                 time.sleep(1)
             
+
+
+
+
+               
+        
+
         def court_resizing():
             Sim_game.court_picture.expand = True
             page.update()
@@ -416,6 +421,25 @@ def main(page: ft.Page):
             
             for i in range(len(Game_sim.play_log)):
                 time.sleep(round(Sim_game.game_speed_slider.value,3))
+                
+                Sim_game.court_player_1.player_info.first_name
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                 Sim_game.lv.controls.append(ft.Text(f"{Game_sim.play_log[i]}",color=ft.colors.WHITE,weight=ft.FontWeight.W_500))
                 if "MY TEAM SCORE :" in Game_sim.play_log[i]:
                     my_team_score_list = []

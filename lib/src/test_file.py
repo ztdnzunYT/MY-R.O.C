@@ -12,47 +12,37 @@ def main(page: ft.Page):
     page.window_min_width = 500
     page.window_min_height = 400
     
-    player_size = 40  
-    player_speed = 500
-    court_horizontal_range = [60,280]
-    court_vertical_range = [15,200]
-
-    court_pic = ft.Image( src="lib\\assets\\images\\basketball-half-court-parquet-600nw-122537710.png",width=380,height=380,scale=.9,fit=ft.ImageFit.COVER,
-                            repeat=ft.ImageRepeat.NO_REPEAT,border_radius=ft.border_radius.all(5))
-
-
-    class Player_init(ft.Container):
-        player_size = 40  
-        player_speed = 500
-        court_horizontal_range = [60,280]
-        court_vertical_range = [15,200]
-        def __init__(self,height,bgcolor,info):
-                super().__init__()
-                self.width = player_size
-                self.height = height 
-                self.bgcolor = bgcolor
-                self.info = info
-                self.shape = ft.BoxShape.CIRCLE
-                self.alignment = ft.alignment.center
-                self.content = ft.Text(value=my_team_player1.position,text_align=ft.TextAlign.CENTER,weight=ft.FontWeight.W_500,color=ft.colors.WHITE)
-
-
-
-    p = Player_init(player_size,ft.colors.GREEN,(my_team_player1.position))
-
-
-
-    court_player_1 = ft.Container(width=player_size,height=player_size,shape=ft.BoxShape.CIRCLE,bgcolor=ft.colors.RED,border=ft.border.all(2,ft.colors.WHITE24),animate_position=player_speed,
-                                    alignment=ft.alignment.center,content=(ft.Text("PG",text_align=ft.TextAlign.CENTER,weight=ft.FontWeight.W_500,color=ft.colors.WHITE)),left=0)
-    court_player_2 = ft.Container(width=player_size,height=player_size,shape=ft.BoxShape.CIRCLE,bgcolor=ft.colors.AMBER_700,border=ft.border.all(2,ft.colors.WHITE24),animate_position=player_speed,
-                                    alignment=ft.alignment.center,bottom=100,left=140,content=(ft.Text("SF",text_align=ft.TextAlign.CENTER,weight=ft.FontWeight.W_500,color=ft.colors.WHITE)))
-    court_player_3 = ft.Container(width=player_size,height=player_size,shape=ft.BoxShape.CIRCLE,bgcolor=ft.colors.BLUE,border=ft.border.all(2,ft.colors.WHITE24),animate_position=player_speed,
-                                    alignment=ft.alignment.center,bottom=50,left=110,content=(ft.Text("C",text_align=ft.TextAlign.CENTER,weight=ft.FontWeight.W_500,color=ft.colors.WHITE)))
-    court_ball = ft.Container(width=player_size/1.8,height=player_size/1.8,shape=ft.BoxShape.CIRCLE,bgcolor=ft.colors.ORANGE_600,border=ft.border.all(2,ft.colors.WHITE24),
-                                animate_position=player_speed,alignment=ft.alignment.center,bottom=100,left=140)
     
 
-    on_court_items = ft.Stack([court_player_1,court_player_2,court_player_3],height=250,expand=True)
+    court_pic = ft.Image( src="lib\\assets\\images\\basketball-half-court-parquet-600nw-122537710.png",width=380,height=380,scale=.9,fit=ft.ImageFit.COVER,
+                            repeat=ft.ImageRepeat.NO_REPEAT,border_radius=ft.border_radius.all(5)  )
+
+    class test: 
+
+        class Player_init(ft.Container):
+            player_size = 40  
+            player_speed = 500
+            court_horizontal_range = [60,280]
+            court_vertical_range = [15,200]
+            def __init__(self,bgcolor,info):
+                    super().__init__()
+                    self.width = test.Player_init.player_size
+                    self.height = test.Player_init.player_size
+                    self.bgcolor = bgcolor
+                    self.info = info
+                    self.shape = ft.BoxShape.CIRCLE
+                    self.alignment = ft.alignment.center
+                    self.content = ft.Text(value=self.info.position,text_align=ft.TextAlign.CENTER,weight=ft.FontWeight.W_500,color=ft.colors.WHITE)
+                    self.animate_position = test.Player_init.player_speed
+
+
+    x = test.Player_init(ft.colors.RED,my_team_player1)
+    y = test.Player_init(ft.colors.BLUE,my_team_player2)
+    z = test.Player_init(ft.colors.ORANGE_600,my_team_player3)
+
+    players = [x,y,z]
+
+    on_court_items = ft.Stack([x,y,z],height=300,expand=True)
 
     court = ft.Stack([
         ft.Container(
@@ -72,30 +62,66 @@ def main(page: ft.Page):
             )
         ],expand=True)   
     
+    play_animation = {
+    "checked in the ball" : [[105,105],[250,250]],  #lessen the horizontal max
+    
+    } 
+    """
+    "dribbled the ball" : [test.Player_init.court_horizontal_range,test.Player_init.court_vertical_range],
+    "passed the ball to" : [test.Player_init.court_horizontal_range,test.Player_init.court_vertical_range],
+    "went up for a layup" : [test.Player_init.court_horizontal_range,test.Player_init.court_vertical_range],
+    "went up for a dunk" : [test.Player_init.court_horizontal_range,test.Player_init.court_vertical_range],
+    "pulled up for a mid-range shot" : [test.Player_init.court_horizontal_range,test.Player_init.court_vertical_range],
+    "pulled up for a three-point shot" : [test.Player_init.court_horizontal_range,test.Player_init.court_vertical_range],
+    "grabbed the rebound" : [test.Player_init.court_horizontal_range,test.Player_init.court_vertical_range],
+    "missed the rebound" : [test.Player_init.court_horizontal_range,test.Player_init.court_vertical_range],
+    """
+    
+    for i in play_animation:
+        print(max(play_animation[i][0]))
 
-    def play_checker(play):
-         pass
+
+    def animate_play(i):
+        for play in play_animation:
+                if play in Game_sim.play_log[i]:
+                    for name in range(len(players)):
+                        if str((players[name]).info.first_name) and str((players[name]).info.last_name) in Game_sim.play_log[i]:
+                            players[name].bottom = random.randint(play_animation[play][0][0],play_animation[play][0][1])   #change from numbers to min and max | max(play_animation[i][0])
+                            players[name].left = random.randint(play_animation[play][1][0],play_animation[play][1][1])
+                            page.update()
+                            time.sleep(2)
+                            players[name].bottom = random.randint(test.Player_init.court_vertical_range[0],test.Player_init.court_vertical_range[1])
+                            players[name].left = random.randint(test.Player_init.court_horizontal_range[0],test.Player_init.court_horizontal_range[1])
+                            print(str((players[name]).info.first_name),str((players[name]).info.last_name),"Cleared the ball")
+                            page.update()
+                            time.sleep(2)
+                        else:
+                            print("Searching...")
         
 
-
+   
+ 
 
 
 
     def run_play(e):
         
-        court_player_1.bottom = random.randint(min(court_vertical_range),max(court_vertical_range))
-        court_player_1.left = random.randint(min(court_horizontal_range),max(court_horizontal_range))
+        #court_player_1.bottom = random.randint(min(court_vertical_range),max(court_vertical_range))
+        #court_player_1.left = random.randint(min(court_horizontal_range),max(court_horizontal_range))
 
+
+        print((players[0]).info.first_name,players[0].info.last_name)
         for i in range(len(Game_sim.play_log)):
-            print("Searching ...")
-            time.sleep(.1)
-            if my_team_player1.first_name and my_team_player1.last_name and "cleared the ball" in Game_sim.play_log[i]:
-                print(Game_sim.play_log[i])
+            animate_play(i)
+
             
+                
+
+
+
+            time.sleep(0.03)        
+                
             
-
-
-
         page.update()
         time.sleep(.7) 
 
@@ -105,7 +131,6 @@ def main(page: ft.Page):
 
     page.add(
         court,
-        p,
         ft.ElevatedButton("Animate!", on_click=run_play),
         ft.ElevatedButton("Start Game", on_click=run_sim),
 

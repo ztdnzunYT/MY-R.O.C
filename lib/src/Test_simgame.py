@@ -671,7 +671,7 @@ print(Game_sim.Game_stats.rebounds_missed)
  
 (<function Game_sim.Offense.pass_ball at 0x000001D3B29BBD80>, <function Game_sim.Offense.take_layup at 0x000001D3B29BBE20>, <function Game_sim.Offense.take_dunk at 0x000001D3B29BBEC0>, <function Game_sim.Offense.take_three_point_shot at 0x000001D3B29BBF60>, <function Game_sim.Offense.take_midrange_shot at 0x000001D3B2A10040>)
 
-start_sim()
+print(start_sim())
 """
 
 
