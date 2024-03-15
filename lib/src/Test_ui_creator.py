@@ -331,26 +331,26 @@ def main(page: ft.Page):
                 
 
     class Sim_game():
-        
         lv = ft.ListView(expand=1, spacing=10, padding=20, auto_scroll=True)
         switch = ft.Switch(label=" Fullscreen",value=True,scale=.7,active_color=ft.colors.BACKGROUND)
         my_team_score_display =  ft.Text(text_align=ft.TextAlign.CENTER,weight=ft.FontWeight.W_500,value=0,size=15)
         ai_team_score_display =  ft.Text(text_align=ft.TextAlign.CENTER,weight=ft.FontWeight.W_500,value=0,size=15)
         game_speed_slider = ft.Slider(value=1,min=0.04,max=2.5,divisions=3,width=300,active_color=ft.colors.WHITE70,label=" Gamespeed: {value}% ",
                                         on_change=lambda e: print((e.control.value)))
+        
         class Players(ft.Container):
-            player_size = 40  
-            player_speed = 500
             court_min_max_width = [60,240]
             court_min_max_height = [10,205]    
-            def __init__(self,width,height,shape,bgcolor,speed,bottom,left,player_info,player_name):
+            def __init__(self,shape,bgcolor,bottom,left,player_info,player_name):
                 super().__init__()
-                self.width = width
-                self.height = height
+                self.player_size = 40 #default vlaues
+                self.player_speed = 500 
+                self.width = self.player_size
+                self.height = self.player_size
+                self.animate_position = self.player_speed
                 self.shape = shape
                 self.bgcolor = bgcolor
                 self.border = ft.border.all(2,ft.colors.WHITE24)
-                self.animate_position = speed
                 self.alignment = ft.alignment.center
                 self.bottom = bottom
                 self.left = left
@@ -359,16 +359,24 @@ def main(page: ft.Page):
                 self.content = ft.Text(value=self.player_info.position if player_info != None else "",text_align=ft.TextAlign.CENTER,weight=ft.FontWeight.W_500,color=ft.colors.WHITE)
                 self.expand = True
 
-        court_player_1 = Players(Players.player_size,Players.player_size,ft.BoxShape.CIRCLE,ft.colors.RED,Players.player_speed,105,250,my_team_player1,(my_team_player1.first_name,my_team_player1.last_name))    
-        court_player_2 = Players(Players.player_size,Players.player_size,ft.BoxShape.CIRCLE,ft.colors.BLUE,Players.player_speed,180,170,my_team_player2,(my_team_player2.first_name,my_team_player2.last_name))    
-        court_player_3 = Players(Players.player_size,Players.player_size,ft.BoxShape.CIRCLE,ft.colors.ORANGE_600,Players.player_speed,30,130,my_team_player3,(my_team_player3.first_name,my_team_player3.last_name))    
-        court_ball = Players(Players.player_size/1.9,Players.player_size/1.9,ft.BoxShape.CIRCLE,ft.colors.ORANGE_600,Players.player_speed,100,240,None,None)    
+        court_player_1 = Players(ft.BoxShape.CIRCLE,ft.colors.RED,105,250,my_team_player1,(my_team_player1.first_name,my_team_player1.last_name))    
+        court_player_2 = Players(ft.BoxShape.CIRCLE,ft.colors.BLUE,180,170,my_team_player2,(my_team_player2.first_name,my_team_player2.last_name))    
+        court_player_3 = Players(ft.BoxShape.CIRCLE,ft.colors.ORANGE_600,30,130,my_team_player3,(my_team_player3.first_name,my_team_player3.last_name))    
+        court_ball = Players(ft.BoxShape.CIRCLE,ft.colors.AMBER_700,100,240,None,None)
+        court_ball.width = 20
+        court_ball.height = 20
+        
+
+        
+    
+
+
+        court_players = [court_player_1,court_player_2,court_player_3,court_ball]
+
+        court_icons = ft.Stack([court_player_1,court_player_2,court_player_3,court_ball],height=250,expand=True)
 
         court_picture = ft.Image( src="lib\\assets\\images\\basketball-half-court-parquet-600nw-122537710.png",width=380,height=380,scale=.9,fit=ft.ImageFit.COVER,
                                         repeat=ft.ImageRepeat.NO_REPEAT,border_radius=ft.border_radius.all(5))
-        
-        court_icons = ft.Stack([court_player_1,court_player_2,court_player_3,court_ball],height=250,expand=True)
-
         court = ft.Stack([
             ft.Container(
                 width=court_picture.width,
@@ -387,7 +395,6 @@ def main(page: ft.Page):
             )
             ],expand=True)   
         
-        
         def run_play(e):
             for i in range(10):
                 Sim_game.court_player_1.bottom = random.randint(min(Sim_game.Players.court_min_max_height),max(Sim_game.Players.court_min_max_height))
@@ -399,12 +406,6 @@ def main(page: ft.Page):
                 page.update()
                 time.sleep(1)
             
-
-
-
-
-               
-        
 
         def court_resizing():
             Sim_game.court_picture.expand = True
@@ -423,19 +424,6 @@ def main(page: ft.Page):
                 time.sleep(round(Sim_game.game_speed_slider.value,3))
                 
                 Sim_game.court_player_1.player_info.first_name
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
