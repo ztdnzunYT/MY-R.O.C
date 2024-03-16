@@ -341,7 +341,7 @@ def main(page: ft.Page):
         class Players(ft.Container):
             court_min_max_width = [60,240]
             court_min_max_height = [10,205]    
-            def __init__(self,shape,bgcolor,bottom,left,player_info,player_name):
+            def __init__(self,shape,bgcolor,bottom,left,player_info):
                 super().__init__()
                 self.player_size = 40 #default vlaues
                 self.player_speed = 500 
@@ -355,23 +355,19 @@ def main(page: ft.Page):
                 self.bottom = bottom
                 self.left = left
                 self.player_info = player_info
-                self.player_name = player_name
                 self.content = ft.Text(value=self.player_info.position if player_info != None else "",text_align=ft.TextAlign.CENTER,weight=ft.FontWeight.W_500,color=ft.colors.WHITE)
                 self.expand = True
 
-        court_player_1 = Players(ft.BoxShape.CIRCLE,ft.colors.RED,105,250,my_team_player1,(my_team_player1.first_name,my_team_player1.last_name))    
-        court_player_2 = Players(ft.BoxShape.CIRCLE,ft.colors.BLUE,180,170,my_team_player2,(my_team_player2.first_name,my_team_player2.last_name))    
-        court_player_3 = Players(ft.BoxShape.CIRCLE,ft.colors.ORANGE_600,30,130,my_team_player3,(my_team_player3.first_name,my_team_player3.last_name))    
-        court_ball = Players(ft.BoxShape.CIRCLE,ft.colors.AMBER_700,100,240,None,None)
+        court_player_1 = Players(ft.BoxShape.CIRCLE,ft.colors.RED,105,250,my_team_player1)    
+        court_player_2 = Players(ft.BoxShape.CIRCLE,ft.colors.BLUE,180,170,my_team_player2)    
+        court_player_3 = Players(ft.BoxShape.CIRCLE,ft.colors.ORANGE_600,30,130,my_team_player3)    
+        court_ball = Players(ft.BoxShape.CIRCLE,ft.colors.AMBER_700,100,240,None)
         court_ball.width = 20
         court_ball.height = 20
-        
-
-        
-    
 
 
-        court_players = [court_player_1,court_player_2,court_player_3,court_ball]
+
+        court_players = [court_player_1,court_player_2,court_player_3]
 
         court_icons = ft.Stack([court_player_1,court_player_2,court_player_3,court_ball],height=250,expand=True)
 
@@ -395,40 +391,62 @@ def main(page: ft.Page):
             )
             ],expand=True)   
         
-        def run_play(e):
-            for i in range(10):
-                Sim_game.court_player_1.bottom = random.randint(min(Sim_game.Players.court_min_max_height),max(Sim_game.Players.court_min_max_height))
-                Sim_game.court_player_1.left = random.randint(min(Sim_game.Players.court_min_max_width),max(Sim_game.Players.court_min_max_width))
-                Sim_game.court_player_2.bottom = random.randint(min(Sim_game.Players.court_min_max_height),max(Sim_game.Players.court_min_max_height))
-                Sim_game.court_player_2.left = random.randint(min(Sim_game.Players.court_min_max_width),max(Sim_game.Players.court_min_max_width))
-                Sim_game.court_player_3.bottom = random.randint(min(Sim_game.Players.court_min_max_height),max(Sim_game.Players.court_min_max_height))
-                Sim_game.court_player_3.left = random.randint(min(Sim_game.Players.court_min_max_width),max(Sim_game.Players.court_min_max_width))
-                page.update()
-                time.sleep(1)
+        play_animation_pos = {
+            "checked in the ball" : [[105,105],[250,250]]  #lessen the horizontal max
             
+            } 
+
+        """
+            "dribbled the ball" : [test.Player_init.court_horizontal_min_max,test.Player_init.court_vertical_min_max],
+            "passed the ball to" : [test.Player_init.court_horizontal_min_max,test.Player_init.court_vertical_min_max],
+            "went up for a layup" : [test.Player_init.court_horizontal_min_max,test.Player_init.court_vertical_min_max],
+            "went up for a dunk" : [test.Player_init.court_horizontal_min_max,test.Player_init.court_vertical_min_max],
+            "pulled up for a mid-range shot" : [test.Player_init.court_horizontal_min_max,test.Player_init.court_vertical_min_max],
+            "pulled up for a three-point shot" : [test.Player_init.court_horizontal_min_max,test.Player_init.court_vertical_min_max],
+            "grabbed the rebound" : [test.Player_init.court_horizontal_min_max,test.Player_init.court_vertical_min_max],
+            "missed the rebound" : [test.Player_init.court_horizontal_min_max,test.Player_init.court_vertical_min_max],
+            """
+        
+        court_horizontal_min_max = [60,280]
+        court_vertical_min_max = [15,200]
 
         def court_resizing():
             Sim_game.court_picture.expand = True
             page.update()
         
+        
+        def animate_play(i):
+            for play in Sim_game.play_animation_pos:
+                if play in Game_sim.play_log[i]:
+                    for name in Sim_game.court_players:
+                        if (name.player_info.first_name and name.player_info.last_name) in Game_sim.play_log[i]:
+                            name.bottom = random.randint(min(Sim_game.play_animation_pos[play][0]),max(Sim_game.play_animation_pos[play][0]))
+                            name.left = random.randint(min(Sim_game.play_animation_pos[play][1]),max(Sim_game.play_animation_pos[play][1]))
+                            page.update()
+                            print(name.player_info.first_name,name.player_info.last_name, play)
+                            time.sleep(1)
+                            name.bottom = 0 
+                            name.left = 0
+                            page.update()
+                            time.sleep(1)
+
+      
         def new_log_entry():
+            
             my_team_score = 0
             ai_team_score = 0
             Sim_game.my_team_score_display.value = 0
             Sim_game.ai_team_score_display.value = 0
             Sim_game.my_team_score_display.color = ft.colors.WHITE
             Sim_game.ai_team_score_display.color = ft.colors.WHITE
+            time.sleep(1)
             Sim_game.lv.controls.clear()
+            
             
             for i in range(len(Game_sim.play_log)):
                 time.sleep(round(Sim_game.game_speed_slider.value,3))
-                
-                Sim_game.court_player_1.player_info.first_name
-
-
-
-
                 Sim_game.lv.controls.append(ft.Text(f"{Game_sim.play_log[i]}",color=ft.colors.WHITE,weight=ft.FontWeight.W_500))
+                Sim_game.animate_play(i)
                 if "MY TEAM SCORE :" in Game_sim.play_log[i]:
                     my_team_score_list = []
                     for o in range(len(Game_sim.play_log[i])):
@@ -459,6 +477,7 @@ def main(page: ft.Page):
                 page.update()
             Game_sim.play_log.clear()
             start_sim()
+            
       
         
         def sim_game():
@@ -616,14 +635,8 @@ def main(page: ft.Page):
                                                 bgcolor=ft.colors.TRANSPARENT,
                                                 expand=True,
                                                 content=(
-                                                    ft.Row([
-                                                        ft.Column([
-                                                            ft.ElevatedButton( text="Start Sim",icon=ft.icons.PLAY_ARROW_ROUNDED, style=ft.ButtonStyle(shape=ft.ContinuousRectangleBorder(radius=30,)
-                                                                            ,padding=15),tooltip="Click to start sim",color=ft.colors.WHITE,bgcolor=ft.colors.WHITE30,on_click=lambda e: Sim_game.new_log_entry()),
-                                                            ft.ElevatedButton( text="Run Play",icon=ft.icons.PLAY_ARROW_ROUNDED, style=ft.ButtonStyle(shape=ft.ContinuousRectangleBorder(radius=30,)
-                                                                            ,padding=15),tooltip="Click to make players run a play",color=ft.colors.WHITE,bgcolor=ft.colors.WHITE30,on_click=Sim_game.run_play)
-                                                        ])
-                                                    ])
+                                                    ft.ElevatedButton( text="Start Sim",icon=ft.icons.PLAY_ARROW_ROUNDED, style=ft.ButtonStyle(shape=ft.ContinuousRectangleBorder(radius=30,)
+                                                                            ,padding=15),tooltip="Click to start sim",color=ft.colors.WHITE,bgcolor=ft.colors.WHITE30,on_click=lambda e: Sim_game.new_log_entry())
                                                 )
                                                 )
                                             ])

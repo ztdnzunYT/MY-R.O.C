@@ -58,7 +58,7 @@ self.three_point_percentage = three_point_percentage
 
 
 class Game_pace:
-    gamespeed = .01
+    gamespeed = 0
 
 class Game_difficulty:
     easy = 7
@@ -67,8 +67,6 @@ class Game_difficulty:
     hard = 4
     difficulty = medium
 
-def time_delay():
-    time.sleep(Game_pace.gamespeed)
 
 
 class Game_stats:
@@ -144,14 +142,14 @@ class Game_sim:
             Game_sim.ball_holder = my_team_player1
             #print(f"{Game_sim.ball_holder.position} {Game_sim.ball_holder.first_name} {Game_sim.ball_holder.last_name} checked in the ball")
             Game_sim.play_log.append(f"{Game_sim.ball_holder.position} {Game_sim.ball_holder.first_name} {Game_sim.ball_holder.last_name} checked in the ball")
-            time_delay()
+            ()
             Game_sim.Offense.pass_ball()
      
         def clear_ball():
             Game_sim.ai_defender_picker()
             #print(f"{Game_sim.ball_holder.position} {Game_sim.ball_holder.first_name} {Game_sim.ball_holder.last_name} cleared the ball")
             Game_sim.play_log.append(f"{Game_sim.ball_holder.position} {Game_sim.ball_holder.first_name} {Game_sim.ball_holder.last_name} cleared the ball")
-            time_delay()
+            ()
             Game_sim.Offense.pass_ball()
 
         def pass_ball():
@@ -163,7 +161,7 @@ class Game_sim:
                 else:
                     #print(f"{Game_sim.ball_holder.position} {Game_sim.ball_holder.first_name} {Game_sim.ball_holder.last_name} dribbled the ball")
                     Game_sim.play_log.append(f"{Game_sim.ball_holder.position} {Game_sim.ball_holder.first_name} {Game_sim.ball_holder.last_name} dribbled the ball")
-                    time_delay()
+                    ()
                     if random.randint(0,Game_difficulty.difficulty)==0:
                         Game_sim.Ai_defense.steal_ball()
                     Game_sim.Offense.pass_ball()
@@ -171,7 +169,7 @@ class Game_sim:
                 Game_sim.ai_defender_picker()
                 #print(f"{Game_sim.ball_holder.position} {Game_sim.ball_holder.first_name} {Game_sim.ball_holder.last_name} passed the ball to {Game_sim.ball_reciver.position} {Game_sim.ball_reciver.first_name} {Game_sim.ball_reciver.last_name}")
                 Game_sim.play_log.append(f"{Game_sim.ball_holder.position} {Game_sim.ball_holder.first_name} {Game_sim.ball_holder.last_name} passed the ball to {Game_sim.ball_reciver.position} {Game_sim.ball_reciver.first_name} {Game_sim.ball_reciver.last_name}")
-                time_delay()
+                ()
                 if random.randint(0,Game_difficulty.difficulty)==0:
                     Game_sim.Ai_defense.steal_ball()
                 Game_sim.ball_holder = Game_sim.ball_reciver
@@ -180,7 +178,7 @@ class Game_sim:
         def take_layup():
             #print(f"{Game_sim.ball_holder.position} {Game_sim.ball_holder.first_name} {Game_sim.ball_holder.last_name} went up for a layup")
             Game_sim.play_log.append(f"{Game_sim.ball_holder.position} {Game_sim.ball_holder.first_name} {Game_sim.ball_holder.last_name} went up for a layup")
-            time_delay()
+            ()
             player_layup_percent = random.randint(0,Game_sim.ball_holder.layup)
             interior_defense_percent = random.randint(0,ai_defender.interior_defense)
             if player_layup_percent > interior_defense_percent:
@@ -189,7 +187,7 @@ class Game_sim:
                 Game_stats.layups_made +=1 
                 Game_stats.score +=1
                 Game_stats.my_team_display_score()
-                time_delay()
+                ()
                 Game_sim.Offense.check_ball()
             else:
                 if random.randint(0,Game_difficulty.difficulty) == 0:
@@ -198,13 +196,13 @@ class Game_sim:
                     #print(f"{Game_sim.ball_holder.position} {Game_sim.ball_holder.first_name} {Game_sim.ball_holder.last_name} missed the layup")
                     Game_sim.play_log.append(f"{Game_sim.ball_holder.position} {Game_sim.ball_holder.first_name} {Game_sim.ball_holder.last_name} missed the layup")
                     Game_stats.layups_missed +=1 
-                    time_delay()
+                    ()
                     Game_sim.Defense.rebound_ball()
 
         def take_dunk():
             #print(f"{Game_sim.ball_holder.position} {Game_sim.ball_holder.first_name} {Game_sim.ball_holder.last_name} went up for a dunk")
             Game_sim.play_log.append(f"{Game_sim.ball_holder.position} {Game_sim.ball_holder.first_name} {Game_sim.ball_holder.last_name} went up for a dunk")
-            time_delay()
+            ()
             player_dunk_percent = random.randint(0,Game_sim.ball_holder.dunk)
             interior_defense_percent = random.randint(0,ai_defender.interior_defense)
             if player_dunk_percent > interior_defense_percent:
@@ -213,7 +211,7 @@ class Game_sim:
                 Game_stats.dunks_made +=1 
                 Game_stats.score +=1
                 Game_stats.my_team_display_score()
-                time_delay()
+                ()
                 Game_sim.Offense.check_ball()
             else:
                 if random.randint(0,Game_difficulty.difficulty) == 0:
@@ -222,13 +220,13 @@ class Game_sim:
                     #print(f"{Game_sim.ball_holder.position} {Game_sim.ball_holder.first_name} {Game_sim.ball_holder.last_name} missed the dunk")
                     Game_sim.play_log.append(f"{Game_sim.ball_holder.position} {Game_sim.ball_holder.first_name} {Game_sim.ball_holder.last_name} missed the dunk")
                     Game_stats.dunks_missed +=1 
-                    time_delay()
+                    ()
                     Game_sim.Defense.rebound_ball()
 
         def take_three_point_shot():
             #print(f"{Game_sim.ball_holder.position} {Game_sim.ball_holder.first_name} {Game_sim.ball_holder.last_name} pulled up for a three-point shot")
             Game_sim.play_log.append(f"{Game_sim.ball_holder.position} {Game_sim.ball_holder.first_name} {Game_sim.ball_holder.last_name} pulled up for a three-point shot")
-            time_delay()
+            ()
             player_three_percent = random.randint(0,Game_sim.ball_holder.three_pointer)
             perimeter_defender_percent = random.randint(0,ai_defender.perimeter_defense)
             if player_three_percent > perimeter_defender_percent: #MADE 3 POINTER
@@ -237,7 +235,7 @@ class Game_sim:
                 Game_stats.three_points_made +=1 
                 Game_stats.score +=2
                 Game_stats.my_team_display_score()
-                time_delay()
+                ()
                 Game_sim.Offense.check_ball()
             else:
                 if random.randint(0,Game_difficulty.difficulty) == 0:
@@ -246,13 +244,13 @@ class Game_sim:
                     #print(f"{Game_sim.ball_holder.position} {Game_sim.ball_holder.first_name} {Game_sim.ball_holder.last_name} missed the three-point shot")
                     Game_sim.play_log.append(f"{Game_sim.ball_holder.position} {Game_sim.ball_holder.first_name} {Game_sim.ball_holder.last_name} missed the three-point shot")
                     Game_stats.three_points_missed +=1 
-                    time_delay()
+                    ()
                     Game_sim.Defense.rebound_ball()
             
         def take_midrange_shot():
             #print(f"{Game_sim.ball_holder.position} {Game_sim.ball_holder.first_name} {Game_sim.ball_holder.last_name} pulled up for a mid-range shot")
             Game_sim.play_log.append(f"{Game_sim.ball_holder.position} {Game_sim.ball_holder.first_name} {Game_sim.ball_holder.last_name} pulled up for a mid-range shot")
-            time_delay()
+            ()
             player_midrange_percent = random.randint(0,Game_sim.ball_holder.midrange)
             perimeter_defender_percent = random.randint(0,ai_defender.perimeter_defense)
             if player_midrange_percent > perimeter_defender_percent: #MADE 2 POINTER
@@ -261,7 +259,7 @@ class Game_sim:
                 Game_stats.midrange_shots_made +=1 
                 Game_stats.score +=1
                 Game_stats.my_team_display_score()
-                time_delay()
+                ()
                 Game_sim.Offense.check_ball()
             else:
                 if random.randint(0,Game_difficulty.difficulty) == 0:
@@ -270,7 +268,7 @@ class Game_sim:
                     #print(f"{Game_sim.ball_holder.position} {Game_sim.ball_holder.first_name} {Game_sim.ball_holder.last_name} missed the mid-range shot")
                     Game_sim.play_log.append(f"{Game_sim.ball_holder.position} {Game_sim.ball_holder.first_name} {Game_sim.ball_holder.last_name} missed the mid-range shot")
                     Game_stats.midrange_shots_missed +=1 
-                    time_delay()
+                    ()
                     Game_sim.Defense.rebound_ball()          
 
         def create_shot():
@@ -291,7 +289,7 @@ class Game_sim:
                 Game_sim.Ai_defense.turnover_ball()
                 Game_stats.steals +=1  
                 Game_stats.ai_turnovers +=1
-                time_delay()
+                ()
                 Game_sim.Offense.pass_ball()
         
         def block_ball(action):   
@@ -303,7 +301,7 @@ class Game_sim:
                 Game_stats.blocks +=1 
                 Game_stats.ai_turnovers +=1
                 Game_sim.Ai_defense.turnover_ball()
-                time_delay()
+                ()
                 Game_sim.Offense.pass_ball()
 
 
@@ -315,16 +313,16 @@ class Game_sim:
                 #print(f"{Game_sim.ball_holder.position} {Game_sim.ball_holder.first_name} {Game_sim.ball_holder.last_name} grabbed the rebound")
                 Game_sim.play_log.append(f"{Game_sim.ball_holder.position} {Game_sim.ball_holder.first_name} {Game_sim.ball_holder.last_name} grabbed the rebound")
                 Game_stats.rebounds_grabbed +=1 
-                time_delay()
+                ()
                 Game_sim.rebound_plays[random.randrange(0,len(Game_sim.rebound_plays))]()
             else:
                 #print(f"{Game_sim.ball_holder.position} {Game_sim.ball_holder.first_name} {Game_sim.ball_holder.last_name} missed the rebound")
                 Game_sim.play_log.append(f"{Game_sim.ball_holder.position} {Game_sim.ball_holder.first_name} {Game_sim.ball_holder.last_name} missed the rebound")
-                time_delay()
+                ()
                 Game_stats.rebounds_missed +=1
                 #print(f"{Game_sim.ai_ball_holder.position} {Game_sim.ai_ball_holder.first_name} {Game_sim.ai_ball_holder.last_name} grabbed the rebound")
                 Game_sim.play_log.append(f"{Game_sim.ai_ball_holder.position} {Game_sim.ai_ball_holder.first_name} {Game_sim.ai_ball_holder.last_name} grabbed the rebound")
-                time_delay()
+                ()
                 Game_sim.Defense.turnover_ball()
                 Game_sim.Ai_offense.clear_ball()
         
@@ -365,14 +363,14 @@ class Game_sim:
             Game_sim.ai_ball_holder = ai_team_player1
             #print(f"{Game_sim.ai_ball_holder.position} {Game_sim.ai_ball_holder.first_name} {Game_sim.ai_ball_holder.last_name} checked in the ball")
             Game_sim.play_log.append(f"{Game_sim.ai_ball_holder.position} {Game_sim.ai_ball_holder.first_name} {Game_sim.ai_ball_holder.last_name} checked in the ball")
-            time_delay()
+            ()
             Game_sim.Ai_offense.pass_ball()
 
         def clear_ball():
             Game_sim.my_team_defender_picker()
             #print(f"{Game_sim.ai_ball_holder.position} {Game_sim.ai_ball_holder.first_name} {Game_sim.ai_ball_holder.last_name} cleared the ball")
             Game_sim.play_log.append(f"{Game_sim.ai_ball_holder.position} {Game_sim.ai_ball_holder.first_name} {Game_sim.ai_ball_holder.last_name} cleared the ball")
-            time_delay()
+            ()
             Game_sim.Ai_offense.pass_ball()
             #change to random ai)playy
 
@@ -385,7 +383,7 @@ class Game_sim:
                 else:
                     #print(f"{Game_sim.ai_ball_holder.position} {Game_sim.ai_ball_holder.first_name} {Game_sim.ai_ball_holder.last_name} dribbled the ball")
                     Game_sim.play_log.append(f"{Game_sim.ai_ball_holder.position} {Game_sim.ai_ball_holder.first_name} {Game_sim.ai_ball_holder.last_name} dribbled the ball")
-                    time_delay()
+                    ()
                 if random.randint(0,Game_difficulty.difficulty)==0:
                     Game_sim.Defense.steal_ball()
                 Game_sim.Ai_offense.pass_ball()
@@ -396,13 +394,13 @@ class Game_sim:
                 #print(f"{Game_sim.ai_ball_holder.position} {Game_sim.ai_ball_holder.first_name} {Game_sim.ai_ball_holder.last_name} passed the ball to {Game_sim.ai_ball_reciver.position} {Game_sim.ai_ball_reciver.first_name} {Game_sim.ai_ball_reciver.last_name}")
                 Game_sim.play_log.append(f"{Game_sim.ai_ball_holder.position} {Game_sim.ai_ball_holder.first_name} {Game_sim.ai_ball_holder.last_name} passed the ball to {Game_sim.ai_ball_reciver.position} {Game_sim.ai_ball_reciver.first_name} {Game_sim.ai_ball_reciver.last_name}")
                 Game_sim.ai_ball_holder = Game_sim.ai_ball_reciver
-                time_delay()
+                ()
                 Game_sim.ai_plays[random.randrange(0,len(Game_sim.plays))]()
 
         def take_layup():
             #print(f"{Game_sim.ai_ball_holder.position} {Game_sim.ai_ball_holder.first_name} {Game_sim.ai_ball_holder.last_name} went up for a layup")
             Game_sim.play_log.append(f"{Game_sim.ai_ball_holder.position} {Game_sim.ai_ball_holder.first_name} {Game_sim.ai_ball_holder.last_name} went up for a layup")
-            time_delay()
+            ()
             player_layup_percent = random.randint(0,Game_sim.ai_ball_holder.layup)
             interior_defense_percent = random.randint(0,my_team_defender.interior_defense)
             if player_layup_percent > interior_defense_percent:
@@ -411,7 +409,7 @@ class Game_sim:
                 Game_stats.ai_layups_made +=1 
                 Game_stats.ai_score +=1 
                 Game_stats.ai_display_score()
-                time_delay()
+                ()
                 Game_sim.Ai_offense.check_ball()
             else:
                 if random.randint(0,Game_difficulty.difficulty) == 0:
@@ -420,13 +418,13 @@ class Game_sim:
                     #print(f"{Game_sim.ai_ball_holder.position} {Game_sim.ai_ball_holder.first_name} {Game_sim.ai_ball_holder.last_name} missed the layup")
                     Game_sim.play_log.append(f"{Game_sim.ai_ball_holder.position} {Game_sim.ai_ball_holder.first_name} {Game_sim.ai_ball_holder.last_name} missed the layup")
                     Game_stats.ai_layups_missed +=1 
-                    time_delay()       
+                    ()       
                     Game_sim.Ai_defense.rebound_ball()
 
         def take_dunk():
             #print(f"{Game_sim.ai_ball_holder.position} {Game_sim.ai_ball_holder.first_name} {Game_sim.ai_ball_holder.last_name} went up for a dunk")
             Game_sim.play_log.append(f"{Game_sim.ai_ball_holder.position} {Game_sim.ai_ball_holder.first_name} {Game_sim.ai_ball_holder.last_name} went up for a dunk")
-            time_delay()
+            ()
             player_dunk_percent = random.randint(0,Game_sim.ai_ball_holder.dunk)
             interior_defense_percent = random.randint(0,my_team_defender.interior_defense)
             if player_dunk_percent > interior_defense_percent:
@@ -435,7 +433,7 @@ class Game_sim:
                 Game_stats.ai_dunks_made +=1 
                 Game_stats.ai_score +=1
                 Game_stats.ai_display_score()
-                time_delay()
+                ()
                 Game_sim.Ai_offense.check_ball()
             else:
                 if random.randint(0,Game_difficulty.difficulty) == 0:
@@ -444,13 +442,13 @@ class Game_sim:
                     #print(f"{Game_sim.ai_ball_holder.position} {Game_sim.ai_ball_holder.first_name} {Game_sim.ai_ball_holder.last_name} missed the dunk")
                     Game_sim.play_log.append(f"{Game_sim.ai_ball_holder.position} {Game_sim.ai_ball_holder.first_name} {Game_sim.ai_ball_holder.last_name} missed the dunk")
                     Game_stats.ai_dunks_missed +=1 
-                    time_delay()
+                    ()
                     Game_sim.Ai_defense.rebound_ball()
                 
         def take_three_point_shot():
             #print(f"{Game_sim.ai_ball_holder.position} {Game_sim.ai_ball_holder.first_name} {Game_sim.ai_ball_holder.last_name} pulled up for a three-point shot")
             Game_sim.play_log.append(f"{Game_sim.ai_ball_holder.position} {Game_sim.ai_ball_holder.first_name} {Game_sim.ai_ball_holder.last_name} pulled up for a three-point shot")
-            time_delay()
+            ()
             player_three_percent = random.randint(0,Game_sim.ai_ball_holder.three_pointer)
             perimeter_defender_percent = random.randint(0,my_team_defender.perimeter_defense)
             if player_three_percent > perimeter_defender_percent: #MADE 3 POINTER
@@ -459,7 +457,7 @@ class Game_sim:
                 Game_stats.ai_three_points_made +=1 
                 Game_stats.ai_score +=2
                 Game_stats.ai_display_score()
-                time_delay()
+                ()
                 Game_sim.Ai_offense.check_ball()
             else:
                 if random.randint(0,Game_difficulty.difficulty) == 0:
@@ -468,14 +466,14 @@ class Game_sim:
                     #print(f"{Game_sim.ai_ball_holder.position} {Game_sim.ai_ball_holder.first_name} {Game_sim.ai_ball_holder.last_name} missed the three-point shot")
                     Game_sim.play_log.append(f"{Game_sim.ai_ball_holder.position} {Game_sim.ai_ball_holder.first_name} {Game_sim.ai_ball_holder.last_name} missed the three-point shot")
                     Game_stats.ai_three_points_missed +=1
-                    time_delay()     
+                    ()     
                     Game_sim.Ai_defense.rebound_ball()
             
     
         def take_midrange_shot():
             #print(f"{Game_sim.ai_ball_holder.position} {Game_sim.ai_ball_holder.first_name} {Game_sim.ai_ball_holder.last_name} pulled up for a mid-range shot")
             Game_sim.play_log.append(f"{Game_sim.ai_ball_holder.position} {Game_sim.ai_ball_holder.first_name} {Game_sim.ai_ball_holder.last_name} pulled up for a mid-range shot")
-            time_delay()
+            ()
             player_midrange_percent = random.randint(0,Game_sim.ai_ball_holder.midrange)
             perimeter_defender_percent = random.randint(0,my_team_defender.perimeter_defense)
             if player_midrange_percent > perimeter_defender_percent: #MADE 2 POINTER
@@ -484,7 +482,7 @@ class Game_sim:
                 Game_stats.ai_midrange_shots_made +=1 
                 Game_stats.ai_score +=1
                 Game_stats.ai_display_score()
-                time_delay()
+                ()
                 Game_sim.Ai_offense.check_ball()
             else:
                 if random.randint(0,Game_difficulty.difficulty) == 0:
@@ -493,7 +491,7 @@ class Game_sim:
                     #print(f"{Game_sim.ai_ball_holder.position} {Game_sim.ai_ball_holder.first_name} {Game_sim.ai_ball_holder.last_name} missed the mid-range shot")
                     Game_sim.play_log.append(f"{Game_sim.ai_ball_holder.position} {Game_sim.ai_ball_holder.first_name} {Game_sim.ai_ball_holder.last_name} missed the mid-range shot")
                     Game_stats.ai_midrange_shots_missed +=1 
-                    time_delay()
+                    ()
                     Game_sim.Ai_defense.rebound_ball()        
 
         def create_shot():
@@ -516,7 +514,7 @@ class Game_sim:
                 Game_sim.Defense.turnover_ball()
                 Game_stats.ai_steals +=1 
                 Game_stats.turnovers +=1
-                time_delay()
+                ()
                 Game_sim.Ai_offense.pass_ball()
 
         def block_ball(action):   
@@ -528,7 +526,7 @@ class Game_sim:
                 Game_stats.ai_blocks +=1 
                 Game_stats.turnovers +=1 
                 Game_sim.Defense.turnover_ball()
-                time_delay()
+                ()
                 Game_sim.Ai_offense.pass_ball()
 
         def rebound_ball():
@@ -538,7 +536,7 @@ class Game_sim:
                 Game_sim.ai_ball_holder = ai_team_player3
                 #print(f"{Game_sim.ai_ball_holder.position} {Game_sim.ai_ball_holder.first_name} {Game_sim.ai_ball_holder.last_name} grabbed the rebound")
                 Game_sim.play_log.append(f"{Game_sim.ai_ball_holder.position} {Game_sim.ai_ball_holder.first_name} {Game_sim.ai_ball_holder.last_name} grabbed the rebound")
-                time_delay()
+                ()
                 Game_stats.ai_rebounds_grabbed +=1 
                 Game_sim.ai_rebound_plays[random.randrange(0,len(Game_sim.ai_rebound_plays))]()
             
@@ -580,7 +578,7 @@ def ball_first():
     #print()
     Game_sim.play_log.append(f"{Game_sim.team_with_ball} : GETS BALL FIRST ")
     Game_sim.play_log.append("")
-    time_delay()
+    ()
 
 
 
@@ -614,14 +612,12 @@ def gameover():
         #print(("-----------------"))
         Game_sim.play_log.append(f"MY TEAM WON! {Game_stats.score} | {Game_stats.ai_score}")
         Game_sim.play_log.append("-----------------")
-        print(Game_sim.play_log)
         quit()
     elif Game_stats.ai_score >= Game_stats.wining_score:
         #print((f"AI TEAM WON! {Game_stats.ai_score}|{Game_stats.score}"))
         #print(("-----------------"))
         Game_sim.play_log.append(f"AI TEAM WON! {Game_stats.ai_score} | {Game_stats.score}")
         Game_sim.play_log.append("-----------------")
-        print(Game_sim.play_log)
         quit()
     
 

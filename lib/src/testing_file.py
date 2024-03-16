@@ -12,9 +12,6 @@ def main(page: ft.Page):
     page.window_min_width = 500
     page.window_min_height = 400
     
-    
-
-    
 
     class Sim_game: 
     
@@ -64,8 +61,8 @@ def main(page: ft.Page):
                 )
             ],expand=True)   
         
-        play_animation = {
-        "checked in the ball" : [[105,105],[250,250]],  #lessen the horizontal max
+        play_animation_pos = {
+        "checked in the ball" : [[105],[250]],  #lessen the horizontal max
         
         } 
 
@@ -83,45 +80,32 @@ def main(page: ft.Page):
         court_horizontal_min_max = [60,280]
         court_vertical_min_max = [15,200] 
 
-        print(court_vertical_min_max[0])
-
         def animate_play(i):
-            for play in Sim_game.play_animation:
-                    if play in Game_sim.play_log[i]:
-                        for name in range(len(Sim_game.players)):
-                            if str((Sim_game.players[name]).info.first_name) and str((Sim_game.players[name]).info.last_name) in Game_sim.play_log[i]:
-                                Sim_game.players[name].bottom = random.randint(Sim_game.play_animation[play][0][0],Sim_game.play_animation[play][0][1])   #change from numbers to min and max | max(play_animation[i][0])
-                                Sim_game.players[name].left = random.randint(Sim_game.play_animation[play][1][0],Sim_game.play_animation[play][1][1])
-                                page.update()
-                                time.sleep(2)
-                                Sim_game.players[name].bottom =  random.randint(Sim_game.court_vertical_min_max[0],Sim_game.court_horizontal_min_max[1])
-                                Sim_game.players[name].left = random.randint(Sim_game.court_horizontal_min_max[0],Sim_game.court_horizontal_min_max[1])
-                                print(str((Sim_game.players[name]).info.first_name),str((Sim_game.players[name]).info.last_name),"Cleared the ball")
-                                page.update()
-                                time.sleep(2)
-                            else:
-                                print("Searching...")
-
-
+            for play in Sim_game.play_animation_pos:
+                if play in Game_sim.play_log[i]:
+                    for name in Sim_game.players:
+                        if (name.info.first_name and name.info.last_name) in Game_sim.play_log[i]:
+                            name.bottom = random.randint(min(Sim_game.play_animation_pos[play][0]),max(Sim_game.play_animation_pos[play][0]))
+                            name.left = random.randint(min(Sim_game.play_animation_pos[play][1]),max(Sim_game.play_animation_pos[play][1]))
+                            page.update()
+                            time.sleep(1)
+                            name.bottom = 0 
+                            name.left = 0
+                            print(name.info.first_name,name.info.last_name, play)
+                            page.update()
+                            time.sleep(1)
+                        else:
+                            print("Searching...")
 
         def run_play(e):
             
             #court_player_1.bottom = random.randint(min(court_vertical_min_max),max(court_vertical_min_max))
             #court_player_1.left = random.randint(min(court_horizontal_min_max),max(court_horizontal_min_max))
-
-
-            print((Sim_game.players[0]).info.first_name,Sim_game.players[0].info.last_name)
             for i in range(len(Game_sim.play_log)):
                 Sim_game.animate_play(i)
 
-                
-                    
-
-
-
                 time.sleep(0.03)        
                     
-                
             page.update()
             time.sleep(.7) 
 
