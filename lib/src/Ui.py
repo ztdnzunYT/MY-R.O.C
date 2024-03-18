@@ -366,13 +366,16 @@ def main(page: ft.Page):
         court_ball.width = 20
         court_ball.height = 20
 
+        #court_player_1.bottom = 220
+        #court_player_1.left = 100
+       
 
 
         court_players = [court_player_1,court_player_2,court_player_3]
 
-        court_icons = ft.Stack([court_player_1,court_player_2,court_player_3,court_ball],height=250,expand=True)
+        court_icons = ft.Stack([court_player_1,court_player_2,court_player_3,court_ball],height=260,expand=True)
 
-        court_picture = ft.Image( src="lib\\assets\\icons\\basketball-half-court-parquet-600nw-122537710.png",width=380,height=380,scale=.9,fit=ft.ImageFit.COVER,
+        court_picture = ft.Image( src="lib\\assets\\images\\basketball-half-court-parquet-600nw-122537710.png",width=380,height=380,scale=.9,fit=ft.ImageFit.COVER,
                                         repeat=ft.ImageRepeat.NO_REPEAT,border_radius=ft.border_radius.all(5))
         court = ft.Stack([
             ft.Container(
