@@ -957,6 +957,12 @@ def main(page: ft.Page):
 
 
     class My_ROC_Team:
+        team_name = ft.Text("MY TEAM",text_align=ft.TextAlign.CENTER,expand=True,size=25,weight=ft.FontWeight.W_500)
+
+    
+
+
+
         def my_roc_team():
             print(f"{page.route} Menu item clicked")
             return ft.Container(
@@ -969,16 +975,23 @@ def main(page: ft.Page):
                 expand=True,
                 content=
                     ft.Column([
-                        ft.Container(
-                            width=200,
-                            height=page.height,
-                            bgcolor=ft.colors.with_opacity(0.1,ft.colors.WHITE),
-                            content=ft.Container(
-                                alignment=ft.alignment.top_center,
-                                margin=ft.margin.only(top=10),
-                                content=ft.Text("MY TEAM",text_align=ft.TextAlign.CENTER,expand=True,size=25,weight=ft.FontWeight.W_500)
+                        ft.Row([
+                            ft.Container(
+                                width=200,
+                                height=page.height,
+                                bgcolor=ft.colors.with_opacity(0.1,ft.colors.WHITE),
+                                content=ft.Column([
+                                            ft.Row([
+                                                ft.Container(
+                                                alignment=ft.alignment.top_center,
+                                                margin=ft.margin.only(top=15),
+                                                content=My_ROC_Team.team_name),
+                                            ],vertical_alignment=ft.alignment.center,alignment=ft.MainAxisAlignment.CENTER),
+                                            ft.Divider(thickness=2,color=ft.colors.WHITE10)
+                                    
+                                ])
                             )
-                        )
+                        ])
                     ],alignment=ft.MainAxisAlignment.CENTER)
 
 
