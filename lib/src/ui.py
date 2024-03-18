@@ -25,6 +25,7 @@ def main(page: ft.Page):
     page.on_window_event = page.update()
 
 
+
     class new_or_load_management:
 
         
@@ -1115,16 +1116,17 @@ def main(page: ft.Page):
                       
                 )
             )
+        page.update()
             
     def page_resive(e):
         page.go(f"'{page.route}'")
        
-
+   
+    print(page.route)
     page.update()
     page.on_route_change = route_change
-
     page.go(page.route)
-    
+
 
 
 ft.app(target=main)
