@@ -964,17 +964,26 @@ def main(page: ft.Page):
                 height=page.window_height,
                 margin=10,
                 border_radius=10,
-                border=ft.border.all(2, ft.colors.WHITE24),
                 alignment=ft.alignment.center,
                 bgcolor=ft.colors.BLACK12,
-                content=(ft.Text(
-                    "MY R.O.C Team",
-                    size=50,
-                    color=ft.colors.with_opacity(0.5,ft.colors.WHITE),
-                    weight=ft.FontWeight.BOLD,
-                    text_align=ft.TextAlign.CENTER,
-                    )),
-                expand=True)
+                expand=True,
+                content=
+                    ft.Column([
+                        ft.Container(
+                            width=200,
+                            height=page.height,
+                            bgcolor=ft.colors.with_opacity(0.1,ft.colors.WHITE),
+                            content=ft.Container(
+                                alignment=ft.alignment.top_center,
+                                margin=ft.margin.only(top=10),
+                                content=ft.Text("MY TEAM",text_align=ft.TextAlign.CENTER,expand=True,size=25,weight=ft.FontWeight.W_500)
+                            )
+                        )
+                    ],alignment=ft.MainAxisAlignment.CENTER)
+
+
+                )
+                
 
     class Settings:
         def settings():
@@ -987,6 +996,7 @@ def main(page: ft.Page):
                 border=ft.border.all(2, ft.colors.WHITE24),
                 alignment=ft.alignment.center,
                 bgcolor=ft.colors.BLACK12,
+                expand=True,
                 content=(ft.Text(
                     "Settings",
                     size=50,
@@ -994,7 +1004,8 @@ def main(page: ft.Page):
                     weight=ft.FontWeight.BOLD,
                     text_align=ft.TextAlign.CENTER,
                     )),
-                expand=True)
+                )
+        
 
 
 
