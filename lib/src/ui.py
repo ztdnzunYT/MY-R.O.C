@@ -7,14 +7,13 @@ from Player_database_reset_manager import database_manager as Dbm
 from Player_db_creator import create_all_tables
 from Player_creator import run as pc_run 
 from Test_simgame import Game_sim, Game_stats, start_sim
-from Player_team_initializer import My_team_query
+from Player_team_initializer import My_team_query , my_team_player1 , my_team_player2 , my_team_player3
 
 
 def main(page: ft.Page):
     page.title = "MY R.O.C MANAGER"
     page.horizontal_alignment = ft.MainAxisAlignment.CENTER
     page.vertical_alignment = ft.MainAxisAlignment.CENTER
-    page.horizontal_alignment = ft.CrossAxisAlignment.CENTER
     print(page.width,page.height)
     page.window_frameless = False
     page.window_width=1050
@@ -22,7 +21,11 @@ def main(page: ft.Page):
     page.window_min_width=1000
     page.window_center()
 
-    class new_or_load_management():
+
+    page.on_window_event = page.update()
+
+
+    class new_or_load_management:
 
         
         new_management_button = ft.Container(
@@ -56,11 +59,8 @@ def main(page: ft.Page):
         def load_management():
             return page.go("/Dashboard")
         
-        
-        
 
-
-    class Main_menu():
+    class Main_menu:
         def side_menu():
             return ft.Row(
                 [
@@ -153,7 +153,7 @@ def main(page: ft.Page):
                 border_radius=10,
                 border=ft.border.all(2, ft.colors.WHITE24),
                 alignment=ft.alignment.center,
-                bgcolor=ft.colors.BLACK12,
+                bgcolor=ft.colors.WHITE12,
                 content=(ft.Text(
                     "MY R.O.C",
                     size=50,
@@ -204,16 +204,16 @@ def main(page: ft.Page):
                 ), 
                 expand=True,
                 alignment=ft.alignment.center
-                )
+            )
         
             
-    class Dashboard():
+    class Dashboard:
         def dashboard():
             print(f"{page.route} Menu item clicked")
             return ft.Container(
                 width=page.window_width,
                 height=page.window_height,
-                margin=5,
+                margin=10,
                 border_radius=10,
                 border=ft.border.all(2, ft.colors.WHITE24),
                 alignment=ft.alignment.center,
@@ -249,7 +249,11 @@ def main(page: ft.Page):
                                                 expand=True,
                                                 ink=True,
                                                 on_click=lambda _: page.go("/Sim Game"),
-                                                content=ft.Text("SIM GAME",size=50,color=ft.colors.WHITE,weight=ft.FontWeight.BOLD,expand=False,text_align=ft.TextAlign.CENTER,italic=True,max_lines=3),
+                                                content=
+                                                    ft.Stack([
+                                                        ft.Text("SIM GAME",size=50,color=ft.colors.BLACK,weight=ft.FontWeight.BOLD,expand=False,text_align=ft.TextAlign.CENTER,italic=True,max_lines=3),
+                                                        ft.Text("SIM GAME",size=50,color=ft.colors.WHITE,weight=ft.FontWeight.BOLD,expand=False,text_align=ft.TextAlign.CENTER,italic=True,max_lines=3),
+                                                    ])
                                                 ),
                                             ft.Container(
                                                 padding=10,
@@ -324,35 +328,130 @@ def main(page: ft.Page):
                             ]
                             ,)]) ,expand=True
                             )
-                    
-            
+                
 
     class Sim_game():
-
-        
         lv = ft.ListView(expand=1, spacing=10, padding=20, auto_scroll=True)
-        my_team_score_display =  ft.Text(text_align=ft.TextAlign.CENTER,weight=ft.FontWeight.W_500,value=0)
-        ai_team_score_display =  ft.Text(text_align=ft.TextAlign.CENTER,weight=ft.FontWeight.W_500,value=0)
-        play = Game_sim.play_choice
-        game_speed_slider = ft.Slider(value=2,min=0.04,max=3,divisions=3,width=300,active_color=ft.colors.WHITE70,label=" Gamespeed: {value}% ",on_change=lambda e: print(round(e.control.value),3))
+        switch = ft.Switch(label=" Fullscreen",value=True,scale=.7,active_color=ft.colors.BACKGROUND)
+        my_team_score_display =  ft.Text(text_align=ft.TextAlign.CENTER,weight=ft.FontWeight.W_500,value=0,size=15)
+        ai_team_score_display =  ft.Text(text_align=ft.TextAlign.CENTER,weight=ft.FontWeight.W_500,value=0,size=15)
+        game_speed_slider = ft.Slider(value=1,min=0.04,max=2.5,divisions=3,width=300,active_color=ft.colors.WHITE70,label=" Gamespeed: {value}% ",
+                                        on_change=lambda e: print((e.control.value)))
+        
+        class Players(ft.Container):
+            court_min_max_width = [60,240]
+            court_min_max_height = [10,205]    
+            def __init__(self,shape,bgcolor,bottom,left,player_info):
+                super().__init__()
+                self.player_size = 40 #default vlaues
+                self.player_speed = 500 
+                self.width = self.player_size
+                self.height = self.player_size
+                self.animate_position = self.player_speed
+                self.shape = shape
+                self.bgcolor = bgcolor
+                self.border = ft.border.all(2,ft.colors.WHITE24)
+                self.alignment = ft.alignment.center
+                self.bottom = bottom
+                self.left = left
+                self.player_info = player_info
+                self.content = ft.Text(value=self.player_info.position if player_info != None else "",text_align=ft.TextAlign.CENTER,weight=ft.FontWeight.W_500,color=ft.colors.WHITE)
+                self.expand = True
 
+        court_player_1 = Players(ft.BoxShape.CIRCLE,ft.colors.RED,105,250,my_team_player1)    
+        court_player_2 = Players(ft.BoxShape.CIRCLE,ft.colors.BLUE,180,170,my_team_player2)    
+        court_player_3 = Players(ft.BoxShape.CIRCLE,ft.colors.ORANGE_600,30,130,my_team_player3)    
+        court_ball = Players(ft.BoxShape.CIRCLE,ft.colors.AMBER_700,100,240,None)
+        court_ball.width = 20
+        court_ball.height = 20
+
+
+
+        court_players = [court_player_1,court_player_2,court_player_3]
+
+        court_icons = ft.Stack([court_player_1,court_player_2,court_player_3,court_ball],height=250,expand=True)
+
+        court_picture = ft.Image( src="lib\\assets\\images\\basketball-half-court-parquet-600nw-122537710.png",width=380,height=380,scale=.9,fit=ft.ImageFit.COVER,
+                                        repeat=ft.ImageRepeat.NO_REPEAT,border_radius=ft.border_radius.all(5))
+        court = ft.Stack([
+            ft.Container(
+                width=court_picture.width,
+                height=court_picture.height,
+                content=(
+                ft.Stack([
+                    court_picture,
+                    ft.Column([
+                        ft.Row([
+                            court_icons
+                        ],
+                        vertical_alignment=ft.alignment.center,alignment=ft.MainAxisAlignment.CENTER)
+                    ],alignment=ft.MainAxisAlignment.CENTER,horizontal_alignment=ft.alignment.center),
+                ])
+                )
+            )
+            ],expand=True)   
+        
+        play_animation_pos = {
+            "checked in the ball" : [[105,105],[250,250]]  #lessen the horizontal max
+            
+            } 
+
+        """
+            "dribbled the ball" : [test.Player_init.court_horizontal_min_max,test.Player_init.court_vertical_min_max],
+            "passed the ball to" : [test.Player_init.court_horizontal_min_max,test.Player_init.court_vertical_min_max],
+            "went up for a layup" : [test.Player_init.court_horizontal_min_max,test.Player_init.court_vertical_min_max],
+            "went up for a dunk" : [test.Player_init.court_horizontal_min_max,test.Player_init.court_vertical_min_max],
+            "pulled up for a mid-range shot" : [test.Player_init.court_horizontal_min_max,test.Player_init.court_vertical_min_max],
+            "pulled up for a three-point shot" : [test.Player_init.court_horizontal_min_max,test.Player_init.court_vertical_min_max],
+            "grabbed the rebound" : [test.Player_init.court_horizontal_min_max,test.Player_init.court_vertical_min_max],
+            "missed the rebound" : [test.Player_init.court_horizontal_min_max,test.Player_init.court_vertical_min_max],
+            """
+        
+        court_horizontal_min_max = [60,280]
+        court_vertical_min_max = [15,200]
+
+        def court_resizing():
+            Sim_game.court_picture.expand = True
+            page.update()
+        
+        
+        def animate_play(i):
+            for play in Sim_game.play_animation_pos:
+                if play in Game_sim.play_log[i]:
+                    for name in Sim_game.court_players:
+                        if (name.player_info.first_name and name.player_info.last_name) in Game_sim.play_log[i]:
+                            name.bottom = random.randint(min(Sim_game.play_animation_pos[play][0]),max(Sim_game.play_animation_pos[play][0]))
+                            name.left = random.randint(min(Sim_game.play_animation_pos[play][1]),max(Sim_game.play_animation_pos[play][1]))
+                            page.update()
+                            print(name.player_info.first_name,name.player_info.last_name, play)
+                            time.sleep(1)
+                            name.bottom = 0 
+                            name.left = 0
+                            page.update()
+                            time.sleep(1)
+
+      
         def new_log_entry():
+            
             my_team_score = 0
             ai_team_score = 0
             Sim_game.my_team_score_display.value = 0
             Sim_game.ai_team_score_display.value = 0
             Sim_game.my_team_score_display.color = ft.colors.WHITE
             Sim_game.ai_team_score_display.color = ft.colors.WHITE
+            time.sleep(1)
             Sim_game.lv.controls.clear()
             
-            for i in range(len(Sim_game.play)):
+            
+            for i in range(len(Game_sim.play_log)):
                 time.sleep(round(Sim_game.game_speed_slider.value,3))
-                Sim_game.lv.controls.append(ft.Text(f"{Sim_game.play[i]}",color=ft.colors.WHITE,weight=ft.FontWeight.W_500))
-                if "MY TEAM SCORE :" in Sim_game.play[i]:
+                Sim_game.lv.controls.append(ft.Text(f"{Game_sim.play_log[i]}",color=ft.colors.WHITE,weight=ft.FontWeight.W_500))
+                Sim_game.animate_play(i)
+                if "MY TEAM SCORE :" in Game_sim.play_log[i]:
                     my_team_score_list = []
-                    for o in range(len(Sim_game.play[i])):
-                        if (str(Sim_game.play[i][o])).isdigit(): 
-                            my_team_score_list.append(Sim_game.play[i][o])
+                    for o in range(len(Game_sim.play_log[i])):
+                        if (str(Game_sim.play_log[i][o])).isdigit(): 
+                            my_team_score_list.append(Game_sim.play_log[i][o])
                             if len(my_team_score_list) == 1:
                                 my_team_score = (my_team_score_list[0])
                             else:
@@ -361,11 +460,11 @@ def main(page: ft.Page):
                 if int(my_team_score) >= Game_stats.wining_score:
                     Sim_game.my_team_score_display.color = ft.colors.LIGHT_GREEN_ACCENT_400
                     Sim_game.ai_team_score_display.color = ft.colors.RED
-                if "AI SCORE :" in Sim_game.play[i]:
+                if "AI SCORE :" in Game_sim.play_log[i]:
                     ai_team_score_list = []
-                    for o in range(len(Sim_game.play[i])):
-                        if (str(Sim_game.play[i][o])).isdigit(): 
-                            ai_team_score_list.append(Sim_game.play[i][o])
+                    for o in range(len(Game_sim.play_log[i])):
+                        if (str(Game_sim.play_log[i][o])).isdigit(): 
+                            ai_team_score_list.append(Game_sim.play_log[i][o])
                             if len(ai_team_score_list) == 1 :
                                 ai_team_score = (ai_team_score_list[0])
                             else:
@@ -376,11 +475,13 @@ def main(page: ft.Page):
                     Sim_game.my_team_score_display.color = ft.colors.RED
 
                 page.update()
-            Sim_game.play.clear()
+            Game_sim.play_log.clear()
             start_sim()
+            
       
         
         def sim_game():
+            Sim_game.court_resizing()
             
             print(f"{page.route} Menu item clicked")
             return ft.Container(
@@ -404,46 +505,54 @@ def main(page: ft.Page):
                             content=(
                                 ft.Column(
                                     [
-
-                                    ft.Row([
-                                        ft.Container(
-                                            alignment=ft.alignment.center,
-                                            bgcolor=ft.colors.BLACK26,
-                                            width=100,
-                                            height=30,
-                                            margin=ft.margin.only(top=15),
-                                            border_radius=2,
-                                            content=ft.Container(
-                                                content=
-                                                ft.Stack([
-                                                    ft.Container(
-                                                        margin=ft.margin.only(top=5,right=50),
-                                                        content=
-                                                        ft.Row([
-                                                            Sim_game.my_team_score_display,
-                                                        ],alignment=ft.MainAxisAlignment.CENTER,spacing=37,vertical_alignment=ft.alignment.center),
-                                                    ),
-                                                    ft.Container(
-                                                        margin=ft.margin.only(top=5,left=50),
-                                                        content=
-                                                        ft.Row([
-                                                            Sim_game.ai_team_score_display,
-                                                        ],alignment=ft.MainAxisAlignment.CENTER,spacing=37,vertical_alignment=ft.alignment.center),
-                                                    ),
-                                                    ft.Container(
-                                                        alignment=ft.alignment.center,
-                                                        content=
-                                                        ft.VerticalDivider(
-                                                            thickness=2,
-                                                            opacity=.5,
-                                                            color=ft.colors.WHITE,
-                                                        ),
+                                        ft.Stack([
+                                            
+                                            ft.Row([
+                                                ft.Container(
+                                                    margin=ft.margin.only(top=10,left=10),
+                                                    content=(
+                                                        Sim_game.switch
                                                     )
-                                                ])
-                                            )
-                                            ),  
-                                        ],vertical_alignment=ft.alignment.center,alignment=ft.MainAxisAlignment.CENTER
-                                        ),
+                                                )
+                                            ],vertical_alignment=ft.alignment.center),
+                                            ft.Row([
+                                                ft.Container(                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
+                                                    alignment=ft.alignment.center,
+                                                    bgcolor=ft.colors.BLACK26,
+                                                    width=100,
+                                                    height=30,
+                                                    margin=ft.margin.only(top=15),
+                                                    border_radius=2,
+                                                    content=
+                                                    ft.Stack([
+                                                        ft.Container(
+                                                            margin=ft.margin.only(top=5,right=50),
+                                                            content=
+                                                            ft.Row([
+                                                                Sim_game.my_team_score_display,
+                                                            ],alignment=ft.MainAxisAlignment.CENTER,spacing=37,vertical_alignment=ft.alignment.center),
+                                                        ),
+                                                        ft.Container(
+                                                            margin=ft.margin.only(top=5,left=50),
+                                                            content=
+                                                            ft.Row([
+                                                                Sim_game.ai_team_score_display,
+                                                            ],alignment=ft.MainAxisAlignment.CENTER,spacing=37,vertical_alignment=ft.alignment.center),
+                                                        ),
+                                                        ft.Container(
+                                                            alignment=ft.alignment.center,
+                                                            content=
+                                                            ft.VerticalDivider(
+                                                                thickness=2,
+                                                                opacity=.5,
+                                                                color=ft.colors.WHITE,
+                                                            ),
+                                                        )
+                                                    ])
+                                                ),    
+                                                
+                                            ],vertical_alignment=ft.alignment.center,alignment=ft.MainAxisAlignment.CENTER)    
+                                        ]), 
 
                                         ft.Container(
                                             width=page.window_width,
@@ -453,20 +562,10 @@ def main(page: ft.Page):
                                             bgcolor=ft.colors.BACKGROUND,
                                             border=ft.border.all(2,ft.colors.BLACK26),
                                             alignment=ft.alignment.center,
-                                            
                                             content=(
-                                                ft.Image(
-                                                    src="lib\\assets\\icons\\basketball-half-court-parquet-600nw-122537710.png",
-                                                    width=400,
-                                                    height=400,
-                                                    scale=.9,
-                                                    fit=ft.ImageFit.COVER,
-                                                    repeat=ft.ImageRepeat.NO_REPEAT,
-                                                    border_radius=ft.border_radius.all(5),
-                                                )
+                                                Sim_game.court
                                             )
                                         ),
-
                                     ft.Row([
                                         Sim_game.game_speed_slider,
                                     ],alignment=ft.MainAxisAlignment.CENTER),
@@ -498,6 +597,7 @@ def main(page: ft.Page):
 
                                     ft.Container(
                                         width=page.window_width,
+                                        height=page.window_height,
                                         border_radius=10,
                                         margin=ft.margin.only(top=10,bottom=20,right=30,left=30),
                                         bgcolor=ft.colors.BLACK26,
@@ -506,12 +606,11 @@ def main(page: ft.Page):
                                         content=(
                                             ft.Row([
                                                 ft.Container(
-                                                width=page.width,
-                                                height=page.height/3,
-                                                margin=ft.margin.only(top=15,bottom=15,right=5,left=20),
+                                                height=page.window_height,
                                                 alignment=ft.alignment.center,
                                                 border_radius=5,
                                                 bgcolor=ft.colors.WHITE24,
+                                                margin=ft.margin.only(left=10,top=10,bottom=10,right=-5),
                                                 expand=True,
                                                 content=(
                                                     ft.Column([
@@ -537,18 +636,14 @@ def main(page: ft.Page):
                                                 expand=True,
                                                 content=(
                                                     ft.ElevatedButton( text="Start Sim",icon=ft.icons.PLAY_ARROW_ROUNDED, style=ft.ButtonStyle(shape=ft.ContinuousRectangleBorder(radius=30,)
-                                                                    ,padding=15),tooltip="Click to start sim",color=ft.colors.WHITE,bgcolor=ft.colors.WHITE30,on_click=lambda e: Sim_game.new_log_entry())
-                                                    )
+                                                                            ,padding=15),tooltip="Click to start sim",color=ft.colors.WHITE,bgcolor=ft.colors.WHITE30,on_click=lambda e: Sim_game.new_log_entry())
                                                 )
-                                            
+                                                )
                                             ])
-                                        )
-                                        
+                                        )                                        
                                     ),  
-
                                     ],horizontal_alignment=ft.alignment.center) 
                                 ),
-
                             expand=True
                         ),
 
@@ -559,8 +654,7 @@ def main(page: ft.Page):
                             border_radius=5,
                             bgcolor=ft.colors.WHITE38,
                             alignment=ft.alignment.center,
-                            content=(
-                                
+                            content=(                                
                                 ft.Container(
                                     width=page.width,
                                     height=page.height,
@@ -595,13 +689,13 @@ def main(page: ft.Page):
                     ),
                 expand=True)
         
-    class The_Roc():
+    class The_Roc:
         def the_Roc():
             print(f"{page.route} Menu item clicked")
             return ft.Container(
             width=page.window_width,
             height=page.window_height,
-            margin=5,
+            margin=10,
             border_radius=10,
             border=ft.border.all(2, ft.colors.WHITE24),
             alignment=ft.alignment.center,
@@ -616,7 +710,7 @@ def main(page: ft.Page):
             expand=True)
 
 
-    class Player_search():
+    class Player_search:
 
         def player_inserter():
             pdc.mycursor.execute("SELECT * FROM player_hub")
@@ -817,11 +911,13 @@ def main(page: ft.Page):
                         border_radius=10,
                         content=ft.Row(
                             [
-                                ft.Column(
-                                    [Player_search.table,
-                                    ft.FilledTonalButton(text="Clear search",on_click=lambda e: Player_search.delete_player()),
-                                    ft.FilledTonalButton(text="Search players",on_click=lambda e: Player_search.add_multiple())],
-                                    scroll=ft.ScrollMode.AUTO,alignment=ft.alignment.center,on_scroll_interval=.1
+                                ft.Column([
+                                        ft.Row([
+                                            ft.FilledTonalButton(text="Search players",on_click=lambda e: Player_search.add_multiple()),
+                                            ft.FilledTonalButton(text="Clear search",on_click=lambda e: Player_search.delete_player())
+                                            ]),
+                                        Player_search.table,
+                                    ],scroll=ft.ScrollMode.AUTO,alignment=ft.alignment.center,on_scroll_interval=.1
                                 ),
                             ],
                             scroll=ft.ScrollMode.AUTO,alignment=ft.alignment.center
@@ -835,13 +931,13 @@ def main(page: ft.Page):
             )   
         
 
-    class Online_pvp():
+    class Online_pvp:
         def online_pvp():
             print(f"{page.route} Menu item clicked")
             return ft.Container(
                 width=page.window_width,
                 height=page.window_height,
-                margin=5,
+                margin=10,
                 border_radius=10,
                 border=ft.border.all(2, ft.colors.WHITE24),
                 alignment=ft.alignment.center,
@@ -856,13 +952,13 @@ def main(page: ft.Page):
                 expand=True)
 
 
-    class My_ROC_Team():
+    class My_ROC_Team:
         def my_roc_team():
             print(f"{page.route} Menu item clicked")
             return ft.Container(
                 width=page.window_width,
                 height=page.window_height,
-                margin=5,
+                margin=10,
                 border_radius=10,
                 border=ft.border.all(2, ft.colors.WHITE24),
                 alignment=ft.alignment.center,
@@ -876,13 +972,13 @@ def main(page: ft.Page):
                     )),
                 expand=True)
 
-    class Settings():
+    class Settings:
         def settings():
             print(f"{page.route} Menu item clicked")
             return ft.Container(
                 width=page.window_width,
                 height=page.window_height,
-                margin=5,
+                margin=10,
                 border_radius=10,
                 border=ft.border.all(2, ft.colors.WHITE24),
                 alignment=ft.alignment.center,
@@ -924,7 +1020,8 @@ def main(page: ft.Page):
                         ft.Row ([ 
                         ft.Row(alignment="top_left", spacing=25, controls=[Main_menu.management_window()],expand=True),
                         ],expand=True)
-                    ]
+                    ],  
+                   
                 )
             )
         
@@ -934,12 +1031,15 @@ def main(page: ft.Page):
                 ft.View(
                     "/Dashboard",
                     [
+                        
                         ft.Row ([ 
                         ft.Row(alignment="top_left", spacing=25, controls=[Main_menu.side_menu(),Dashboard.dashboard()],expand=True),
                         ],expand=True)
-                    ]
-                )
-            )
+                    ],
+                  
+
+                )    
+            )    
         
         if page.route == "/Sim Game":
             page.views.append(
@@ -950,6 +1050,7 @@ def main(page: ft.Page):
                         ft.Row(alignment="top_let", spacing=25, controls=[Main_menu.side_menu(),Sim_game.sim_game()],expand=True),
                         ],expand=True)
                     ],
+                     
                 )
             )
 
@@ -962,6 +1063,7 @@ def main(page: ft.Page):
                         ft.Row(alignment="top_let", spacing=25, controls=[Main_menu.side_menu(),Online_pvp.online_pvp()],expand=True),
                         ],expand=True)
                     ],
+                   
                 )
             )
         if page.route == "/The Roc":
@@ -972,7 +1074,8 @@ def main(page: ft.Page):
                         ft.Row ([ 
                         ft.Row(alignment="top_left", spacing=25, controls=[Main_menu.side_menu(),The_Roc.the_Roc()],expand=True),
                         ],expand=True)
-                    ]
+                    ],
+                    
                 )
             )
         
@@ -985,6 +1088,7 @@ def main(page: ft.Page):
                         ft.Row(alignment="top_let", spacing=25, controls=[Main_menu.side_menu(),Player_search.player_search_menu()],expand=True),
                         ],expand=True)
                     ],
+                   
                 )
             )
         if page.route == "/MY R.O.C Team":
@@ -996,6 +1100,7 @@ def main(page: ft.Page):
                         ft.Row(alignment="top_let", spacing=25, controls=[Main_menu.side_menu(),My_ROC_Team.my_roc_team()],expand=True),
                         ],expand=True)
                     ],
+                    
                 )
             )
         if page.route == "/Settings":
@@ -1007,6 +1112,7 @@ def main(page: ft.Page):
                         ft.Row(alignment="top_let", spacing=25, controls=[Main_menu.side_menu(),Settings.settings()],expand=True),
                         ],expand=True)
                     ],
+                      
                 )
             )
             

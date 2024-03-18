@@ -6,11 +6,11 @@ from Player_database_connector import*
 #mycursor.execute("UPDATE SQLITE_SEQUENCE SET SEQ=0 WHERE NAME='test_user'")
 #UPDATE SQLITE_SEQUENCE SET SEQ=0 WHERE NAME='table_name';
 
-class My_team_query():
+class My_team_query:
     mycursor.execute("SELECT * FROM my_team")
     my_team = mycursor.fetchall()
 
-class Ai_team_picker():
+class Ai_team_picker:
     def pick_random_ai_team():
         global random_ai_team
         #random_ai_team = random.randint(1,10)
@@ -18,12 +18,12 @@ class Ai_team_picker():
         random_ai_team = 5
     pick_random_ai_team()
     
-class Ai_team_query():
+class Ai_team_query:
     mycursor.execute("SELECT * FROM ai_team_"+str(random_ai_team)+"")
     ai_team = mycursor.fetchall()  #List of all the information in the the ai database
 
 
-class Player_initalizer():
+class Player_initalizer:
     def __init__(self,id,first_name,last_name,age,height,weight,star_rating,position,build,moral,trait,team_name,skill_set,injured,recovery_days, 
             potential,overall,offense,defense,roots,three_pointer,midrange,layup,dunk,ball_handle,speed,stamina,passing,strength,rebounding,
             interior_defense,perimeter_defense,steal,block,points,assists,rebounds,steals,blocks,turnovers,games_played,points_per_game,
@@ -94,7 +94,7 @@ class Teams():
     all_teams = (my_team,ai_team)
 
 
-    class My_team():
+    class My_team:
         my_team_p1 = Player_initalizer(My_team_query.my_team[0][0],My_team_query.my_team[0][1],My_team_query.my_team[0][2],My_team_query.my_team[0][3],My_team_query.my_team[0][4],My_team_query.my_team[0][5],My_team_query.my_team[0][6],
                                 My_team_query.my_team[0][7],My_team_query.my_team[0][8],My_team_query.my_team[0][9],My_team_query.my_team[0][10],My_team_query.my_team[0][11],My_team_query.my_team[0][12],My_team_query.my_team[0][13],
                                 My_team_query.my_team[0][14],My_team_query.my_team[0][15],My_team_query.my_team[0][16],My_team_query.my_team[0][17],My_team_query.my_team[0][18],My_team_query.my_team[0][19],My_team_query.my_team[0][20],
@@ -156,6 +156,10 @@ my_team_player3 = Teams.My_team.my_team_p3
 ai_team_player1 = Teams.Ai_team.ai_team_p1
 ai_team_player2 = Teams.Ai_team.ai_team_p2 
 ai_team_player3 = Teams.Ai_team.ai_team_p3
+
+
+
+
 
 '''
 self,id,first_name,last_name,age,height,weight,star_rating,position,build,moral,trait,skill_set,injured,recovery_days, 

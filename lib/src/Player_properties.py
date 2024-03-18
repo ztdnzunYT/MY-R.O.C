@@ -1,4 +1,4 @@
-
+import random
 #THIS FILE IS USED TO CREATE RANDOM PLAYER INFORMATION THAT WILL BE ENTERED INTO THE DATABASE
 
 
@@ -31,7 +31,7 @@ class Player_variables ():
     spf_weight = (180,195,210) #small/power foward weight 
     center_weight = (210,235,260)
     star_rating = (1,2,3,4,5) #may be multiplied by multiplier in main program
-    positions = ("PG","SG","SF","PF","Center")
+    positions = ("PG","SG","SF","PF","C")
     builds = ("Playmaking Shooter","Perimeter-Protecting Slasher","Athletic Finisher","Inside Out Facilitator","Power Lockdown","2 Way Wing"
               ,"Stretch Four","Paint Protector","Glass Cleaning Playmaker","Back-Down Bigman")
     morals = ("Excelent","Good","Alright","Poor","Terrible")
@@ -66,7 +66,7 @@ class Player_variables ():
 pv = Player_variables
 
 
-import random
+
 
 """
     three = pv.star_attribute_rating[0]
