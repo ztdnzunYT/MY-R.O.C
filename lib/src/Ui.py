@@ -17,6 +17,7 @@ def main(page: ft.Page):
     print(page.width,page.height)
     page.window_frameless = False
     page.window_width=1050
+    page.window_height = 690
     page.window_min_height=690
     page.window_min_width=1000
     page.window_center()
