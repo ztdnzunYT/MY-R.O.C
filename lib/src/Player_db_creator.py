@@ -61,7 +61,7 @@ class Player_hub_table_creator():
 
 class Myteam_table_creator():
     def my_team_table_creator():
-         mycursor.execute("""CREATE TABLE my_team(
+        mycursor.execute("""CREATE TABLE my_team(
         player_id INTEGER PRIMARY KEY AUTOINCREMENT,
         first_name TEXT NOT NULL,
         last_name TEXT NOT NULL,
@@ -636,6 +636,8 @@ class Ai_teams_table_creator():
         field_goal_percentage REAL NULL,
         three_point_percentage REAL NULL
         )""")
+
+
 
   
 def create_all_tables():

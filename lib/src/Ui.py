@@ -320,6 +320,7 @@ def main(page: ft.Page):
                                             alignment=ft.alignment.center,
                                             margin=5,
                                             border_radius=5,
+                                            content=ft.Text("USER PROFILE",size=40,color=ft.colors.WHITE,weight=ft.FontWeight.BOLD,expand=False,text_align=ft.TextAlign.CENTER,italic=True,max_lines=3),
                                             expand=False),
 
                                         ],expand=True,spacing=5,alignment=ft.alignment.center)
@@ -359,6 +360,7 @@ def main(page: ft.Page):
                 self.player_info = player_info
                 self.content = ft.Text(value=self.player_info.position if player_info != None else "",text_align=ft.TextAlign.CENTER,weight=ft.FontWeight.W_500,color=ft.colors.WHITE)
                 self.expand = True
+                
 
         court_player_1 = Players(ft.BoxShape.CIRCLE,ft.colors.RED,105,250,my_team_player1)    
         court_player_2 = Players(ft.BoxShape.CIRCLE,ft.colors.BLUE,180,170,my_team_player2)    
@@ -792,12 +794,13 @@ def main(page: ft.Page):
                 #color=ft.colors.with_opacity(0.3,ft.colors.WHITE),
                 cells=[
                 ]
-
             )
             new_row.cells.append(ft.DataCell(ft.Text(f"{player_info[0]}")))
             new_row.cells.append(ft.DataCell(ft.CircleAvatar(content=ft.Text(f"{str(player_info[1][0])}{str(player_info[2][0])}",text_align=ft.TextAlign.CENTER,size=20),
                                                              bgcolor=ft.colors.GREY_900,radius=20,color=ft.colors.WHITE70)))
             for i in range(49):
+                if  i > 0 and i != 6:
+                    new_row.cells.append(ft.DataCell(ft.Text(f"{player_info[i]}")))
                 if i == 5:
                     new_row.cells[i] = (ft.DataCell(ft.Text(f"{player_info[i-1]} ft")))
                 if i == 6: 
@@ -873,8 +876,6 @@ def main(page: ft.Page):
                 if i == 49:
                     new_row.cells[i] = (ft.DataCell(ft.Text(f"{player_info[i-1]} 3pt%")))
                 
-                if  i > 0 and i != 6:
-                    new_row.cells.append(ft.DataCell(ft.Text(f"{player_info[i]}")))
                  #NOTE TO SELF. MIGHT NEED TO ADD THIS FOR THE ATTRIBUTE AND PERCENTS IN FUTURE 
                 
                     # AS WELL AS ADD STACK IN ORDER TO SEE THE SPECIFIC COLUMN NAMES WHILE SCROLLING 
@@ -882,8 +883,6 @@ def main(page: ft.Page):
             Player_search.table.rows.append(new_row)
             page.update()
            
-
-
         #Way to delete all the rows to be able to make a new list with filters
         def delete_player():
             print("player deleted")
@@ -899,7 +898,6 @@ def main(page: ft.Page):
         def player_search_menu():  
             print(f"{page.route} Menu item clicked")
             Player_search.table.rows.clear() #Deletes all of player search 
-           
 
             return ft.Container(
                 width=page.window_width,
@@ -956,49 +954,353 @@ def main(page: ft.Page):
                     )),
                 expand=True)
 
-
     class My_ROC_Team:
+        
+        def player_inserter():
+            pdc.mycursor.execute("SELECT * FROM my_team")
+            my_team = pdc.mycursor.fetchall()
+            return my_team
+        
+
+        class My_team_stats(ft.Row):
+            def __init__(self,content):
+                super().__init__()
+                self.content = content
+                self.controls = ft.Container(
+                    alignment=ft.alignment.top_center,
+                    content=self.content),
+                self.vertical_alignment = ft.alignment.top_center,
+                self.alignment = ft.MainAxisAlignment.CENTER
+        
+        upgrade_points = ft.Text(value=0)
+
+        class Stat_upgrader(ft.Container):
+            def __init__(self,stat_name):
+                super().__init__()
+                self.margin = ft.margin.only(left=30,right=30)
+                self.stat_name = stat_name
+                self.stat_val = 0
+                self.content = My_ROC_Team.Stat_upgrader.build(self)
+            def build(self):
+                stat_label = ft.Text(value=self.stat_name,text_align=ft.TextAlign.CENTER)
+                stat_slider = ft.Slider(label="{value}%",value=self.stat_val,min=0,max=100,divisions=5,width=50,expand=True,disabled=True)
+                stat_increaser_button = ft.IconButton(ft.icons.ADD,on_click=lambda e: stat_increaser())
+                def stat_increaser():
+                    stat_slider.value = stat_slider.value + 20 
+                    page.update()
+                return ft.Row([stat_label,stat_slider,stat_increaser_button],alignment=ft.MainAxisAlignment.CENTER,vertical_alignment=ft.alignment.center)
+
+
+
+        team_online_wins_losses = ft.Text("Wins | Losses",text_align=ft.alignment.center,size=15,expand=True)
+        team_online_win_percent = ft.Text("Win percentage 0%",text_align=ft.alignment.center,size=15)
+        team_mvp = ft.Text("MVP",text_align=ft.alignment.center,size=15)
+        team_online_play_style = ft.Text("Playstyle",text_align=ft.alignment.center,size=15) 
+        team_online_games_played = ft.Text("Games played",text_align=ft.alignment.center,size=15)
+        team_online_points_scored = ft.Text("Carrer online points",text_align=ft.alignment.center,size=15)
+        sim_games_wins_losses =  ft.Text("Wins | Losses",text_align=ft.alignment.center,size=15,expand=True)
+        sim_games_win_percent = ft.Text("Win percentage 0%",text_align=ft.alignment.center,size=15)
+        sim_games_played =  ft.Text("Games played",text_align=ft.alignment.center,size=15)
+        sim_games_points_scored =  ft.Text("Carrer offline points",text_align=ft.alignment.center,size=15)
+
+
+        #team_performance_graph = 
+
         team_name = ft.Text("MY TEAM",text_align=ft.TextAlign.CENTER,expand=True,size=25,weight=ft.FontWeight.W_500)
 
-    
+        table = ft.DataTable(
+            column_spacing=50,
+            data_row_max_height=65,
+            show_bottom_border=False,
+            show_checkbox_column=False,
+            bgcolor=ft.colors.BLACK12,
+            
+            
+            
+            
+            columns=[
+                ft.DataColumn(ft.Text(f"Id",text_align=ft.TextAlign.CENTER,weight=ft.FontWeight.BOLD),tooltip="Player row id"),
+                ft.DataColumn(ft.Text(f"",text_align=ft.TextAlign.CENTER,weight=ft.FontWeight.BOLD)),
+                ft.DataColumn(ft.Text(f"First name",text_align=ft.TextAlign.CENTER,weight=ft.FontWeight.BOLD)),
+                ft.DataColumn(ft.Text(f"Last name",text_align=ft.TextAlign.CENTER,weight=ft.FontWeight.BOLD)),
+                ft.DataColumn(ft.Text(f"Age",text_align=ft.TextAlign.CENTER,weight=ft.FontWeight.BOLD)),
+                ft.DataColumn(ft.Text(f"Height",text_align=ft.TextAlign.CENTER,weight=ft.FontWeight.BOLD)),
+                ft.DataColumn(ft.Text(f"Weight",text_align=ft.TextAlign.CENTER,weight=ft.FontWeight.BOLD)),
+                ft.DataColumn(ft.Text(f"★ Rating",text_align=ft.TextAlign.CENTER,weight=ft.FontWeight.BOLD)),
+                ft.DataColumn(ft.Text(f"Position",text_align=ft.TextAlign.CENTER,weight=ft.FontWeight.BOLD)),
+                ft.DataColumn(ft.Text(f"Build",text_align=ft.TextAlign.CENTER,weight=ft.FontWeight.BOLD)),
+                ft.DataColumn(ft.Text(f"Moral",text_align=ft.TextAlign.CENTER,weight=ft.FontWeight.BOLD)),
+                ft.DataColumn(ft.Text(f"Trait",text_align=ft.TextAlign.CENTER,weight=ft.FontWeight.BOLD)),
+                ft.DataColumn(ft.Text(f"Team name",text_align=ft.TextAlign.CENTER,weight=ft.FontWeight.BOLD)),
+                ft.DataColumn(ft.Text(f"Skill set",text_align=ft.TextAlign.CENTER,weight=ft.FontWeight.BOLD),tooltip="Players with specific skill sets\ncan recieve attribute boosts"),
+                ft.DataColumn(ft.Text(f"Injured",text_align=ft.TextAlign.CENTER,weight=ft.FontWeight.BOLD)),
+                ft.DataColumn(ft.Text(f"Recovery days",text_align=ft.TextAlign.CENTER,weight=ft.FontWeight.BOLD)),
+                ft.DataColumn(ft.Text(f"Potential",text_align=ft.TextAlign.CENTER,weight=ft.FontWeight.BOLD)),
+                ft.DataColumn(ft.Text(f"Overall",text_align=ft.TextAlign.CENTER,weight=ft.FontWeight.BOLD)),
+                ft.DataColumn(ft.Text(f"Offense",text_align=ft.TextAlign.CENTER,weight=ft.FontWeight.BOLD)),
+                ft.DataColumn(ft.Text(f"Defense",text_align=ft.TextAlign.CENTER,weight=ft.FontWeight.BOLD)),
+                ft.DataColumn(ft.Text(f"Roots",text_align=ft.TextAlign.CENTER,weight=ft.FontWeight.BOLD)),
+                ft.DataColumn(ft.Text(f"Three pointer",text_align=ft.TextAlign.CENTER,weight=ft.FontWeight.BOLD)),
+                ft.DataColumn(ft.Text(f"Midrange",text_align=ft.TextAlign.CENTER,weight=ft.FontWeight.BOLD)),
+                ft.DataColumn(ft.Text(f"Layup",text_align=ft.TextAlign.CENTER,weight=ft.FontWeight.BOLD)),
+                ft.DataColumn(ft.Text(f"Dunk",text_align=ft.TextAlign.CENTER,weight=ft.FontWeight.BOLD)),
+                ft.DataColumn(ft.Text(f"Ball handle",text_align=ft.TextAlign.CENTER,weight=ft.FontWeight.BOLD)),
+                ft.DataColumn(ft.Text(f"Speed",text_align=ft.TextAlign.CENTER,weight=ft.FontWeight.BOLD)),
+                ft.DataColumn(ft.Text(f"Stamina",text_align=ft.TextAlign.CENTER,weight=ft.FontWeight.BOLD)),
+                ft.DataColumn(ft.Text(f"Passing",text_align=ft.TextAlign.CENTER,weight=ft.FontWeight.BOLD)),
+                ft.DataColumn(ft.Text(f"Strength",text_align=ft.TextAlign.CENTER,weight=ft.FontWeight.BOLD)),
+                ft.DataColumn(ft.Text(f"Rebounding",text_align=ft.TextAlign.CENTER,weight=ft.FontWeight.BOLD)),
+                ft.DataColumn(ft.Text(f"Interior defense",text_align=ft.TextAlign.CENTER,weight=ft.FontWeight.BOLD)),
+                ft.DataColumn(ft.Text(f"Perimeter defense",text_align=ft.TextAlign.CENTER,weight=ft.FontWeight.BOLD)),
+                ft.DataColumn(ft.Text(f"Steal",text_align=ft.TextAlign.CENTER,weight=ft.FontWeight.BOLD)),
+                ft.DataColumn(ft.Text(f"Block",text_align=ft.TextAlign.CENTER,weight=ft.FontWeight.BOLD)),
+                ft.DataColumn(ft.Text(f"Points",text_align=ft.TextAlign.CENTER,weight=ft.FontWeight.BOLD)),
+                ft.DataColumn(ft.Text(f"Assists",text_align=ft.TextAlign.CENTER,weight=ft.FontWeight.BOLD)),
+                ft.DataColumn(ft.Text(f"Rebounds",text_align=ft.TextAlign.CENTER,weight=ft.FontWeight.BOLD)),
+                ft.DataColumn(ft.Text(f"Steals",text_align=ft.TextAlign.CENTER,weight=ft.FontWeight.BOLD)),
+                ft.DataColumn(ft.Text(f"Blocks",text_align=ft.TextAlign.CENTER,weight=ft.FontWeight.BOLD)),
+                ft.DataColumn(ft.Text(f"Turnovers",text_align=ft.TextAlign.CENTER,weight=ft.FontWeight.BOLD)),
+                ft.DataColumn(ft.Text(f"Games played",text_align=ft.TextAlign.CENTER,weight=ft.FontWeight.BOLD)),
+                ft.DataColumn(ft.Text(f"Points per game",text_align=ft.TextAlign.CENTER,weight=ft.FontWeight.BOLD)),
+                ft.DataColumn(ft.Text(f"Assists per game",text_align=ft.TextAlign.CENTER,weight=ft.FontWeight.BOLD)),
+                ft.DataColumn(ft.Text(f"Steals per game",text_align=ft.TextAlign.CENTER,weight=ft.FontWeight.BOLD)),
+                ft.DataColumn(ft.Text(f"Blocks per game",text_align=ft.TextAlign.CENTER,weight=ft.FontWeight.BOLD)),
+                ft.DataColumn(ft.Text(f"Rebounds per game",text_align=ft.TextAlign.CENTER,weight=ft.FontWeight.BOLD)),
+                ft.DataColumn(ft.Text(f"Turnovers per game",text_align=ft.TextAlign.CENTER,weight=ft.FontWeight.BOLD)),
+                ft.DataColumn(ft.Text(f"Field goal %",text_align=ft.TextAlign.CENTER,weight=ft.FontWeight.BOLD)),
+                ft.DataColumn(ft.Text(f"Three point %",text_align=ft.TextAlign.CENTER,weight=ft.FontWeight.BOLD)),
+                ft.DataColumn(ft.Text(f""))
+              
+            ],
+            rows=[
+                #color=ft.colors.with_opacity(0.3,ft.colors.WHITE),
+            ],
+        )   
+       
+        def add_player(player_info):
+            for i in range(len(My_ROC_Team.player_inserter())):
+                new_row = ft.DataRow(
+                    data=i,
+                    cells= [ ],
+                    #on_long_press=lambda e: print(My_ROC_Team.table.rows)
+                    )   
+                new_row.cells.append(ft.DataCell(ft.Text(f"{player_info[0]}")))
+            new_row.cells.append(ft.DataCell(ft.CircleAvatar(content=ft.Text(f"{str(player_info[1][0])}{str(player_info[2][0])}",text_align=ft.TextAlign.CENTER,size=20),
+                                                             bgcolor=ft.colors.GREY_900,radius=20,color=ft.colors.WHITE70)))
+            for i in range(49):
+                if  i > 0 and i != 6:
+                    new_row.cells.append(ft.DataCell(ft.Text(f"{player_info[i]}")))
+                if i == 5:
+                    new_row.cells[i] = (ft.DataCell(ft.Text(f"{player_info[i-1]} ft")))
+                if i == 6: 
+                    new_row.cells[i] = (ft.DataCell(ft.Text(f"{player_info[i-1]} lb")))
+                if i == 6:
+                    new_row.cells.append(ft.DataCell(ft.Text(f"{(int(player_info[i]) * "★")}")))
+                if i == 15:
+                    new_row.cells[i] = (ft.DataCell(ft.Text(f"{player_info[i-1]} dys")))
+                if i == 16:
+                    new_row.cells[i] = (ft.DataCell(ft.Text(f"{player_info[i-1]} pot")))
+                if i == 17:
+                    new_row.cells[i] = (ft.DataCell(ft.Text(f"{player_info[i-1]} ovr")))
+                if i == 18:
+                    new_row.cells[i] = (ft.DataCell(ft.Text(f"{player_info[i-1]} off")))
+                if i == 19:
+                    new_row.cells[i] = (ft.DataCell(ft.Text(f"{player_info[i-1]} def")))
+                if i == 21:
+                    new_row.cells[i] = (ft.DataCell(ft.Text(f"{player_info[i-1]} three")))
+                if i == 22:
+                    new_row.cells[i] = (ft.DataCell(ft.Text(f"{player_info[i-1]} midr")))
+                if i == 23:
+                    new_row.cells[i] = (ft.DataCell(ft.Text(f"{player_info[i-1]} lay")))
+                if i == 24:
+                    new_row.cells[i] = (ft.DataCell(ft.Text(f"{player_info[i-1]} dnk")))
+                if i == 25:
+                    new_row.cells[i] = (ft.DataCell(ft.Text(f"{player_info[i-1]} handle")))
+                if i == 26:
+                    new_row.cells[i] = (ft.DataCell(ft.Text(f"{player_info[i-1]} speed")))
+                if i == 27:
+                    new_row.cells[i] = (ft.DataCell(ft.Text(f"{player_info[i-1]} stam")))
+                if i == 28:
+                    new_row.cells[i] = (ft.DataCell(ft.Text(f"{player_info[i-1]} passing")))
+                if i == 29:
+                    new_row.cells[i] = (ft.DataCell(ft.Text(f"{player_info[i-1]} strength")))
+                if i == 30:
+                    new_row.cells[i] = (ft.DataCell(ft.Text(f"{player_info[i-1]} rebound")))
+                if i == 31:
+                    new_row.cells[i] = (ft.DataCell(ft.Text(f"{player_info[i-1]} int d")))
+                if i == 32:
+                    new_row.cells[i] = (ft.DataCell(ft.Text(f"{player_info[i-1]} per d")))
+                if i == 33:
+                    new_row.cells[i] = (ft.DataCell(ft.Text(f"{player_info[i-1]} stl")))
+                if i == 34:
+                    new_row.cells[i] = (ft.DataCell(ft.Text(f"{player_info[i-1]} blk")))
+                if i == 35:
+                    new_row.cells[i] = (ft.DataCell(ft.Text(f"{player_info[i-1]} pts")))
+                if i == 36:
+                    new_row.cells[i] = (ft.DataCell(ft.Text(f"{player_info[i-1]} asts")))
+                if i == 37:
+                    new_row.cells[i] = (ft.DataCell(ft.Text(f"{player_info[i-1]} rebs")))
+                if i == 38:
+                    new_row.cells[i] = (ft.DataCell(ft.Text(f"{player_info[i-1]} stls")))
+                if i == 39:
+                    new_row.cells[i] = (ft.DataCell(ft.Text(f"{player_info[i-1]} blks")))
+                if i == 40:
+                    new_row.cells[i] = (ft.DataCell(ft.Text(f"{player_info[i-1]} trnvrs")))
+                if i == 41:
+                    new_row.cells[i] = (ft.DataCell(ft.Text(f"{player_info[i-1]} games played")))
+                if i == 42:
+                    new_row.cells[i] = (ft.DataCell(ft.Text(f"{player_info[i-1]} ppg")))
+                if i == 43:
+                    new_row.cells[i] = (ft.DataCell(ft.Text(f"{player_info[i-1]} apg")))
+                if i == 44:
+                    new_row.cells[i] = (ft.DataCell(ft.Text(f"{player_info[i-1]} spg")))
+                if i == 45:
+                    new_row.cells[i] = (ft.DataCell(ft.Text(f"{player_info[i-1]} bpg")))
+                if i == 46:
+                    new_row.cells[i] = (ft.DataCell(ft.Text(f"{player_info[i-1]} rpg")))
+                if i == 47:
+                    new_row.cells[i] = (ft.DataCell(ft.Text(f"{player_info[i-1]} tpg")))
+                if i == 48:
+                    new_row.cells[i] = (ft.DataCell(ft.Text(f"{player_info[i-1]} fg%")))
+                if i == 49:
+                    new_row.cells[i] = (ft.DataCell(ft.Text(f"{player_info[i-1]} 3pt%")))
+                
+                 #NOTE TO SELF. MIGHT NEED TO ADD THIS FOR THE ATTRIBUTE AND PERCENTS IN FUTURE 
+                
+                    # AS WELL AS ADD STACK IN ORDER TO SEE THE SPECIFIC COLUMN NAMES WHILE SCROLLING 
+            new_row.cells.append(ft.DataCell(ft.CupertinoCheckbox())) 
+            My_ROC_Team.table.rows.append(new_row)
+            page.update()
 
-
+        def add_multiple():
+            for i in range(len(My_ROC_Team.player_inserter())):
+                My_ROC_Team.add_player((My_ROC_Team.player_inserter()[i]))
 
         def my_roc_team():
+            My_ROC_Team.table.rows.clear()
+            My_ROC_Team.player_inserter()
+            My_ROC_Team.add_multiple()
             print(f"{page.route} Menu item clicked")
             return ft.Container(
                 width=page.window_width,
                 height=page.window_height,
                 margin=10,
                 border_radius=10,
-                alignment=ft.alignment.center,
+                alignment=ft.alignment.top_center,
                 bgcolor=ft.colors.BLACK12,
                 expand=True,
                 content=
                     ft.Column([
                         ft.Row([
                             ft.Container(
-                                width=200,
+                                width=150,
                                 height=page.height,
                                 bgcolor=ft.colors.with_opacity(0.1,ft.colors.WHITE),
+                                border=ft.border.only(right=ft.border.BorderSide(2.5,color=ft.colors.with_opacity(0.1,ft.colors.WHITE))),
                                 content=ft.Column([
                                             ft.Row([
                                                 ft.Container(
-                                                alignment=ft.alignment.top_center,
-                                                margin=ft.margin.only(top=15),
-                                                content=My_ROC_Team.team_name),
-                                            ],vertical_alignment=ft.alignment.center,alignment=ft.MainAxisAlignment.CENTER),
-                                            ft.Divider(thickness=2,color=ft.colors.WHITE10)
-                                    
-                                ])
-                            )
-                        ])
-                    ],alignment=ft.MainAxisAlignment.CENTER)
+                                                    alignment=ft.alignment.top_center,
+                                                    margin=ft.margin.only(top=10,bottom=-8.5),
+                                                    content=My_ROC_Team.team_name),
+                                            ],vertical_alignment=ft.alignment.top_center,alignment=ft.MainAxisAlignment.CENTER),
+                                            ft.Divider(thickness=.3,color=ft.colors.with_opacity(.4,ft.colors.WHITE)),
+                                            My_ROC_Team.My_team_stats(ft.Text("Online team stats",text_align=ft.alignment.center,size=15)),
+                                            ft.Divider(thickness=.3,color=ft.colors.with_opacity(.4,ft.colors.WHITE)),
+                                            My_ROC_Team.My_team_stats(My_ROC_Team.team_online_wins_losses),
+                                            ft.Divider(thickness=.3,color=ft.colors.with_opacity(.4,ft.colors.WHITE)),
+                                            My_ROC_Team.My_team_stats(My_ROC_Team.team_online_win_percent),
+                                            ft.Divider(thickness=.3,color=ft.colors.with_opacity(.4,ft.colors.WHITE)),
+                                            My_ROC_Team.My_team_stats(My_ROC_Team.team_mvp),
+                                            ft.Divider(thickness=.3,color=ft.colors.with_opacity(.4,ft.colors.WHITE)),
+                                            My_ROC_Team.My_team_stats(My_ROC_Team.team_online_play_style),
+                                            ft.Divider(thickness=.3,color=ft.colors.with_opacity(.4,ft.colors.WHITE)),
+                                            My_ROC_Team.My_team_stats(My_ROC_Team.team_online_games_played),
+                                            ft.Divider(thickness=.3,color=ft.colors.with_opacity(.4,ft.colors.WHITE)),
+                                            My_ROC_Team.My_team_stats(My_ROC_Team.team_online_points_scored),
+                                            ft.Divider(thickness=.3,color=ft.colors.with_opacity(.4,ft.colors.WHITE)),
 
+                                            # graph
 
-                )
-                
+                                            My_ROC_Team.My_team_stats(ft.Text("Offline team stats",text_align=ft.alignment.center,size=15)),
+                                            ft.Divider(thickness=.3,color=ft.colors.with_opacity(.4,ft.colors.WHITE)),
+                                            My_ROC_Team.My_team_stats(My_ROC_Team.sim_games_wins_losses),
+                                            ft.Divider(thickness=.3,color=ft.colors.with_opacity(.4,ft.colors.WHITE)),
+                                            My_ROC_Team.My_team_stats(My_ROC_Team.sim_games_win_percent),
+                                            ft.Divider(thickness=.3,color=ft.colors.with_opacity(.4,ft.colors.WHITE)),
+                                            My_ROC_Team.My_team_stats(My_ROC_Team.sim_games_played),
+                                            ft.Divider(thickness=.3,color=ft.colors.with_opacity(.4,ft.colors.WHITE)),
+                                            My_ROC_Team.My_team_stats(My_ROC_Team.sim_games_points_scored),
+                                            ft.Divider(thickness=.3,color=ft.colors.with_opacity(.4,ft.colors.WHITE)),
+                                            My_ROC_Team.My_team_stats(ft.Text("")),
+                                            ft.Divider(thickness=.3,color=ft.colors.TRANSPARENT),
+                                        ],alignment=ft.alignment.top_center,horizontal_alignment=ft.alignment.top_center,scroll=ft.ScrollMode.AUTO,expand=True)
+                                ),
 
+                            ft.Container(
+                                expand=True,
+                                bgcolor=ft.colors.TRANSPARENT,
+                                alignment=ft.alignment.top_center,
+                                content=(
+                                    ft.Row([
+                                        ft.Container(
+                                            height=ft.Page.height,
+                                            bgcolor=ft.colors.with_opacity(0.1,ft.colors.WHITE),
+                                            expand=True,
+                                            content=ft.Column([
+                                                ft.Row(
+                                                    [My_ROC_Team.table],
+                                                    scroll=ft.ScrollMode.AUTO,alignment=ft.alignment.top_center
+                                                ),  
+                                                ft.Row([
+                                                    ft.Container(
+                                                        width=500,
+                                                        height=page.height,
+                                                        bgcolor=ft.colors.GREY_400,expand=True),
+                                                    ft.Container(
+                                                        height=page.height,
+                                                        border=ft.border.only(top=ft.BorderSide(2.5,ft.colors.with_opacity(.1,ft.colors.WHITE))),
+                                                        bgcolor=ft.colors.BLACK12,
+                                                        expand=True,
+                                                        content=(
+                                                            ft.Column([
+                                                                ft.Container(
+                                                                    alignment=ft.alignment.center,
+                                                                    margin=10,
+                                                                    content=ft.Row([ft.Text(value=f"Upgrade point remaining : {My_ROC_Team.upgrade_points.value}",text_align=ft.TextAlign.CENTER)],alignment=ft.MainAxisAlignment.CENTER)),
+                                                                My_ROC_Team.Stat_upgrader("Layup"),
+                                                                My_ROC_Team.Stat_upgrader("Dunk"),
+                                                                My_ROC_Team.Stat_upgrader("Mid\nrange"),
+                                                                My_ROC_Team.Stat_upgrader("Three"),
+                                                                My_ROC_Team.Stat_upgrader("Handles"),
+                                                                My_ROC_Team.Stat_upgrader("Passing"),
+                                                                My_ROC_Team.Stat_upgrader("Steal"),
+                                                                My_ROC_Team.Stat_upgrader("Block"),
+                                                                My_ROC_Team.Stat_upgrader("Rebounding"),
+                                                                My_ROC_Team.Stat_upgrader("Interior\nDefense"),
+                                                                My_ROC_Team.Stat_upgrader("Perimeter\nDefense"),
+                                                                My_ROC_Team.Stat_upgrader("Speed"),
+                                                                My_ROC_Team.Stat_upgrader("Stamina"),
+                                                                My_ROC_Team.Stat_upgrader("Strength"),
+                                                                ft.Container(height=300)
+                                                            
+                                                            ],spacing=0,scroll=ft.ScrollMode.AUTO,expand=True,alignment=ft.MainAxisAlignment.CENTER,horizontal_alignment=ft.alignment.center)
+                                                        )),
+                                                    
+                                                ],spacing=0)       
+                                            ],spacing=0)
+                                        )
+                                    ],expand=True,vertical_alignment=ft.alignment.top_center)
+                                )
+                            ),
+                            
+                            
+                            
+                        ],spacing=0,expand=True)
+                    ],alignment=ft.alignment.top_center,horizontal_alignment=ft.alignment.top_center,expand=True,spacing=0)
+           
+            ) 
+   
     class Settings:
         def settings():
             print(f"{page.route} Menu item clicked")
@@ -1019,8 +1321,6 @@ def main(page: ft.Page):
                     text_align=ft.TextAlign.CENTER,
                     )),
                 )
-        
-
 
 
     def route_change(route):
