@@ -399,6 +399,7 @@ def main(page: ft.Page):
         court_vertical_min_max = [15,210]
     
         play_animation_pos = {
+            "cleared the ball" : [[25,195],[215,230]],
             "checked in the ball" : [[105,105],[250,250]],  #lessen the horizontal max
             "dribbled the ball" : [[25,195],[60,240]],
             "went up for a layup" : [[75,155],[60,85]],
@@ -407,6 +408,7 @@ def main(page: ft.Page):
             "pulled up for a three-point shot" : [[15,210],[215,250]],
             "grabbed the rebound" : [[75,155],[60,85]]
             } 
+        
 
         """
             "dribbled the ball" : [test.Player_init.court_horizontal_min_max,test.Player_init.court_vertical_min_max],
@@ -417,6 +419,7 @@ def main(page: ft.Page):
             "pulled up for a three-point shot" : [test.Player_init.court_horizontal_min_max,test.Player_init.court_vertical_min_max],
             "grabbed the rebound" : [test.Player_init.court_horizontal_min_max,test.Player_init.court_vertical_min_max],
             "missed the rebound" : [test.Player_init.court_horizontal_min_max,test.Player_init.court_vertical_min_max],
+            #cleared the ball 
             """
 
         def court_resizing():
@@ -1234,11 +1237,8 @@ def main(page: ft.Page):
             My_ROC_Team.add_multiple()
             print(f"{page.route} Menu item clicked")
             return ft.Container(
-                width=page.window_width,
-                height=page.window_height,
-                margin=10,
                 border_radius=10,
-                alignment=ft.alignment.top_center,
+                alignment=ft.alignment.center,
                 bgcolor=ft.colors.with_opacity(0.3,ft.colors.WHITE),
                 expand=True,
                 content=
@@ -1252,7 +1252,7 @@ def main(page: ft.Page):
                                 content=ft.Column([
                                             ft.Row([
                                                 ft.Container(
-                                                    alignment=ft.alignment.top_center,
+                                                    alignment=ft.alignment.center,
                                                     margin=ft.margin.only(top=10,bottom=-8.5),
                                                     content=My_ROC_Team.team_name),
                                             ],vertical_alignment=ft.alignment.top_center,alignment=ft.MainAxisAlignment.CENTER),
@@ -1286,82 +1286,80 @@ def main(page: ft.Page):
                                             ft.Divider(thickness=.3,color=ft.colors.with_opacity(.4,ft.colors.WHITE)),
                                             My_ROC_Team.My_team_stats(ft.Text("")),
                                             ft.Divider(thickness=.3,color=ft.colors.TRANSPARENT),
-                                        ],alignment=ft.alignment.top_center,horizontal_alignment=ft.alignment.top_center,scroll=ft.ScrollMode.AUTO,expand=True)
+                                        ],alignment=ft.alignment.center,horizontal_alignment=ft.alignment.center,scroll=ft.ScrollMode.AUTO,expand=True)
                                 ),
 
                             ft.Container(
+                         
                                 expand=True,
-                                alignment=ft.alignment.top_center,
+                  
                                 content=(
-                                    ft.Row([
-                                        ft.Container(
-                                            height=ft.Page.height,
-                                            expand=True,
-                                            bgcolor=ft.colors.with_opacity(.6,ft.colors.GREY_400),
-                                            content=ft.Column([
-                                                ft.Row(
-                                                    [My_ROC_Team.table],
-                                                    scroll=ft.ScrollMode.AUTO,alignment=ft.alignment.center
-                                                ),  
-                                                ft.Row([
-                                                    ft.Container(
-                                                        width=500,
+                                    ft.Column([
+                                        ft.Row([
+                                            ft.Container( 
+                                                expand=True,
+                                                bgcolor=ft.colors.with_opacity(.6,ft.colors.GREY_400),
+                                                content=ft.Column([
+                                                    ft.Row([
+                                                       My_ROC_Team.table
+
+                                                       ],scroll=ft.ScrollMode.AUTO,
+                                                    ), 
+
+                                                    ft.Row([
+                                                       ft.Container(
                                                         height=page.height,
-                                                        border=ft.border.only(top=ft.BorderSide(2.5,ft.colors.with_opacity(.1,ft.colors.WHITE)),right=ft.BorderSide(2.5,ft.colors.with_opacity(.1,ft.colors.WHITE))),
-                                                        bgcolor=ft.colors.with_opacity(0.7,ft.colors.TRANSPARENT),
+                                                        border=ft.border.only(top=ft.BorderSide(2.5,ft.colors.with_opacity(.1,ft.colors.WHITE))),
+                                                        bgcolor=ft.colors.with_opacity(0.6,ft.colors.TRANSPARENT),
                                                         expand=True,
-                                                        alignment=ft.alignment.center,
                                                         content=(
-                                                            ft.Column([
-                                                               ft.Row([
-                                                                    ft.Container(
-                                                                        alignment=ft.alignment.center,
-                                                                        expand=True,
-                                                                        content=(
-                                                                        My_ROC_Team.piechart.chart
-                                                                        )
-                                                                    ),
-                                                                ],expand=True,alignment=ft.MainAxisAlignment.CENTER,vertical_alignment=ft.alignment.center)
-                                                            ],spacing=0,scroll=ft.ScrollMode.AUTO,expand=True,alignment=ft.MainAxisAlignment.CENTER,horizontal_alignment=ft.alignment.center)
-                                                        )   
+                                                           ft.Row([
+                                                           My_ROC_Team.piechart.chart],expand=True)
+                                                        )
                                                     ),
-                                                    ft.Container(
+                                                        
+                                                        ft.Container(
                                                         height=page.height,
                                                         border=ft.border.only(top=ft.BorderSide(2.5,ft.colors.with_opacity(.1,ft.colors.WHITE))),
                                                         bgcolor=ft.colors.with_opacity(0.7,ft.colors.TRANSPARENT),
                                                         expand=True,
                                                         content=(
                                                             ft.Column([
-                                                                ft.Container(
-                                                                    alignment=ft.alignment.center,
-                                                                    margin=10,
-                                                                    content=ft.Row([
-                                                                    ft.Text(value=f"Upgrade point remaining : {My_ROC_Team.upgrade_points.value}",text_align=ft.TextAlign.CENTER,color=ft.colors.WHITE)],alignment=ft.MainAxisAlignment.CENTER)),
-                                                                    My_ROC_Team.Stat_upgrader("Layup",My_ROC_Team.Stat_upgrader.Sliders.layup),
-                                                                    My_ROC_Team.Stat_upgrader("Dunk",My_ROC_Team.Stat_upgrader.Sliders.dunk),
-                                                                    My_ROC_Team.Stat_upgrader("Mid\nrange",My_ROC_Team.Stat_upgrader.Sliders.mid_range),
-                                                                    My_ROC_Team.Stat_upgrader("Three",My_ROC_Team.Stat_upgrader.Sliders.three),
-                                                                    My_ROC_Team.Stat_upgrader("Handles",My_ROC_Team.Stat_upgrader.Sliders.handles),
-                                                                    My_ROC_Team.Stat_upgrader("Passing",My_ROC_Team.Stat_upgrader.Sliders.passing),
-                                                                    My_ROC_Team.Stat_upgrader("Steal",My_ROC_Team.Stat_upgrader.Sliders.steal),
-                                                                    My_ROC_Team.Stat_upgrader("Block",My_ROC_Team.Stat_upgrader.Sliders.block),
-                                                                    My_ROC_Team.Stat_upgrader("Rebound",My_ROC_Team.Stat_upgrader.Sliders.rebounding),
-                                                                    My_ROC_Team.Stat_upgrader("Interior\nDefense",My_ROC_Team.Stat_upgrader.Sliders.interior_defense),
-                                                                    My_ROC_Team.Stat_upgrader("Perimeter\nDefense",My_ROC_Team.Stat_upgrader.Sliders.perimeter_defense),
-                                                                    My_ROC_Team.Stat_upgrader("Speed",My_ROC_Team.Stat_upgrader.Sliders.speed),
-                                                                    My_ROC_Team.Stat_upgrader("Stamina",My_ROC_Team.Stat_upgrader.Sliders.stamina),
-                                                                    My_ROC_Team.Stat_upgrader("Strength",My_ROC_Team.Stat_upgrader.Sliders.strength),
-                                                                    ft.Container(height=300)
-                                                            ],spacing=0,scroll=ft.ScrollMode.AUTO,expand=True,alignment=ft.MainAxisAlignment.CENTER,horizontal_alignment=ft.alignment.center)
-                                                        )),
-                                                ],spacing=0,alignment=ft.MainAxisAlignment.CENTER,vertical_alignment=ft.alignment.center)       
-                                            ],spacing=0,alignment=ft.MainAxisAlignment.CENTER,horizontal_alignment=ft.alignment.center)
-                                        )
-                                    ],expand=True,vertical_alignment=ft.alignment.top_center,alignment=ft.MainAxisAlignment.CENTER)
+                                                                ft.Container(height=20),
+                                                                ft.Row([
+                                                                ft.Text(value=f"Upgrade point remaining : {My_ROC_Team.upgrade_points.value}",text_align=ft.TextAlign.CENTER,color=ft.colors.WHITE)],alignment=ft.MainAxisAlignment.CENTER),
+                                                                My_ROC_Team.Stat_upgrader("Layup",My_ROC_Team.Stat_upgrader.Sliders.layup),
+                                                                My_ROC_Team.Stat_upgrader("Dunk",My_ROC_Team.Stat_upgrader.Sliders.dunk),
+                                                                My_ROC_Team.Stat_upgrader("Mid\nrange",My_ROC_Team.Stat_upgrader.Sliders.mid_range),
+                                                                My_ROC_Team.Stat_upgrader("Three",My_ROC_Team.Stat_upgrader.Sliders.three),
+                                                                My_ROC_Team.Stat_upgrader("Handles",My_ROC_Team.Stat_upgrader.Sliders.handles),
+                                                                My_ROC_Team.Stat_upgrader("Passing",My_ROC_Team.Stat_upgrader.Sliders.passing),
+                                                                My_ROC_Team.Stat_upgrader("Steal",My_ROC_Team.Stat_upgrader.Sliders.steal),
+                                                                My_ROC_Team.Stat_upgrader("Block",My_ROC_Team.Stat_upgrader.Sliders.block),
+                                                                My_ROC_Team.Stat_upgrader("Rebound",My_ROC_Team.Stat_upgrader.Sliders.rebounding),
+                                                                My_ROC_Team.Stat_upgrader("Interior\nDefense",My_ROC_Team.Stat_upgrader.Sliders.interior_defense),
+                                                                My_ROC_Team.Stat_upgrader("Perimeter\nDefense",My_ROC_Team.Stat_upgrader.Sliders.perimeter_defense),
+                                                                My_ROC_Team.Stat_upgrader("Speed",My_ROC_Team.Stat_upgrader.Sliders.speed),
+                                                                My_ROC_Team.Stat_upgrader("Stamina",My_ROC_Team.Stat_upgrader.Sliders.stamina),
+                                                                My_ROC_Team.Stat_upgrader("Strength",My_ROC_Team.Stat_upgrader.Sliders.strength),
+                                                            ],spacing=0,scroll=ft.ScrollMode.AUTO,expand=True,)
+                                                        )
+                                                    )],expand=True,spacing=0),
+
+                                                        
+
+                                                ],spacing=0,expand=True)
+                                            ),
+                                            
+                                            
+                                        ],expand=True),
+                                       
+                                    ])
+
                                 )
                             ),  
                         ],spacing=0,expand=True)
-                    ],alignment=ft.alignment.top_center,horizontal_alignment=ft.alignment.top_center,expand=True,spacing=0)
+                    ],spacing=0)
            
             ) 
    
