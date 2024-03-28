@@ -23,6 +23,7 @@ def main(page: ft.Page):
     page.window_center()
 
 
+
     page.on_window_event = page.update()
 
     class new_or_load_management:
@@ -332,13 +333,15 @@ def main(page: ft.Page):
 
     class Sim_game():
         lv = ft.ListView(expand=1, spacing=10, padding=20, auto_scroll=True)
-        switch = ft.Switch(label=" Fullscreen",value=True,scale=.7,active_color=ft.colors.BACKGROUND)
+        switch = ft.Switch(label=" Fullscreen",value=False,scale=.7,active_color=ft.colors.BACKGROUND,on_change=lambda e: Settings.is_fullscreened())
         my_team_score_display =  ft.Text(text_align=ft.TextAlign.CENTER,weight=ft.FontWeight.W_500,value=0,size=15)
         ai_team_score_display =  ft.Text(text_align=ft.TextAlign.CENTER,weight=ft.FontWeight.W_500,value=0,size=15)
         game_speed_slider = ft.Slider(value=1,min=0.04,max=2.5,divisions=3,width=300,active_color=ft.colors.WHITE70,label=" Gamespeed: {value}% ",
                                         on_change=lambda e: print((e.control.value)))
         
-        class Players(ft.Container):
+
+
+        class Players(ft.Container):    
             court_min_max_width = [60,240]
             court_min_max_height = [10,205]    
             def __init__(self,shape,bgcolor,bottom,left,player_info):
@@ -975,7 +978,7 @@ def main(page: ft.Page):
                 self.alignment = ft.MainAxisAlignment.CENTER
 
 
-        up_points = 0
+        up_points = 20
         upgrade_points = ft.Text(value=up_points)
 
    
@@ -1115,11 +1118,11 @@ def main(page: ft.Page):
             My_ROC_Team.Stat_upgrader.Sliders.speed.value = player_info.speed
             My_ROC_Team.Stat_upgrader.Sliders.stamina.value = player_info.stamina
             My_ROC_Team.Stat_upgrader.Sliders.strength.value = player_info.strength
-            My_ROC_Team.piechart.finishing.value = player_info.layup + player_info.dunk
-            My_ROC_Team.piechart.shooting.value = player_info.midrange + player_info.three_pointer
-            My_ROC_Team.piechart.playmaking.value = player_info.passing + player_info.ball_handle
-            My_ROC_Team.piechart.defense.value = player_info.steal + player_info.block + player_info.rebounding + player_info.interior_defense + player_info.perimeter_defense
-            My_ROC_Team.piechart.physicals.value = player_info.speed + player_info.stamina + player_info.strength
+            My_ROC_Team.Piechart.finishing.value = player_info.layup + player_info.dunk
+            My_ROC_Team.Piechart.shooting.value = player_info.midrange + player_info.three_pointer
+            My_ROC_Team.Piechart.playmaking.value = player_info.passing + player_info.ball_handle
+            My_ROC_Team.Piechart.defense.value = player_info.steal + player_info.block + player_info.rebounding + player_info.interior_defense + player_info.perimeter_defense
+            My_ROC_Team.Piechart.physicals.value = player_info.speed + player_info.stamina + player_info.strength
             page.update()
         
         def add_player(player_info):
@@ -1186,10 +1189,12 @@ def main(page: ft.Page):
             for i in range(len(My_ROC_Team.players)):
                 My_ROC_Team.add_player(My_ROC_Team.players[i])
 
-        class piechart:
+        
+        class Piechart:
 
             normal_radius = 80
             normal_title_style = ft.TextStyle(size=15, color=ft.colors.WHITE, weight=ft.FontWeight.BOLD)
+            
 
             finishing = ft.PieChartSection(
                 value=25,
@@ -1236,7 +1241,8 @@ def main(page: ft.Page):
                 physicals
                 ],sections_space=0,
                 center_space_radius=60,
-                expand=True
+                expand=True,
+                
             )
 
         def my_roc_team():
@@ -1324,7 +1330,7 @@ def main(page: ft.Page):
                                                         expand=True,
                                                         content=(
                                                            ft.Row([
-                                                           My_ROC_Team.piechart.chart],expand=True)
+                                                           My_ROC_Team.Piechart.chart],expand=True)
                                                         )
                                                     ),
                                                         
@@ -1375,17 +1381,20 @@ def main(page: ft.Page):
    
     class Settings:
 
+        def is_fullscreened():
+            if Sim_game.switch.value == False:
+               page.window_full_screen = False
+            else:
+               page.window_full_screen = True
+            page.update()
+
+        #default white38
         user_color_theme = ft.colors.WHITE38
         def fp_color():
             if Settings.user_color_theme == ft.colors.WHITE38:
                 return ft.colors.WHITE12
             else:
                return Settings.user_color_theme
-        
-
-       
-
-
 
         def settings():
             print(f"{page.route} Menu item clicked")
@@ -1430,11 +1439,11 @@ def main(page: ft.Page):
         ft.View(
             "/",
             [   
-                ft.Row ([
+            
                 ft.Row(alignment="top_left", spacing=25, controls=[Main_menu.management_window()],expand=True),
                   #Main_dashboard
-                ],
-                expand=True)
+                
+
             ],
             
             )
@@ -1444,9 +1453,9 @@ def main(page: ft.Page):
                 ft.View(
                     "/Buffer",
                     [
-                        ft.Row ([ 
+    
                         ft.Row(alignment="top_left", spacing=25, controls=[Screen_buffer.screen_bufer()],expand=True),
-                        ],expand=True)
+    
                     ],  
                    
                 )
@@ -1456,9 +1465,9 @@ def main(page: ft.Page):
                 ft.View(
                     "/Login",
                     [
-                        ft.Row ([ 
+
                         ft.Row(alignment="top_left", spacing=25, controls=[Main_menu.management_window()],expand=True),
-                        ],expand=True)
+   
                     ],  
                    
                 )
@@ -1471,9 +1480,9 @@ def main(page: ft.Page):
                     "/Dashboard",
                     [
                         
-                        ft.Row ([ 
+  
                         ft.Row(alignment="top_left", spacing=25, controls=[Main_menu.side_menu(),Dashboard.dashboard()],expand=True),
-                        ],expand=True)
+
                     ],
                   
 
@@ -1485,9 +1494,9 @@ def main(page: ft.Page):
                 ft.View(
                     "/Sim Game",
                     [
-                        ft.Row ([ 
+
                         ft.Row(alignment="top_let", spacing=25, controls=[Main_menu.side_menu(),Sim_game.sim_game()],expand=True),
-                        ],expand=True)
+         
                     ],
                      
                 )
@@ -1498,10 +1507,8 @@ def main(page: ft.Page):
                 ft.View(
                     "/Online PvP",
                     [
-                        ft.Row ([ 
                         ft.Row(alignment="top_let", spacing=25, controls=[Main_menu.side_menu(),Online_pvp.online_pvp()],expand=True),
-                        ],expand=True)
-                    ],
+                    ]
                    
                 )
             )
@@ -1510,11 +1517,8 @@ def main(page: ft.Page):
                 ft.View(
                     "/The Roc",
                     [
-                        ft.Row ([ 
                         ft.Row(alignment="top_left", spacing=25, controls=[Main_menu.side_menu(),The_Roc.the_Roc()],expand=True),
-                        ],expand=True)
                     ],
-                    
                 )
             )
         
@@ -1523,9 +1527,7 @@ def main(page: ft.Page):
                 ft.View(
                     "/Player Search",
                     [
-                        ft.Row ([ 
                         ft.Row(alignment="top_let", spacing=25, controls=[Main_menu.side_menu(),Player_search.player_search_menu()],expand=True),
-                        ],expand=True)
                     ],
                    
                 )
@@ -1535,9 +1537,7 @@ def main(page: ft.Page):
                 ft.View(
                     "/MY R.O.C Team",         
                     [
-                        ft.Row ([ 
                         ft.Row(alignment="top_let", spacing=25, controls=[Main_menu.side_menu(),My_ROC_Team.my_roc_team()],expand=True),
-                        ],expand=True)
                     ],
                     
                 )
@@ -1547,9 +1547,9 @@ def main(page: ft.Page):
                 ft.View(
                     "/Settings",
                     [
-                        ft.Row ([ 
+       
                         ft.Row(alignment="center", spacing=25, controls=[Main_menu.side_menu(),Settings.settings()],expand=True),
-                        ],expand=True)
+           
                     ],
                       
                 )
