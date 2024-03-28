@@ -19,7 +19,7 @@ def main(page: ft.Page):
     page.window_width=1050
     page.window_height = 690
     page.window_min_height=690
-    page.window_min_width=1000
+    page.window_min_width=1050
     page.window_center()
 
 
@@ -172,7 +172,7 @@ def main(page: ft.Page):
                 content=ft.Container(
                     width=300,
                     height=300,
-                    bgcolor=ft.colors.WHITE12,
+                    bgcolor=Settings.fp_color(),
                     border_radius=20,
                     alignment=ft.alignment.center,
                     content=
@@ -250,10 +250,9 @@ def main(page: ft.Page):
                                                 ink=True,
                                                 on_click=lambda _: page.go("/Sim Game"),
                                                 content=
-                                                    ft.Stack([
-                                                        ft.Text("SIM GAME",size=50,color=ft.colors.BLACK,weight=ft.FontWeight.BOLD,expand=False,text_align=ft.TextAlign.CENTER,italic=True,max_lines=3),
-                                                        ft.Text("SIM GAME",size=50,color=ft.colors.WHITE,weight=ft.FontWeight.BOLD,expand=False,text_align=ft.TextAlign.CENTER,italic=True,max_lines=3),
-                                                    ])
+
+                                                    ft.Text("SIM GAME",size=50,color=ft.colors.WHITE,weight=ft.FontWeight.BOLD,expand=False,text_align=ft.TextAlign.CENTER,italic=True,max_lines=3),
+                                     
                                                 ),
                                             ft.Container(
                                                 padding=10,
@@ -284,7 +283,7 @@ def main(page: ft.Page):
                                                 width=page.window_width,  
                                                 height = page.window_height/2.5,
                                                 padding=10,
-                                                bgcolor=ft.colors.WHITE38,
+                                                bgcolor=Settings.user_color_theme,
                                                 alignment=ft.alignment.top_center,
                                                 margin=5,
                                                 border_radius=5,
@@ -303,7 +302,7 @@ def main(page: ft.Page):
                                                     ),
                                                 ),
                                                 ft.Container(
-                                                    bgcolor=ft.colors.BLACK45,
+                                                    bgcolor=ft.colors.BLACK54,
                                                     expand=True,
                                                     margin=3,
                                                     border_radius=5,
@@ -406,7 +405,8 @@ def main(page: ft.Page):
             "went up for a dunk" : [[95,130],[60,65]],
             "pulled up for a mid-range shot" : [[20,205],[70,175]],
             "pulled up for a three-point shot" : [[15,210],[215,250]],
-            "grabbed the rebound" : [[75,155],[60,85]]
+            "grabbed the rebound" : [[75,155],[60,85]],
+            "missed the rebound" : [[85,165],[75,95]]
             } 
         
 
@@ -424,6 +424,7 @@ def main(page: ft.Page):
 
         def court_resizing():
             Sim_game.court_picture.expand = True
+            page.go(page.route)
             page.update()
         
         
@@ -512,7 +513,7 @@ def main(page: ft.Page):
                             height=page.window_height,
                             margin=20,
                             border_radius=5,
-                            bgcolor=ft.colors.ERROR_CONTAINER,
+                            bgcolor=Settings.user_color_theme,
                             alignment=ft.alignment.top_center,
                             content=(
                                 ft.Column(
@@ -973,29 +974,32 @@ def main(page: ft.Page):
                 self.vertical_alignment = ft.alignment.top_center,
                 self.alignment = ft.MainAxisAlignment.CENTER
 
-        upgrade_points = ft.Text(value=0)
-        
 
+        up_points = 0
+        upgrade_points = ft.Text(value=up_points)
+
+   
+           
         class Stat_upgrader(ft.Container):
-            
+        
             class Sliders:
-                layup = ft.Slider(active_color=ft.colors.WHITE,value=0,min=0,max=100,divisions=5,disabled=True,expand=True,)
-                dunk = ft.Slider(value=0,min=0,max=100,divisions=5,disabled=True,expand=True)
-                mid_range = ft.Slider(value=0,min=0,max=100,divisions=5,disabled=True,expand=True)
-                three = ft.Slider(value=0,min=0,max=100,divisions=5,disabled=True,expand=True)
-                handles = ft.Slider(value=0,min=0,max=100,divisions=5,disabled=True,expand=True)
-                passing = ft.Slider(value=0,min=0,max=100,divisions=5,disabled=True,expand=True)
-                steal = ft.Slider(value=0,min=0,max=100,divisions=5,disabled=True,expand=True)
-                block = ft.Slider(value=0,min=0,max=100,divisions=5,disabled=True,expand=True)
-                rebounding = ft.Slider(value=0,min=0,max=100,divisions=5,disabled=True,expand=True)
-                interior_defense = ft.Slider(value=0,min=0,max=100,divisions=5,disabled=True,expand=True)
-                perimeter_defense = ft.Slider(value=0,min=0,max=100,divisions=5,disabled=True,expand=True)
-                speed = ft.Slider(value=0,min=0,max=100,divisions=5,disabled=True,expand=True)
-                stamina = ft.Slider(value=0,min=0,max=100,divisions=5,disabled=True,expand=True)
-                strength = ft.Slider(value=0,min=0,max=100,divisions=5,disabled=True,expand=True)
+                is_disabled = True
 
-                
-                
+                layup = ft.Slider(value=0,min=0,max=100,divisions=5,disabled=is_disabled,expand=True)
+                dunk = ft.Slider(value=0,min=0,max=100,divisions=5,disabled=is_disabled,expand=True)
+                mid_range = ft.Slider(value=0,min=0,max=100,divisions=5,disabled=is_disabled,expand=True)
+                three = ft.Slider(value=0,min=0,max=100,divisions=5,disabled=is_disabled,expand=True)
+                handles = ft.Slider(value=0,min=0,max=100,divisions=5,disabled=is_disabled,expand=True)
+                passing = ft.Slider(value=0,min=0,max=100,divisions=5,disabled=is_disabled,expand=True)
+                steal = ft.Slider(value=0,min=0,max=100,divisions=5,disabled=is_disabled,expand=True)
+                block = ft.Slider(value=0,min=0,max=100,divisions=5,disabled=is_disabled,expand=True)
+                rebounding = ft.Slider(value=0,min=0,max=100,divisions=5,disabled=is_disabled,expand=True)
+                interior_defense = ft.Slider(value=0,min=0,max=100,divisions=5,disabled=is_disabled,expand=True)
+                perimeter_defense = ft.Slider(value=0,min=0,max=100,divisions=5,disabled=is_disabled,expand=True)
+                speed = ft.Slider(value=0,min=0,max=100,divisions=5,disabled=is_disabled,expand=True)
+                stamina = ft.Slider(value=0,min=0,max=100,divisions=5,disabled=is_disabled,expand=True)
+                strength = ft.Slider(value=0,min=0,max=100,divisions=5,disabled=is_disabled,expand=True)
+      
 
             def __init__(self,stat_name,slider):
                 super().__init__()
@@ -1006,9 +1010,12 @@ def main(page: ft.Page):
                 self.alignment = ft.alignment.center
             def build(self):
                 self.stat_label = ft.Text(value=self.stat_name,text_align=ft.TextAlign.CENTER,tooltip=f"Determines success chance of {str(self.stat_name).lower()}",color=ft.colors.WHITE)
-                self.stat_increaser_button = ft.IconButton(ft.icons.ADD,on_click=lambda e: stat_increaser())
-                def stat_increaser():
-                    self.slider.value = self.slider.value + 20 
+                self.stat_increaser_button = ft.IconButton(ft.icons.ADD,on_click=lambda e: stat_increaser(self.slider.value))
+                def stat_increaser(slider_val):
+                    if My_ROC_Team.upgrade_points.value >0:
+                        if slider_val <100:
+                            My_ROC_Team.upgrade_points.value -=1
+                            self.slider.value = self.slider.value + 20 
                     page.update()
                 return ft.Row([self.stat_label,self.slider,self.stat_increaser_button],alignment=ft.MainAxisAlignment.CENTER,vertical_alignment=ft.alignment.center)
 
@@ -1093,6 +1100,7 @@ def main(page: ft.Page):
         )   
       
         def stat_updater(player_info):
+            My_ROC_Team.upgrade_points.value = My_ROC_Team.up_points
             My_ROC_Team.Stat_upgrader.Sliders.layup.value = player_info.layup
             My_ROC_Team.Stat_upgrader.Sliders.dunk.value = player_info.dunk
             My_ROC_Team.Stat_upgrader.Sliders.mid_range.value = player_info.midrange
@@ -1233,11 +1241,13 @@ def main(page: ft.Page):
 
         def my_roc_team():
             My_ROC_Team.table.rows.clear()
-            My_ROC_Team.player_inserter()
+            if page.route != "/MY R.O.C Team":
+                My_ROC_Team.player_inserter()
             My_ROC_Team.add_multiple()
             print(f"{page.route} Menu item clicked")
             return ft.Container(
                 border_radius=10,
+                margin=10,
                 alignment=ft.alignment.center,
                 bgcolor=ft.colors.with_opacity(0.3,ft.colors.WHITE),
                 expand=True,
@@ -1298,7 +1308,7 @@ def main(page: ft.Page):
                                         ft.Row([
                                             ft.Container( 
                                                 expand=True,
-                                                bgcolor=ft.colors.with_opacity(.6,ft.colors.GREY_400),
+                                                bgcolor=Settings.user_color_theme,
                                                 content=ft.Column([
                                                     ft.Row([
                                                        My_ROC_Team.table
@@ -1310,7 +1320,7 @@ def main(page: ft.Page):
                                                        ft.Container(
                                                         height=page.height,
                                                         border=ft.border.only(top=ft.BorderSide(2.5,ft.colors.with_opacity(.1,ft.colors.WHITE))),
-                                                        bgcolor=ft.colors.with_opacity(0.6,ft.colors.TRANSPARENT),
+                                                        bgcolor=ft.colors.with_opacity(0.4,ft.colors.TRANSPARENT),
                                                         expand=True,
                                                         content=(
                                                            ft.Row([
@@ -1327,7 +1337,7 @@ def main(page: ft.Page):
                                                             ft.Column([
                                                                 ft.Container(height=20),
                                                                 ft.Row([
-                                                                ft.Text(value=f"Upgrade point remaining : {My_ROC_Team.upgrade_points.value}",text_align=ft.TextAlign.CENTER,color=ft.colors.WHITE)],alignment=ft.MainAxisAlignment.CENTER),
+                                                                ft.Text("Remaining upgrade points:",text_align=ft.TextAlign.CENTER),My_ROC_Team.upgrade_points],alignment=ft.MainAxisAlignment.CENTER),
                                                                 My_ROC_Team.Stat_upgrader("Layup",My_ROC_Team.Stat_upgrader.Sliders.layup),
                                                                 My_ROC_Team.Stat_upgrader("Dunk",My_ROC_Team.Stat_upgrader.Sliders.dunk),
                                                                 My_ROC_Team.Stat_upgrader("Mid\nrange",My_ROC_Team.Stat_upgrader.Sliders.mid_range),
@@ -1364,6 +1374,19 @@ def main(page: ft.Page):
             ) 
    
     class Settings:
+
+        user_color_theme = ft.colors.WHITE38
+        def fp_color():
+            if Settings.user_color_theme == ft.colors.WHITE38:
+                return ft.colors.WHITE12
+            else:
+               return Settings.user_color_theme
+        
+
+       
+
+
+
         def settings():
             print(f"{page.route} Menu item clicked")
             return ft.Container(
@@ -1383,7 +1406,20 @@ def main(page: ft.Page):
                     text_align=ft.TextAlign.CENTER,
                     )),
                 )
-
+    
+    class Screen_buffer:
+       loading_ring = ft.ProgressRing(width=40, height=40, stroke_width = 2,)
+       def screen_bufer():
+            print(f"{page.route} buffering screen")
+            return ft.Container(
+                width=page.window_width,
+                height=page.window_height,
+                alignment=ft.alignment.center,
+                content=(
+                   Screen_buffer.loading_ring
+                )
+            )
+        
 
     def route_change(route):
         page.drawer = False
@@ -1403,6 +1439,18 @@ def main(page: ft.Page):
             
             )
         )
+        if page.route == "/Buffer":
+            page.views.append(
+                ft.View(
+                    "/Buffer",
+                    [
+                        ft.Row ([ 
+                        ft.Row(alignment="top_left", spacing=25, controls=[Screen_buffer.screen_bufer()],expand=True),
+                        ],expand=True)
+                    ],  
+                   
+                )
+            )
         if page.route == "/Login":
             page.views.append(
                 ft.View(
@@ -1500,7 +1548,7 @@ def main(page: ft.Page):
                     "/Settings",
                     [
                         ft.Row ([ 
-                        ft.Row(alignment="top_let", spacing=25, controls=[Main_menu.side_menu(),Settings.settings()],expand=True),
+                        ft.Row(alignment="center", spacing=25, controls=[Main_menu.side_menu(),Settings.settings()],expand=True),
                         ],expand=True)
                     ],
                       
@@ -1509,12 +1557,22 @@ def main(page: ft.Page):
         page.update()
             
     def page_resive(e):
-        page.go(f"'{page.route}'")
+        if page.route != "/":
+           original_page = page.route
+           page.go("/Buffer") 
+           time.sleep(.1)
+           page.go(original_page)
+           time.sleep(.3)
+          
+        
        
    
     print(page.route)
+    print(page.views)
     page.update()
     page.on_route_change = route_change
+
+    page.on_resize = lambda e: page_resive(e)
     page.go(page.route)
 
 
