@@ -22,3 +22,6 @@ def open_connection():
     mycursor = conn.cursor()
 
 
+
+
+
