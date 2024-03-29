@@ -739,7 +739,7 @@ def main(page: ft.Page):
            ]
         )
 
-        filter_search_bar = ft.TextField(hint_text="Search",dense=True,color=ft.colors.WHITE)
+        filter_search_bar = ft.TextField(hint_text="Search",dense=True,color=ft.colors.WHITE,width=200)
         
         table = ft.DataTable(
             column_spacing=50,
@@ -809,6 +809,7 @@ def main(page: ft.Page):
                 #color=ft.colors.with_opacity(0.3,ft.colors.WHITE),
                 cells=[
                 ]
+                
             )
             new_row.cells.append(ft.DataCell(ft.Text(f"{player_info[0]}",color=ft.colors.WHITE)))
             new_row.cells.append(ft.DataCell(ft.CircleAvatar(content=ft.Text(f"{str(player_info[1][0])}{str(player_info[2][0])}",text_align=ft.TextAlign.CENTER,size=20),
@@ -1444,7 +1445,7 @@ def main(page: ft.Page):
             page.update()
 
         #default white38
-        user_color_theme = ft.colors.WHITE38
+        user_color_theme = ft.colors.BLUE_800
         def fp_color():
             if Settings.user_color_theme == ft.colors.WHITE38:
                 return ft.colors.WHITE12

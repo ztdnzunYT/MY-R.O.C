@@ -9,7 +9,7 @@ class Player_variables ():
                    "Fredo","Davion","Kyree","Noel","Joe","Ken","Ramon","Uno","Ethan","Jaquan","Warren","Chris","Jack","Abner","Orion","Noah","Greg","Lucas","Peso","Pharell",
                    "Kyle","Favion","Zae","Spence","Rylo","Reggie","Davavion","Jakavious","Javarious","Pj","Dj","Zavarious","Rell","Rich","Michael","Kevin","Mo","Dontavion",
                    "Chase","Coop","Prince","Efa","Payton","Snupe","Dalvon","Oliver","Qez","Te","Ivan","Ron","Dundrel","Zay","West","Fin","Lj","Aj","Sam","Rajon","Kentrell",
-                   "Camdon"," Yusef","Amarion","Flavel","Malachi","Kayten","Jaqurious","Travis","Trey","Kavarius","Wilt","Houston","Iann","Elijah","Bryson","Armon","Cid",
+                   "Camdon"," Benji","Amarion","Flavel","Malachi","Kayten","Jaqurious","Travis","Trey","Kavarius","Wilt","Houston","Iann","Elijah","Bryson","Armon","Cid",
                    "Taylon","Pat","Po")
     
     last_names = ("Jackson","Christopher","Davis","Johnson","Parker","Palacious","Bond","Cambell","Roberts","Jefferson","Glendan","Smith","Brown","Lopez","Wilson","Roses",
