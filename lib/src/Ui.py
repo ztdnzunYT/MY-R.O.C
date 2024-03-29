@@ -79,7 +79,7 @@ def main(page: ft.Page):
             pc_run()
             time.sleep(.5)
             page.window_destroy()
-            return page.go("/Dashboard")
+            exit()
             
         
         def load_management():
@@ -1334,6 +1334,7 @@ def main(page: ft.Page):
             if page.route != "/MY R.O.C Team":
                 My_ROC_Team.player_inserter()
             My_ROC_Team.add_multiple()
+            page.update()
             print(f"{page.route} Menu item clicked")
             return ft.Container(
                 border_radius=10,
@@ -1655,5 +1656,5 @@ def main(page: ft.Page):
 
 
 
-ft.app(target=main)#
+ft.app(target=main)
 
