@@ -1,7 +1,7 @@
 import random
-import Player_properties as pprops
+import Player_properties
 from Player_properties import pv
-from Player_database_connector import* 
+from Mydata_connector import* 
 
 #THIS FILE IS USED TO CREATE ALL THE DATABASES ON START UP
 

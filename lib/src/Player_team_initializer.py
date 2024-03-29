@@ -1,6 +1,9 @@
 import sqlite3
 import random
-from Player_database_connector import*
+from Mydata_connector import*
+
+#This file connects other files to the players database without having to add the following variables
+#windows C:\\My R.O.C Manager\\lib\\db\\Players.db
 
 
 #mycursor.execute("UPDATE SQLITE_SEQUENCE SET SEQ=0 WHERE NAME='test_user'")
@@ -12,14 +15,13 @@ class My_team_query():
 
 class Ai_team_picker():
     def pick_random_ai_team():
-        global random_ai_team
         #random_ai_team = random.randint(1,10)
         #print(f"Team {random_ai_team}")    #THIS WILL BE USED TO HAVE RANDOM TEAMS TO GO AGAINST INSTEAD OF JUST ONE TEAM 
         random_ai_team = 5
-    pick_random_ai_team()
+        return random_ai_team
     
 class Ai_team_query():
-    mycursor.execute("SELECT * FROM ai_team_"+str(random_ai_team)+"")
+    mycursor.execute("SELECT * FROM ai_team_"+str(Ai_team_picker.pick_random_ai_team())+"")
     ai_team = mycursor.fetchall()  #List of all the information in the the ai database
 
 
@@ -90,7 +92,7 @@ class Teams():
 
     
     my_team = "MY TEAM"
-    ai_team = "AI TEAM " + str(random_ai_team)
+    ai_team = "AI TEAM " + str(Ai_team_picker.pick_random_ai_team())
     all_teams = (my_team,ai_team)
 
 
@@ -170,8 +172,6 @@ try:
     print("executed")
 except:
     print("Already executed")
-
-
 
 
 

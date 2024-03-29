@@ -1,14 +1,15 @@
 import flet as ft
 import random
+import os
 import time
+import subprocess
 import math
-import Player_database_connector as pdc
-from Player_database_reset_manager import database_manager as Dbm
-from Player_db_creator import create_all_tables
+import Mydata_connector as mdc
+from Mydata_reset_manager import database_manager as Dbm
+from Database_table_creater import create_all_tables
 from Player_creator import run as pc_run 
 from Test_simgame import Game_sim, Game_stats, start_sim
 from Player_team_initializer import My_team_query , my_team_player1 , my_team_player2 , my_team_player3
-
 
 def main(page: ft.Page):
     page.title = "MY R.O.C MANAGER"
@@ -22,31 +23,53 @@ def main(page: ft.Page):
     page.window_min_width=1050
     page.window_center()
 
-
-
     page.on_window_event = page.update()
 
-    class new_or_load_management:
 
-        
+    class New_or_load_management:
+
         new_management_button = ft.Container(
             content=ft.TextButton(
             text="New Management",
             disabled=False,
-            on_click=lambda e: new_or_load_management.new_management()
+            on_click=lambda e: New_or_load_management.confirm_new_management()
             )
         )
         load_management_button = ft.Container(
             content=ft.TextButton(
             text="Load Management",
-            on_click=lambda e: new_or_load_management.load_management()
+            on_click=lambda e: New_or_load_management.load_management()
             )
         )
+
+        confirm_popup = ft.AlertDialog(
+           modal=True,
+           open=False,
+           title=ft.Text("Please Confirm"),
+           content=ft.Text("Are you sure you want to permanently delete your management?\nDoing so will close the program"),
+           actions=(
+              ft.TextButton("Yes",on_click=lambda e:New_or_load_management.new_management()),
+              ft.TextButton("No",on_click=lambda e:New_or_load_management.close_popup()),
+           ),
+           actions_alignment=ft.MainAxisAlignment.END
+        )
+
+
+        def confirm_new_management():
+           page.dialog = New_or_load_management.confirm_popup
+           New_or_load_management.confirm_popup.open = True
+           page.update()
+        
+        def close_popup():
+           New_or_load_management.confirm_popup.open = False
+           page.update()
+           
 
         if My_team_query.my_team == []:
             load_management_button.disabled = True
         else:
             load_management_button.disabled = False
+
 
         def new_management():
             Dbm.reset_all()
@@ -54,6 +77,8 @@ def main(page: ft.Page):
             create_all_tables()
             print("Database info reset")
             pc_run()
+            time.sleep(.5)
+            page.window_destroy()
             return page.go("/Dashboard")
             
         
@@ -185,7 +210,7 @@ def main(page: ft.Page):
                                 bgcolor=ft.colors.TRANSPARENT,
                                 alignment=ft.alignment.center,
                                 content=(
-                                    new_or_load_management.new_management_button
+                                    New_or_load_management.new_management_button
                                 )
                             ),
                             ft.Container(
@@ -194,7 +219,7 @@ def main(page: ft.Page):
                                 bgcolor=ft.colors.TRANSPARENT,
                                 alignment=ft.alignment.center,
                                 content=(
-                                    new_or_load_management.load_management_button
+                                    New_or_load_management.load_management_button
                                 )
                             ),
                             
@@ -739,7 +764,11 @@ def main(page: ft.Page):
            ]
         )
 
-        filter_search_bar = ft.TextField(hint_text="Search",dense=True,color=ft.colors.WHITE,width=200)
+        
+
+        filter_search_bar = ft.TextField(label="Search",dense=True,color=ft.colors.WHITE,width=200,on_change= lambda e:Player_search.show_button())
+        search_button = ft.FilledTonalButton(text="Search",on_click=lambda e: Player_search.search_player())
+        #loading_ring = ft.ProgressRing(width=20,height=20,stroke_width=2,visible=False)
         
         table = ft.DataTable(
             column_spacing=50,
@@ -813,7 +842,7 @@ def main(page: ft.Page):
             )
             new_row.cells.append(ft.DataCell(ft.Text(f"{player_info[0]}",color=ft.colors.WHITE)))
             new_row.cells.append(ft.DataCell(ft.CircleAvatar(content=ft.Text(f"{str(player_info[1][0])}{str(player_info[2][0])}",text_align=ft.TextAlign.CENTER,size=20),
-                                                             bgcolor=ft.colors.GREY_900,radius=20,color=ft.colors.WHITE)))
+                                                             bgcolor=ft.colors.GREY_800,radius=20,color=ft.colors.WHITE)))
             for i in range(49):
                 if  i > 0 and i != 6:
                     new_row.cells.append(ft.DataCell(ft.Text(f"{player_info[i]}",color=ft.colors.WHITE)))
@@ -826,7 +855,7 @@ def main(page: ft.Page):
                 if i == 15:
                  (ft.DataCell(ft.Text(f"{player_info[i-1]} dys",color=ft.colors.WHITE)))
                 if i == 16:
-                 (ft.DataCell(ft.Text(f"{player_info[i-1]} pot",color=ft.colors.WHITE)))
+                 (ft.DataCell(ft.Text(f"{player_info[i-1] * "★"} pot",color=ft.colors.WHITE)))
                 if i == 17:
                  (ft.DataCell(ft.Text(f"{player_info[i-1]} ovr",color=ft.colors.WHITE)))
                 if i == 18:
@@ -899,12 +928,9 @@ def main(page: ft.Page):
             Player_search.table.rows.append(new_row)
             page.update()
            
-
-        def search_with_filter():
-           Player_search.table.rows.clear()
-           pdc.mycursor.execute("SELECT * FROM player_hub WHERE "+str(Player_search.filter_menu.value)+" LIKE '"+str(Player_search.filter_search_bar.value)+"%'")
-           player_list = pdc.mycursor.fetchall()
-           print(player_list)
+        def show_button():
+           page.update()
+           Player_search.search_button.disabled = False
 
         #Way to delete all the rows to be able to make a new list with filters
         def delete_player():
@@ -915,30 +941,31 @@ def main(page: ft.Page):
 
         def player_inserter():
             if Player_search.filter_menu.value == "None" or Player_search.filter_menu.value == "Filter":
-                pdc.mycursor.execute("SELECT * FROM player_hub")
-                player_list = pdc.mycursor.fetchall()
+                mdc.mycursor.execute("SELECT * FROM player_hub")
+                player_list = mdc.mycursor.fetchall()
                 return player_list
             else:
-                pdc.mycursor.execute("SELECT * FROM player_hub WHERE "+str(Player_search.filter_menu.value)+" LIKE '"+str(Player_search.filter_search_bar.value)+"%'")
-                player_list = pdc.mycursor.fetchall()
+                mdc.mycursor.execute("SELECT * FROM player_hub WHERE "+str(Player_search.filter_menu.value)+" LIKE '"+str(Player_search.filter_search_bar.value)+"%'")
+                player_list = mdc.mycursor.fetchall()
                 return player_list
         
-        def add_multiple():
+        def search_player():
+            Player_search.search_button.disabled = True
             Player_search.table.rows.clear()
+            #if len(Player_search.table.rows) == len(Player_search.player_inserter()):
             if Player_search.filter_menu.value == "None" or Player_search.filter_menu.value == "Filter":
                 for i in range(10):
                     Player_search.add_player(Player_search.player_inserter()[i])
             else:
                 for i in range(len(Player_search.player_inserter())):
                     try:
-                        Player_search.add_player(Player_search.player_inserter()[i])
+                        Player_search.add_player(Player_search.player_inserter()[i])  
                     except:
-                       pass
-                
+                        pass
                    
         def insert_filters():
-            pdc.mycursor.execute("SELECT name FROM PRAGMA_TABLE_INFO('player_hub')")
-            x = pdc.mycursor.fetchall()
+            mdc.mycursor.execute("SELECT name FROM PRAGMA_TABLE_INFO('player_hub')")
+            x = mdc.mycursor.fetchall()
             unwrap = [",","'","(",")"]
             for i in range(len(x)):
                 for o in range(len(unwrap)):
@@ -948,9 +975,10 @@ def main(page: ft.Page):
                 Player_search.filter_menu.options.append(new_filter)
 
         def player_search_menu():  
+            Player_search.search_button.disabled = False
             Player_search.insert_filters()
             Player_search.filter_menu.value = "Filter"
-            Player_search.filter_search_bar.value = "Search"
+            Player_search.filter_search_bar.value = ""
             print(f"{page.route} Menu item clicked")
             Player_search.table.rows.clear() #Deletes all of player search 
 
@@ -973,8 +1001,8 @@ def main(page: ft.Page):
                                         ft.Row([
                                             Player_search.filter_menu,
                                             Player_search.filter_search_bar,
-                                            ft.FilledTonalButton(text="Search players",on_click=lambda e: Player_search.add_multiple()),
-                                            ft.FilledTonalButton(text="Clear search",on_click=lambda e: Player_search.delete_player())
+                                            Player_search.search_button,
+                                           
                                             ]),
                                         Player_search.table,
                                     ],scroll=ft.ScrollMode.AUTO,alignment=ft.alignment.center,on_scroll_interval=.1
@@ -1015,8 +1043,8 @@ def main(page: ft.Page):
         
 
         def player_inserter():
-            pdc.mycursor.execute("SELECT * FROM my_team")
-            my_team = pdc.mycursor.fetchall()
+            mdc.mycursor.execute("SELECT * FROM my_team")
+            my_team = mdc.mycursor.fetchall()
             return my_team
 
         team_online_wins_losses = ft.Text("Wins | Losses",text_align=ft.alignment.center,size=15,expand=True,color=ft.colors.WHITE)
@@ -1445,7 +1473,7 @@ def main(page: ft.Page):
             page.update()
 
         #default white38
-        user_color_theme = ft.colors.BLUE_800
+        user_color_theme = ft.colors.WHITE38
         def fp_color():
             if Settings.user_color_theme == ft.colors.WHITE38:
                 return ft.colors.WHITE12

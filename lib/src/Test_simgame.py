@@ -1,5 +1,5 @@
 from Player_team_initializer import *
-from Player_database_connector import *
+from Mydata_connector import *
 import time 
 
 '''

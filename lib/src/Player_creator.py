@@ -1,7 +1,7 @@
 import random
 import Player_properties as pprops
 from Player_properties import pv
-from Player_database_connector import*
+from Mydata_connector import*
 
 #THIS FILE GENERATES RANDOM PLAYERS AND PLAYER INFO 
 

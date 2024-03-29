@@ -1,5 +1,5 @@
 import sqlite3
-from Player_database_connector import *
+from Mydata_connector import *
 
 #THIS FILE MANAGES DROPPING THE TABLES IN THE DATABASE
 

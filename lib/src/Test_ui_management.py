@@ -1,5 +1,5 @@
 import flet as ft
-from Player_database_connector import*
+from Mydata_connector import*
 
 def main(page: ft.Page):
     page.horizontal_alignment=ft.MainAxisAlignment.CENTER
