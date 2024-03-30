@@ -4,12 +4,16 @@ import os
 import time
 import subprocess
 import math
+import pygame
 import Mydata_connector as mdc
 from Mydata_reset_manager import database_manager as Dbm
 from Database_table_creater import create_all_tables
 from Player_creator import run as pc_run 
 from Test_simgame import Game_sim, Game_stats, start_sim
 from Player_team_initializer import My_team_query , my_team_player1 , my_team_player2 , my_team_player3
+pygame.init()
+from pynput.mouse import Listener
+
 
 def main(page: ft.Page):
     page.title = "MY R.O.C MANAGER"
@@ -22,8 +26,21 @@ def main(page: ft.Page):
     page.window_min_height=690
     page.window_min_width=1050
     page.window_center()
-
     page.on_window_event = page.update()
+
+
+
+
+    class Sounds():
+        ui_click = pygame.mixer.Sound("lib\sounds\Interfaceclick.mp3")
+        def mouse_click():
+           event_list = pygame.event.get()
+           for event in event_list:
+              if event.type == pygame.MOUSEBUTTONDOWN:
+                 pygame.mixer.Sound.play(Sounds.ui_click)
+              
+             
+          
 
 
     class New_or_load_management:
@@ -1198,8 +1215,6 @@ def main(page: ft.Page):
         up_points = 20
         upgrade_points = ft.Text(value=up_points)
 
-        def stat_reset():
-            pass
 
         class Stat_upgrader(ft.Container):
         
@@ -1241,7 +1256,30 @@ def main(page: ft.Page):
                 return ft.Row([self.stat_label,self.slider,self.stat_increaser_button],alignment=ft.MainAxisAlignment.CENTER,vertical_alignment=ft.alignment.center)
 
         #team_performance_graph = 
-
+        
+        
+        def reset_stats_displays():
+            My_ROC_Team.upgrade_points.value = 0
+            My_ROC_Team.Stat_upgrader.Sliders.layup.value = 0
+            My_ROC_Team.Stat_upgrader.Sliders.dunk.value = 0
+            My_ROC_Team.Stat_upgrader.Sliders.mid_range.value = 0
+            My_ROC_Team.Stat_upgrader.Sliders.three.value = 0
+            My_ROC_Team.Stat_upgrader.Sliders.handles.value = 0
+            My_ROC_Team.Stat_upgrader.Sliders.passing.value = 0
+            My_ROC_Team.Stat_upgrader.Sliders.steal.value = 0 
+            My_ROC_Team.Stat_upgrader.Sliders.block.value = 0
+            My_ROC_Team.Stat_upgrader.Sliders.rebounding.value = 0 
+            My_ROC_Team.Stat_upgrader.Sliders.interior_defense.value = 0
+            My_ROC_Team.Stat_upgrader.Sliders.perimeter_defense.value = 0
+            My_ROC_Team.Stat_upgrader.Sliders.speed.value = 0
+            My_ROC_Team.Stat_upgrader.Sliders.stamina.value = 0
+            My_ROC_Team.Stat_upgrader.Sliders.strength.value = 0
+            My_ROC_Team.Piechart.finishing.value = 1
+            My_ROC_Team.Piechart.shooting.value = 1
+            My_ROC_Team.Piechart.playmaking.value = 1
+            My_ROC_Team.Piechart.defense.value = 1
+            My_ROC_Team.Piechart.physicals.value = 1
+            
         def stat_updater(player_info):
             My_ROC_Team.upgrade_points.value = My_ROC_Team.up_points
             My_ROC_Team.Stat_upgrader.Sliders.layup.value = player_info.layup
@@ -1321,7 +1359,9 @@ def main(page: ft.Page):
             )
 
         def my_roc_team():
+            
             My_ROC_Team.table.rows.clear()
+            My_ROC_Team.reset_stats_displays()
             if page.route != "/MY R.O.C Team":
                 My_ROC_Team.player_inserter()
             My_ROC_Team.add_multiple()
@@ -1458,6 +1498,7 @@ def main(page: ft.Page):
 
         theme_color_dropdown = ft.Dropdown(
            hint_text="Theme",
+           width=150,
            height=50,
            color=ft.colors.WHITE,
            label_style=ft.TextStyle(color=ft.colors.WHITE),
@@ -1536,7 +1577,9 @@ def main(page: ft.Page):
                         ft.Container(
                            margin=ft.margin.only(left=20),
                            width=150,
-                           content=Settings.theme_color_dropdown
+                           content=(ft.Row([
+                              Settings.theme_color_dropdown,
+                              ft.Text(value=" Theme color",color=ft.colors.WHITE)]))
                         )
                       ],horizontal_alignment=ft.alignment.center,spacing=20)
                    )
@@ -1695,6 +1738,22 @@ def main(page: ft.Page):
     page.on_route_change = route_change
     page.on_resize = lambda e: page_resive(e)
     page.go(page.route)
+    
+
+    '''
+        pygame.init()
+        ui_click= pygame.mixer.Sound("lib\sounds\Interfaceclick.mp3")
+
+        def on_click(x,y,button,pressed):
+            if pressed:
+                pygame.mixer.Sound.play(ui_click)
+
+        with Listener(on_click=on_click) as listener:
+            listener.join()
+    '''
+
+
+
 
 
 

@@ -1,34 +1,19 @@
-import flet as ft
+from pynput.mouse import Listener
+import pygame
+import time
 
-def main(page: ft.Page):
-    page.title = "AlertDialog examples"
+pygame.init()
+ui_click= pygame.mixer.Sound("lib\sounds\Interfaceclick.mp3")
 
-
-
-
-    ad = ft.AlertDialog(
-           modal=True,
-           open=False,
-           title=ft.Text("Please Confirm"),
-           content=ft.Text("Are you sure you want to permanently delete your management?\nDoing so will close the program"),
-           actions=(
-              ft.TextButton("Yes"),
-              ft.TextButton("No"),
-           ),
-           actions_alignment=ft.MainAxisAlignment.END
-        )
-
-    def show():
-        page.dialog = ad
-        ad.open = True
-        page.update()
+def on_click(x,y,button,pressed):
+    if pressed:
+        pygame.mixer.Sound.play(ui_click)
 
 
 
+with Listener(on_click=on_click) as listener:
+    listener.join()
+    time.sleep(.5)
 
-    page.add(
-       ft.FilledButton("button",on_click=lambda e:show())
-        
-    )
 
-ft.app(target=main)
+
