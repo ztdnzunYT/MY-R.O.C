@@ -1304,7 +1304,7 @@ def main(page: ft.Page):
             page.update()
 
         class Piechart:
-
+            
             normal_radius = 80
             normal_title_style = ft.TextStyle(size=15, color=ft.colors.WHITE, weight=ft.FontWeight.BOLD)
             
@@ -1360,6 +1360,7 @@ def main(page: ft.Page):
 
         def my_roc_team():
             
+               
             My_ROC_Team.table.rows.clear()
             My_ROC_Team.reset_stats_displays()
             if page.route != "/MY R.O.C Team":

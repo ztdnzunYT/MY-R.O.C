@@ -14,7 +14,9 @@ class My_team_query():
     my_team = mycursor.fetchall()
 
 class Ai_team_picker():
-    def pick_random_ai_team():
+   
+    def pick_random_ai_team(): 
+        global random_ai_team
         #random_ai_team = random.randint(1,10)
         #print(f"Team {random_ai_team}")    #THIS WILL BE USED TO HAVE RANDOM TEAMS TO GO AGAINST INSTEAD OF JUST ONE TEAM 
         random_ai_team = 5
