@@ -183,7 +183,7 @@ def main(page: ft.Page):
                 content=(ft.Text(
                     "MY R.O.C",
                     size=50,
-                    color=ft.colors.with_opacity(0.5,ft.colors.WHITE),
+                    color=ft.colors.WHITE,
                     weight=ft.FontWeight.BOLD,
                     text_align=ft.TextAlign.CENTER,
                     )),
@@ -203,7 +203,7 @@ def main(page: ft.Page):
                     alignment=ft.alignment.center,
                     content=
                         ft.Column([
-                            ft.Text("MY R.O.C",size=50,weight=ft.FontWeight.BOLD),
+                            ft.Text("MY R.O.C",size=50,weight=ft.FontWeight.BOLD,color=ft.colors.WHITE),
                             ft.Container(
                                 width=160,
                                 height=30,
@@ -268,7 +268,7 @@ def main(page: ft.Page):
                                         ft.Column([
                                             ft.Container(
                                                 padding=10,
-                                                bgcolor=ft.colors.WHITE38,
+                                                bgcolor=Settings.user_color_theme,
                                                 alignment=ft.alignment.center,
                                                 margin=5,
                                                 border_radius=5,
@@ -282,7 +282,7 @@ def main(page: ft.Page):
                                                 ),
                                             ft.Container(
                                                 padding=10,
-                                                bgcolor=ft.colors.WHITE38,
+                                                bgcolor=Settings.user_color_theme,
                                                 alignment=ft.alignment.center,
                                                 margin=5,
                                                 border_radius=5,
@@ -293,7 +293,7 @@ def main(page: ft.Page):
                                                 ),
                                             ft.Container(
                                                 padding=10,
-                                                bgcolor=ft.colors.WHITE38,
+                                                bgcolor=Settings.user_color_theme,
                                                 alignment=ft.alignment.center,
                                                 margin=5,
                                                 border_radius=5,
@@ -309,14 +309,13 @@ def main(page: ft.Page):
                                                 width=page.window_width,  
                                                 height = page.window_height/2.5,
                                                 padding=10,
-                                                bgcolor=Settings.user_color_theme,
+                                                bgcolor=ft.colors.with_opacity(0.8,Settings.user_color_theme),
                                                 alignment=ft.alignment.top_center,
                                                 margin=5,
                                                 border_radius=5,
                                                 expand=True,
                                                 content=ft.Column([
                                                 ft.Container(
-                                                    bgcolor=ft.colors.TRANSPARENT,
                                                     alignment=ft.alignment.center,
                                                     border_radius=5,
                                                     content=ft.Text(
@@ -340,7 +339,7 @@ def main(page: ft.Page):
                                                 
                                         ft.Container(width=page.window_width,
                                             height = page.window_height/5,
-                                            bgcolor=ft.colors.WHITE38,
+                                            bgcolor=Settings.user_color_theme,
                                             alignment=ft.alignment.center,
                                             margin=5,
                                             border_radius=5,
@@ -359,7 +358,6 @@ def main(page: ft.Page):
 
     class Sim_game():
         lv = ft.ListView(expand=1, spacing=10, padding=20, auto_scroll=True)
-        switch = ft.Switch(label=" Fullscreen",value=False,scale=.7,active_color=ft.colors.BACKGROUND,on_change=lambda e: Settings.is_fullscreened())
         my_team_score_display =  ft.Text(text_align=ft.TextAlign.CENTER,weight=ft.FontWeight.W_500,value=0,size=15)
         ai_team_score_display =  ft.Text(text_align=ft.TextAlign.CENTER,weight=ft.FontWeight.W_500,value=0,size=15)
         game_speed_slider = ft.Slider(value=1,min=0.04,max=2.5,divisions=3,width=300,active_color=ft.colors.WHITE70,label=" Gamespeed: {value}% ",
@@ -549,14 +547,7 @@ def main(page: ft.Page):
                                     [
                                         ft.Stack([
                                             
-                                            ft.Row([
-                                                ft.Container(
-                                                    margin=ft.margin.only(top=10,left=10),
-                                                    content=(
-                                                        Sim_game.switch
-                                                    )
-                                                )
-                                            ],vertical_alignment=ft.alignment.center),
+                                            
                                             ft.Row([
                                                 ft.Container(                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
                                                     alignment=ft.alignment.center,
@@ -1446,13 +1437,9 @@ def main(page: ft.Page):
                                                             ],spacing=0,scroll=ft.ScrollMode.AUTO,expand=True,)
                                                         )
                                                     )],expand=True,spacing=0),
-
-                                                        
-
                                                 ],spacing=0,expand=True)
                                             ),
-                                            
-                                            
+
                                         ],expand=True),
                                        
                                     ])
@@ -1461,25 +1448,60 @@ def main(page: ft.Page):
                             ),  
                         ],spacing=0,expand=True)
                     ],spacing=0)
-           
             ) 
    
     class Settings:
+        
+        
+        switch = ft.Switch(label=" Fullscreen",label_style=ft.TextStyle(color=ft.colors.WHITE),
+                           value=False,active_track_color=ft.colors.GREY_700,thumb_color=ft.colors.GREY_400,on_change=lambda e: Settings.is_fullscreened())
+
+        theme_color_dropdown = ft.Dropdown(
+           hint_text="Theme",
+           height=50,
+           color=ft.colors.WHITE,
+           label_style=ft.TextStyle(color=ft.colors.WHITE),
+           options=[
+                ft.dropdown.Option("GREY"),
+                ft.dropdown.Option("RED"),
+                ft.dropdown.Option("BLUE"),
+                ft.dropdown.Option("INDIGO"),
+                ft.dropdown.Option("PURPLE"),
+                ft.dropdown.Option("TEAL"),
+                ft.dropdown.Option("ORANGE"),
+                ft.dropdown.Option("CYAN"),
+                ft.dropdown.Option("GREEN"),
+                ft.dropdown.Option("REDACCENT"),
+                ft.dropdown.Option("AMBER"),
+                ft.dropdown.Option("PINK"),
+          
+           ],
+           on_change=lambda e:Settings.set_theme()
+        )
 
         def is_fullscreened():
-            if Sim_game.switch.value == False:
+            if Settings.switch.value == False:
                page.window_full_screen = False
             else:
                page.window_full_screen = True
             page.update()
 
+        def set_theme():
+           Settings.user_color_theme = f"{str(Settings.theme_color_dropdown.value).lower()}700"
+           page.update()
+           page.go("/Buffer")
+           time.sleep(.5)
+           page.go("/Settings")
+           print(Settings.user_color_theme)
         #default white38
-        user_color_theme = ft.colors.WHITE38
+        user_color_theme = ft.colors.GREY_600
         def fp_color():
             if Settings.user_color_theme == ft.colors.WHITE38:
                 return ft.colors.WHITE12
             else:
                return Settings.user_color_theme
+            
+        
 
         def settings():
             print(f"{page.route} Menu item clicked")
@@ -1492,14 +1514,34 @@ def main(page: ft.Page):
                 alignment=ft.alignment.center,
                 bgcolor=ft.colors.BLACK12,
                 expand=True,
-                content=(ft.Text(
-                    "Settings",
-                    size=50,
-                    color=ft.colors.with_opacity(0.5,ft.colors.WHITE),
-                    weight=ft.FontWeight.BOLD,
-                    text_align=ft.TextAlign.CENTER,
-                    )),
+                content=(
+                   ft.Container(
+                      width=450,
+                      height=450,
+                      alignment=ft.alignment.center,
+                      margin=ft.margin.only(top=50),
+                      border_radius=10,
+                      bgcolor=Settings.user_color_theme,
+                      content=ft.Column([
+                       ft.Row([
+                        ft.Container(
+                            margin=ft.margin.only(top=10),
+                            content= ft.Text("Settings",text_align=ft.TextAlign.CENTER,color=ft.colors.WHITE,size=30,weight=ft.FontWeight.W_600)
+                        )
+                        ],alignment=ft.MainAxisAlignment.CENTER),
+                        ft.Container(
+                            margin=ft.margin.only(left=20),
+                            content=Settings.switch
+                        ),
+                        ft.Container(
+                           margin=ft.margin.only(left=20),
+                           width=150,
+                           content=Settings.theme_color_dropdown
+                        )
+                      ],horizontal_alignment=ft.alignment.center,spacing=20)
+                   )
                 )
+            )
     
     class Screen_buffer:
        loading_ring = ft.ProgressRing(width=40, height=40, stroke_width = 2,)
