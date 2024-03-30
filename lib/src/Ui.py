@@ -1494,7 +1494,7 @@ def main(page: ft.Page):
         
         
         switch = ft.Switch(label=" Fullscreen",label_style=ft.TextStyle(color=ft.colors.WHITE),
-                           value=False,active_track_color=ft.colors.GREY_700,thumb_color=ft.colors.GREY_400,on_change=lambda e: Settings.is_fullscreened())
+                           value=False,active_track_color=ft.colors.GREY_900,thumb_color=ft.colors.GREY_400,inactive_track_color=ft.colors.GREY_800,on_change=lambda e: Settings.is_fullscreened())
 
         theme_color_dropdown = ft.Dropdown(
            hint_text="Theme",
