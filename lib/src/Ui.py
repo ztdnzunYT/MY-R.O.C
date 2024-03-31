@@ -3,6 +3,7 @@ import random
 import os
 import time
 import subprocess
+import statistics
 import math
 import pygame
 import Mydata_connector as mdc
@@ -325,7 +326,7 @@ def main(page: ft.Page):
                                             ft.Container(
                                                 width=page.window_width,  
                                                 height = page.window_height/2.5,
-                                                padding=10,
+                                                padding=15,
                                                 bgcolor=ft.colors.with_opacity(0.8,Settings.user_color_theme),
                                                 alignment=ft.alignment.top_center,
                                                 margin=5,
@@ -345,7 +346,7 @@ def main(page: ft.Page):
                                                     ),
                                                 ),
                                                 ft.Container(
-                                                    bgcolor=ft.colors.BLACK54,
+                                                    bgcolor=ft.colors.WHITE,
                                                     expand=True,
                                                     margin=3,
                                
@@ -962,7 +963,7 @@ def main(page: ft.Page):
             Player_search.table.rows.clear()
             #if len(Player_search.table.rows) == len(Player_search.player_inserter()):
             if Player_search.filter_menu.value == "None" or Player_search.filter_menu.value == "Filter":
-                for i in range(10):
+                for i in range(10): #may need to add pages to reduce the lag
                     Player_search.add_player(Player_search.player_inserter()[i])
             else:
                 for i in range(len(Player_search.player_inserter())):
@@ -1051,9 +1052,44 @@ def main(page: ft.Page):
         
 
         def player_inserter():
-            mdc.mycursor.execute("SELECT * FROM my_team")
+            mdc.mycursor.execute("SELECT * FROM my_team_player_stats")
             my_team = mdc.mycursor.fetchall()
             return my_team
+       
+        def team_overall(self):
+            team_ovr = 0
+            for i in range(len(self)):
+                team_ovr  += self[i].overall
+            team_ovr = round(team_ovr/len(self))
+            return team_ovr
+        
+        def team_rating(self):
+            team_star_rating = []
+            for i in range(len(self)):
+                team_star_rating.append(self[i].star_rating)
+            team_star_rating = round(statistics.mean(team_star_rating))
+            return team_star_rating
+        
+        def team_offense(self):
+            team_offense = []
+            for i in range(len(self)):
+                team_offense.append(self[i].offense)
+            team_offense = round(statistics.mean(team_offense))
+            return team_offense
+        
+        def team_defense(self):
+            team_defense = []
+            for i in range(len(self)):
+                team_defense.append(self[i].defense)
+            team_defense = round(statistics.mean(team_defense))
+            return team_defense
+             
+        players = [my_team_player1,my_team_player2,my_team_player3]   
+        team_name = ft.Text("MY TEAM",text_align=ft.TextAlign.CENTER,expand=True,size=25,weight=ft.FontWeight.W_500)
+        team_ovr = ft.Text(f"{team_overall(players)} Team Overall",text_align=ft.alignment.center,size=15,expand=True,color=ft.colors.WHITE)
+        team_star_rating = ft.Text(f"{team_rating(players)}★ Team",text_align=ft.alignment.center,size=15,expand=True,color=ft.colors.WHITE)
+        team_offense_ovr = ft.Text(f"{team_offense(players)} Offense",text_align=ft.alignment.center,size=15,expand=True,color=ft.colors.WHITE)
+        team_defense_ovr = ft.Text(f"{team_defense(players)} Defense",text_align=ft.alignment.center,size=15,expand=True,color=ft.colors.WHITE)
 
         team_online_wins_losses = ft.Text("Wins | Losses",text_align=ft.alignment.center,size=15,expand=True,color=ft.colors.WHITE)
         team_online_win_percent = ft.Text("Win percentage 0%",text_align=ft.alignment.center,size=15,color=ft.colors.WHITE)
@@ -1065,10 +1101,6 @@ def main(page: ft.Page):
         sim_games_win_percent = ft.Text("Win percentage 0%",text_align=ft.alignment.center,size=15,color=ft.colors.WHITE)
         sim_games_played =  ft.Text("Games played",text_align=ft.alignment.center,size=15,color=ft.colors.WHITE)
         sim_games_points_scored =  ft.Text("Carrer offline points",text_align=ft.alignment.center,size=15,color=ft.colors.WHITE)
-
-
-        team_name = ft.Text("MY TEAM",text_align=ft.TextAlign.CENTER,expand=True,size=25,weight=ft.FontWeight.W_500)
-        players = [my_team_player1,my_team_player2,my_team_player3]
 
         table = ft.DataTable(
             column_spacing=50,
@@ -1133,7 +1165,6 @@ def main(page: ft.Page):
                 #color=ft.colors.with_opacity(0.3,ft.colors.WHITE),
             ],
         )   
-      
         
         def add_player(player_info):
             new_row = ft.DataRow(cells=[ ],on_select_changed=lambda e: My_ROC_Team.stat_updater(player_info))
@@ -1198,8 +1229,6 @@ def main(page: ft.Page):
         def add_multiple():
             for i in range(len(My_ROC_Team.players)):
                 My_ROC_Team.add_player(My_ROC_Team.players[i])
-
-       
 
         class My_team_stats(ft.Row):
             def __init__(self,content):
@@ -1355,7 +1384,6 @@ def main(page: ft.Page):
                 ],sections_space=0,
                 center_space_radius=60,
                 expand=True,
-                
             )
 
         def my_roc_team():
@@ -1390,15 +1418,23 @@ def main(page: ft.Page):
                                                     content=My_ROC_Team.team_name),
                                             ],vertical_alignment=ft.alignment.top_center,alignment=ft.MainAxisAlignment.CENTER),
                                             ft.Divider(thickness=.3,color=ft.colors.with_opacity(.4,ft.colors.WHITE)),
-                                            My_ROC_Team.My_team_stats(ft.Text("Online team stats",text_align=ft.alignment.center,size=15)),
+                                            My_ROC_Team.My_team_stats(My_ROC_Team.team_ovr),
+                                            ft.Divider(thickness=.3,color=ft.colors.with_opacity(.4,ft.colors.WHITE)),
+                                            My_ROC_Team.My_team_stats(My_ROC_Team.team_star_rating),
+                                            ft.Divider(thickness=.3,color=ft.colors.with_opacity(.4,ft.colors.WHITE)),
+                                            My_ROC_Team.My_team_stats(My_ROC_Team.team_offense_ovr),
+                                            ft.Divider(thickness=.3,color=ft.colors.with_opacity(.4,ft.colors.WHITE)),
+                                            My_ROC_Team.My_team_stats(My_ROC_Team.team_defense_ovr),
+                                            ft.Divider(thickness=.3,color=ft.colors.with_opacity(.4,ft.colors.WHITE)),
+                                            My_ROC_Team.My_team_stats(My_ROC_Team.team_online_play_style),
+                                            ft.Divider(thickness=.3,color=ft.colors.with_opacity(.4,ft.colors.WHITE)),
+                                            My_ROC_Team.My_team_stats(My_ROC_Team.team_mvp),
+                                            ft.Divider(thickness=.3,color=ft.colors.with_opacity(.4,ft.colors.WHITE)),
+                                            My_ROC_Team.My_team_stats(ft.Text("Online Team Stats",text_align=ft.alignment.center,size=15,weight=ft.FontWeight.BOLD)),
                                             ft.Divider(thickness=.3,color=ft.colors.with_opacity(.4,ft.colors.WHITE)),
                                             My_ROC_Team.My_team_stats(My_ROC_Team.team_online_wins_losses),
                                             ft.Divider(thickness=.3,color=ft.colors.with_opacity(.4,ft.colors.WHITE)),
                                             My_ROC_Team.My_team_stats(My_ROC_Team.team_online_win_percent),
-                                            ft.Divider(thickness=.3,color=ft.colors.with_opacity(.4,ft.colors.WHITE)),
-                                            My_ROC_Team.My_team_stats(My_ROC_Team.team_mvp),
-                                            ft.Divider(thickness=.3,color=ft.colors.with_opacity(.4,ft.colors.WHITE)),
-                                            My_ROC_Team.My_team_stats(My_ROC_Team.team_online_play_style),
                                             ft.Divider(thickness=.3,color=ft.colors.with_opacity(.4,ft.colors.WHITE)),
                                             My_ROC_Team.My_team_stats(My_ROC_Team.team_online_games_played),
                                             ft.Divider(thickness=.3,color=ft.colors.with_opacity(.4,ft.colors.WHITE)),
@@ -1407,7 +1443,7 @@ def main(page: ft.Page):
 
                                             # graph
 
-                                            My_ROC_Team.My_team_stats(ft.Text("Offline team stats",text_align=ft.alignment.center,size=15)),
+                                            My_ROC_Team.My_team_stats(ft.Text("Offline team stats",text_align=ft.alignment.center,size=15,weight=ft.FontWeight.BOLD)),
                                             ft.Divider(thickness=.3,color=ft.colors.with_opacity(.4,ft.colors.WHITE)),
                                             My_ROC_Team.My_team_stats(My_ROC_Team.sim_games_wins_losses),
                                             ft.Divider(thickness=.3,color=ft.colors.with_opacity(.4,ft.colors.WHITE)),
@@ -1741,17 +1777,18 @@ def main(page: ft.Page):
     page.go(page.route)
     
 
-    '''
-        pygame.init()
-        ui_click= pygame.mixer.Sound("lib\sounds\Interfaceclick.mp3")
+    """
+    pygame.init()
+    ui_click= pygame.mixer.Sound("lib\sounds\Interfaceclick.mp3")
 
-        def on_click(x,y,button,pressed):
-            if pressed:
-                pygame.mixer.Sound.play(ui_click)
+    def on_click(x,y,button,pressed):
+        if pressed:
+            pygame.mixer.Sound.play(ui_click)
 
-        with Listener(on_click=on_click) as listener:
-            listener.join()
-    '''
+    with Listener(on_click=on_click) as listener:
+        listener.join()
+        """
+
 
 
 

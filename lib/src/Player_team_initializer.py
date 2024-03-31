@@ -10,7 +10,7 @@ from Mydata_connector import*
 #UPDATE SQLITE_SEQUENCE SET SEQ=0 WHERE NAME='table_name';
 
 class My_team_query():
-    mycursor.execute("SELECT * FROM my_team")
+    mycursor.execute("SELECT * FROM my_team_player_stats")
     my_team = mycursor.fetchall()
 
 class Ai_team_picker():

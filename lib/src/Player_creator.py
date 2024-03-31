@@ -382,21 +382,21 @@ class Player_creator():
     class My_team_inserter():
         def my_team_player_inserter():
             Player_creator.create_ai_player(0,4,pv.pg_heights[random.randint(0,1)],random.randrange(pv.guard_weight[0],pv.guard_weight[1])) #INSERT PLAYER POSITION AND RATING 
-            mycursor.execute("""INSERT INTO my_team (
+            mycursor.execute("""INSERT INTO my_team_player_stats (
             first_name,last_name,age,height,weight,star_rating,position,build,moral,trait,skill_set,injured,recovery_days, 
             potential,overall,offense,defense,roots,three_pointer,midrange,layup,dunk,ball_handle, speed,
             stamina,passing,strength,rebounding,interior_defense,perimeter_defense,steal,block
             ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",values)    
             Player_creator.insert()
             Player_creator.create_ai_player(1,4,pv.sg_heights[0],random.randrange(pv.guard_weight[0],pv.guard_weight[1])) #INSERT PLAYER POSITION AND RATING 
-            mycursor.execute("""INSERT INTO my_team (
+            mycursor.execute("""INSERT INTO my_team_player_stats (
             first_name,last_name,age,height,weight,star_rating,position,build,moral,trait,skill_set,injured,recovery_days, 
             potential,overall,offense,defense,roots,three_pointer,midrange,layup,dunk,ball_handle, speed,
             stamina,passing,strength,rebounding,interior_defense,perimeter_defense,steal,block
             ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",values)    
             Player_creator.insert()
             Player_creator.create_ai_player(4,4,pv.c_heights[random.randint(0,1)],random.randrange(pv.center_weight[0],pv.center_weight[1])) #INSERT PLAYER POSITION AND RATING 
-            mycursor.execute("""INSERT INTO my_team (
+            mycursor.execute("""INSERT INTO my_team_player_stats (
             first_name,last_name,age,height,weight,star_rating,position,build,moral,trait,skill_set,injured,recovery_days, 
             potential,overall,offense,defense,roots,three_pointer,midrange,layup,dunk,ball_handle, speed,
             stamina,passing,strength,rebounding,interior_defense,perimeter_defense,steal,block

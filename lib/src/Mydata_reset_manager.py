@@ -17,7 +17,7 @@ class database_manager():
             database_manager.commit(database_manager.reset_ai_team_tables.__name__)
 
     def reset_myteam_table():
-        mycursor.execute("DROP TABLE my_team")
+        mycursor.execute("DROP TABLE my_team_player_stats")
         database_manager.commit(database_manager.reset_myteam_table.__name__)
 
     

@@ -59,9 +59,9 @@ class Player_hub_table_creator():
         three_point_percentage REAL NULL
         )""")
 
-class Myteam_table_creator():
+class My_team_table_creator():
     def my_team_table_creator():
-        mycursor.execute("""CREATE TABLE my_team(
+        mycursor.execute("""CREATE TABLE my_team_player_stats(
         player_id INTEGER PRIMARY KEY AUTOINCREMENT,
         first_name TEXT NOT NULL,
         last_name TEXT NOT NULL,
@@ -112,6 +112,18 @@ class Myteam_table_creator():
         field_goal_percentage REAL NULL,
         three_point_percentage REAL NULL
         )""")
+
+
+    def my_team_stats_table_creator():
+        mycursor.execute("""CREATE TABLE my_team_stats (
+        online_wins INTEGER NULL,
+        online_losses INTEGER NULL,
+        last_game_played TEXT NULL,
+
+        
+                         
+        )""")
+      
 
 class Ai_teams_table_creator():
     def create_ai_team_tables():
@@ -642,7 +654,7 @@ class Ai_teams_table_creator():
   
 def create_all_tables():
     try:
-        Myteam_table_creator.my_team_table_creator()
+        My_team_table_creator.my_team_table_creator()
         Player_hub_table_creator.create_player_hub_table()
         Ai_teams_table_creator.create_ai_team_tables()
     except:
