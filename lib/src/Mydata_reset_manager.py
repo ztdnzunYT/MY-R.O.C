@@ -19,6 +19,7 @@ class database_manager():
     def reset_myteam_table():
         mycursor.execute("DROP TABLE my_team_player_stats")
         database_manager.commit(database_manager.reset_myteam_table.__name__)
+    
 
     
     def commit(function_name):
@@ -39,10 +40,7 @@ class database_manager():
 
 
 
-
-
-
-
+            
 '''
 id = str(1)
 mycursor.execute("INSERT INTO test_user_table2 SELECT * FROM test_user_team WHERE id = "+id+"")

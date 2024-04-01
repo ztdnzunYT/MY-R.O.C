@@ -116,12 +116,24 @@ class My_team_table_creator():
 
     def my_team_stats_table_creator():
         mycursor.execute("""CREATE TABLE my_team_stats (
+        team_name TEXT NULL,
         online_wins INTEGER NULL,
         online_losses INTEGER NULL,
-        last_game_played TEXT NULL,
-
-        
-                         
+        last_online_game_played TEXT NULL,
+        last_online_game_score TEXT NULL,                 
+        last_offline_game_played TEXT NULL, 
+        last_offline_game_score TEXT NULL, 
+        carrer_online_points INTEGER NULL,
+        carrer_offline_points INTEGER NULL,
+        playstyle TEXT NULL,
+        overall INTEGER NULL,
+        star_rating INTEGER NULL,
+        offense INTEGER NULL,
+        defense INTEGER NULL,
+        seasons_won INTEGER NULL,
+        current_season_ranking INTEGER NULL,
+        season_game_number INTEGER NULL,
+        social_media_post TEXT NULL
         )""")
       
 
@@ -650,13 +662,14 @@ class Ai_teams_table_creator():
         )""")
 
 
-
-  
 def create_all_tables():
     try:
         My_team_table_creator.my_team_table_creator()
+        My_team_table_creator.my_team_stats_table_creator()
         Player_hub_table_creator.create_player_hub_table()
         Ai_teams_table_creator.create_ai_team_tables()
+
+    
     except:
         print("Loaded databases")
         pass

@@ -1090,7 +1090,7 @@ def main(page: ft.Page):
         team_star_rating = ft.Text(f"{team_rating(players)}★ Team",text_align=ft.alignment.center,size=15,expand=True,color=ft.colors.WHITE)
         team_offense_ovr = ft.Text(f"{team_offense(players)} Offense",text_align=ft.alignment.center,size=15,expand=True,color=ft.colors.WHITE)
         team_defense_ovr = ft.Text(f"{team_defense(players)} Defense",text_align=ft.alignment.center,size=15,expand=True,color=ft.colors.WHITE)
-
+       
         team_online_wins_losses = ft.Text("Wins | Losses",text_align=ft.alignment.center,size=15,expand=True,color=ft.colors.WHITE)
         team_online_win_percent = ft.Text("Win percentage 0%",text_align=ft.alignment.center,size=15,color=ft.colors.WHITE)
         team_mvp = ft.Text("MVP",text_align=ft.alignment.center,size=15,color=ft.colors.WHITE)
@@ -1101,6 +1101,8 @@ def main(page: ft.Page):
         sim_games_win_percent = ft.Text("Win percentage 0%",text_align=ft.alignment.center,size=15,color=ft.colors.WHITE)
         sim_games_played =  ft.Text("Games played",text_align=ft.alignment.center,size=15,color=ft.colors.WHITE)
         sim_games_points_scored =  ft.Text("Carrer offline points",text_align=ft.alignment.center,size=15,color=ft.colors.WHITE)
+        seasons_won = ft.Text("Seasons Won",text_align=ft.alignment.center,size=15,color=ft.colors.WHITE)
+        season_ranking = ft.Text("Season rank",text_align=ft.alignment.center,size=15,color=ft.colors.WHITE)
 
         table = ft.DataTable(
             column_spacing=50,
@@ -1430,6 +1432,10 @@ def main(page: ft.Page):
                                             ft.Divider(thickness=.3,color=ft.colors.with_opacity(.4,ft.colors.WHITE)),
                                             My_ROC_Team.My_team_stats(My_ROC_Team.team_mvp),
                                             ft.Divider(thickness=.3,color=ft.colors.with_opacity(.4,ft.colors.WHITE)),
+                                            My_ROC_Team.My_team_stats(My_ROC_Team.season_ranking),
+                                            ft.Divider(thickness=.3,color=ft.colors.with_opacity(.4,ft.colors.WHITE)),
+                                            My_ROC_Team.My_team_stats(My_ROC_Team.seasons_won),
+                                            ft.Divider(thickness=.3,color=ft.colors.with_opacity(.4,ft.colors.WHITE)),
                                             My_ROC_Team.My_team_stats(ft.Text("Online Team Stats",text_align=ft.alignment.center,size=15,weight=ft.FontWeight.BOLD)),
                                             ft.Divider(thickness=.3,color=ft.colors.with_opacity(.4,ft.colors.WHITE)),
                                             My_ROC_Team.My_team_stats(My_ROC_Team.team_online_wins_losses),
@@ -1616,7 +1622,7 @@ def main(page: ft.Page):
                            width=150,
                            content=(ft.Row([
                               Settings.theme_color_dropdown,
-                              ft.Text(value=" Theme color",color=ft.colors.WHITE)]))
+                              ft.Text(value="Color Theme",color=ft.colors.WHITE)]))
                         )
                       ],horizontal_alignment=ft.alignment.center,spacing=20)
                    )
